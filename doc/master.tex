@@ -1,0 +1,87 @@
+%	Main Document
+
+\documentclass[
+	12pt,
+	BCOR=5mm,
+	DIV=12,
+	headinclude=on,
+	footinclude=off,
+	parskip=half,
+	bibliography=totoc,
+	listof=entryprefix,
+	toc=listof,
+	pointlessnumbers,
+	plainfootsepline]{scrreprt}
+
+% include configuration file
+\input{config}
+
+\begin{document}
+
+% set some information (title, author, ...)
+\TitelDerArbeit{Entwurf und Implementierung eines Kinoreservierungssystems}
+\AutorDerArbeit{Sascha Görnert, Rene Fischer, Gerrit Pollkläsener, Erik Jansky, Niko Lockenvitz}
+\Firma{DER Touristik GmbH, Technische Universität Kaiserslautern, SAP SE}
+\Kurs{WWI 17 SE B}
+
+\input{titlepage}
+
+\pagenumbering{roman}
+\normalfont
+
+% abstract
+\input{abstract}
+
+% table of contents
+\tableofcontents
+
+% figures
+\listoffigures
+
+% tables
+%\listoftables
+
+% listings (source code)
+\lstlistoflistings
+
+% acronyms
+\input{acronyms}
+\ohead{Acronyms}
+
+%--------------------------------
+% Content
+%--------------------------------
+\clearpage
+\ihead{\chaptername~\thechapter}
+\ohead{\headmark}
+\pagenumbering{arabic}
+
+% one file for each chapter
+\input{content/einleitung}
+
+\input{content/analyse/_analyse}
+\input{content/analyse/personas}
+\input{content/analyse/userstories}
+\input{content/analyse/userjourney}
+\input{content/analyse/ablaufkino}
+
+\input{content/entwurf/_entwurf}
+\input{content/entwurf/klassendiagramm}
+\input{content/entwurf/sequenzdiagramm}
+\input{content/entwurf/authentifizierung}
+\input{content/entwurf/blocken}
+
+% bibliography
+\printbibliography[title=Literaturverzeichnis]
+\cleardoublepage
+
+% appendix
+%\appendix
+%\ihead{\appendixname~\thechapter}
+
+%\input{appendix}
+
+% ewerkl.tex
+\input{ewerkl.tex}
+
+\end{document}
