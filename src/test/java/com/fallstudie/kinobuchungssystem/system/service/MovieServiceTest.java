@@ -17,8 +17,8 @@ import org.junit.jupiter.api.Test;
 
 import com.fallstudie.kinobuchungssystem.common.exception.GeneralException;
 import com.fallstudie.kinobuchungssystem.common.json.JSONConverter;
+import com.fallstudie.kinobuchungssystem.common.transferobject.CustomerTo;
 import com.fallstudie.kinobuchungssystem.common.transferobject.MovieTo;
-import com.fallstudie.kinobuchungssystem.common.transferobject.UserTo;
 import com.fallstudie.kinobuchungssystem.common.urlhelper.URLS;
 import com.fallstudie.kinobuchungssystem.common.urlhelper.UrlCallHelper;
 import com.fallstudie.kinobuchungssystem.system.ToCreator;
@@ -33,7 +33,7 @@ public class MovieServiceTest
     @Test
     public void ka ( ) throws JsonProcessingException
     {
-        UserTo item = ToCreator.createUser();
+        CustomerTo item = ToCreator.createUser();
         String result = new ObjectMapper().writeValueAsString(item);
 
         assertThat(result, containsString("Test Comment"));
@@ -43,22 +43,22 @@ public class MovieServiceTest
     {
         URL url = new URL(URLS.KINOBUCHUNGSSYSTEM_DATA_MOVIE + "getAllMovies");
         String json = urlCallHelper.sendGet(url, MediaType.APPLICATION_JSON);
-        UserTo savedUserTo = (UserTo) JSONConverter.fromJSON(json, UserTo.class);
+        CustomerTo savedUserTo = (CustomerTo) JSONConverter.fromJSON(json, CustomerTo.class);
         long savedId = savedUserTo.getId();
         assertNotNull(savedId);
     }
 
-    public void test ( ) throws Exception
+    @Test
+    public void movieTo ( ) throws Exception
     {
         MovieTo movieTo = ToCreator.createMovieTo(100);
         String rqJson = JSONConverter.toJSON(movieTo);
         MovieTo savedMovieTo = (MovieTo) JSONConverter.fromJSON(rqJson, MovieTo.class);
-        long savedId = savedMovieTo.getId();
-        assertNotNull(savedId);
-
+        long id = savedMovieTo.getId();
+        assertNotNull(id);
     }
 
-    public void saveTripTest ( ) throws Exception
+    public void saveMovieTest ( ) throws Exception
     {
         MovieTo movieTo = ToCreator.createMovieTo(100);
         URL url = new URL(URLS.KINOBUCHUNGSSYSTEM_DATA_MOVIE);
@@ -66,8 +66,8 @@ public class MovieServiceTest
         String rqJson = JSONConverter.toJSON(movieTo);
         parameters.put("trip", rqJson);
         String json = urlCallHelper.sendPost(url, parameters, MediaType.APPLICATION_JSON);
-        MovieTo savedTripTo = (MovieTo) JSONConverter.fromJSON(json, MovieTo.class);
-        long savedId = savedTripTo.getId();
+        MovieTo savedMovieTo = (MovieTo) JSONConverter.fromJSON(json, MovieTo.class);
+        long savedId = savedMovieTo.getId();
         assertNotNull(savedId);
 
         MovieTo readMovie = getMovie(savedId);
