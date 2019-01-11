@@ -18,10 +18,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 /**
  * The persistent class for the actor database table.
  * 
@@ -45,8 +41,6 @@ public class Actor implements Serializable
     @Column(name = "lastname", columnDefinition = "VARCHAR(30)")
     private String lastname;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @JsonIdentityReference(alwaysAsId = false)
     // bi-directional many-to-many association to Movie
     @ManyToMany
     @JoinTable(name = "actor_movie", joinColumns = { @JoinColumn(name = "actor_id") }, inverseJoinColumns = { @JoinColumn(name = "movie_id") })

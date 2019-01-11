@@ -11,24 +11,18 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 /**
  * The persistent class for the reservation database table.
  * 
  */
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-@JsonIdentityReference(alwaysAsId = false)
 @Entity
 @Table(name = "reservation")
 @NamedQuery(name = "Reservation.findAll", query = "SELECT r FROM Reservation r")
@@ -45,24 +39,14 @@ public class Reservation implements Serializable
     @Column(name = "dateofreservation")
     private Date dateOfReservation;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @JsonIdentityReference(alwaysAsId = false)
-    // bi-directional many-to-one association to Show
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Show.class)
-    @JoinColumn(name = "show_id")
-    private Show show;
-
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @JsonIdentityReference(alwaysAsId = false)
     // bi-directional many-to-one association to Ticket
     @OneToMany(mappedBy = "reservation", targetEntity = Ticket.class)
     private List<Ticket> tickets;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @JsonIdentityReference(alwaysAsId = false)
-    // bi-directional many-to-one association to Ticket
-    @OneToMany(mappedBy = "reservation", targetEntity = Seat.class)
-    private List<Seat> seats;
+    // bi-directional one-to-one association to Customer
+    @OneToOne(fetch = FetchType.LAZY, targetEntity = Customer.class)
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 
     public Reservation( )
     {
@@ -88,16 +72,6 @@ public class Reservation implements Serializable
         this.dateOfReservation = dateOfReservation;
     }
 
-    public Show getShow ( )
-    {
-        return show;
-    }
-
-    public void setShow ( Show show )
-    {
-        this.show = show;
-    }
-
     public List<Ticket> getTickets ( )
     {
         return tickets;
@@ -108,14 +82,14 @@ public class Reservation implements Serializable
         this.tickets = tickets;
     }
 
-    public List<Seat> getSeats ( )
+    public Customer getCustomer ( )
     {
-        return seats;
+        return customer;
     }
 
-    public void setSeats ( List<Seat> seats )
+    public void setCustomer ( Customer customer )
     {
-        this.seats = seats;
+        this.customer = customer;
     }
 
 }

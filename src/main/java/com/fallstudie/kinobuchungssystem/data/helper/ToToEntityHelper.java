@@ -7,6 +7,7 @@ import org.modelmapper.ModelMapper;
 
 import com.fallstudie.kinobuchungssystem.common.transferobject.ActorTo;
 import com.fallstudie.kinobuchungssystem.common.transferobject.CategoryTo;
+import com.fallstudie.kinobuchungssystem.common.transferobject.CustomerTo;
 import com.fallstudie.kinobuchungssystem.common.transferobject.EmployeeTo;
 import com.fallstudie.kinobuchungssystem.common.transferobject.GenreTo;
 import com.fallstudie.kinobuchungssystem.common.transferobject.HallTo;
@@ -16,9 +17,9 @@ import com.fallstudie.kinobuchungssystem.common.transferobject.ReservationTo;
 import com.fallstudie.kinobuchungssystem.common.transferobject.SeatTo;
 import com.fallstudie.kinobuchungssystem.common.transferobject.ShowTo;
 import com.fallstudie.kinobuchungssystem.common.transferobject.TicketTo;
-import com.fallstudie.kinobuchungssystem.common.transferobject.UserTo;
 import com.fallstudie.kinobuchungssystem.data.entity.Actor;
 import com.fallstudie.kinobuchungssystem.data.entity.Category;
+import com.fallstudie.kinobuchungssystem.data.entity.Customer;
 import com.fallstudie.kinobuchungssystem.data.entity.Employee;
 import com.fallstudie.kinobuchungssystem.data.entity.Genre;
 import com.fallstudie.kinobuchungssystem.data.entity.Hall;
@@ -28,7 +29,6 @@ import com.fallstudie.kinobuchungssystem.data.entity.Reservation;
 import com.fallstudie.kinobuchungssystem.data.entity.Seat;
 import com.fallstudie.kinobuchungssystem.data.entity.Show;
 import com.fallstudie.kinobuchungssystem.data.entity.Ticket;
-import com.fallstudie.kinobuchungssystem.data.entity.User;
 
 public class ToToEntityHelper
 {
@@ -105,9 +105,9 @@ public class ToToEntityHelper
         return hall;
     }
 
-    private static User createUserEntity ( UserTo transferObject )
+    private static Customer createUserEntity ( CustomerTo transferObject )
     {
-        User user = modelMapper.map(transferObject, User.class);
+        Customer user = modelMapper.map(transferObject, Customer.class);
         return user;
     }
 
@@ -173,10 +173,10 @@ public class ToToEntityHelper
         return list;
     }
 
-    private static List<User> createUserEntities ( List<UserTo> transferObject )
+    private static List<Customer> createUserEntities ( List<CustomerTo> transferObject )
     {
-        List<User> list = new ArrayList<>();
-        for ( UserTo element : transferObject )
+        List<Customer> list = new ArrayList<>();
+        for ( CustomerTo element : transferObject )
         {
             list.add(createUserEntity(element));
         }

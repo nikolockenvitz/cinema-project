@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
@@ -25,7 +26,8 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
  * The persistent class for the movie database table.
  * 
  */
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "@id")
+@JsonIdentityReference(alwaysAsId = false)
 @Entity
 @Table(name = "movie")
 @NamedQuery(name = "Movie.findAll", query = "SELECT m FROM Movie m")
@@ -43,34 +45,27 @@ public class Movie implements Serializable
     private int    duration;
     @Column(name = "fsk")
     private int    fsk;
-    @Column(name = "length")
-    private int    length;
     @Column(name = "name", columnDefinition = "VARCHAR(40)")
     private String name;
+    @Column(name = "length")
+    private long   length;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @JsonIdentityReference(alwaysAsId = false)
     // bi-directional many-to-many association to Actor
     @ManyToMany(mappedBy = "movies", targetEntity = Actor.class)
+    @JoinTable(name = "actor_movie", joinColumns = { @JoinColumn(name = "actor_id") }, inverseJoinColumns = { @JoinColumn(name = "movie_id") })
     private List<Actor> actors;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @JsonIdentityReference(alwaysAsId = false)
     // bi-directional many-to-one association to Genre
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Genre.class)
     @JoinColumn(name = "genre_id")
     private Genre genre;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @JsonIdentityReference(alwaysAsId = false)
     // bi-directional many-to-one association to Show
     @OneToMany(mappedBy = "movie", targetEntity = Show.class)
     private List<Show> shows;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @JsonIdentityReference(alwaysAsId = false)
-    // bi-directional one-to-one association to Rating
-    @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY, targetEntity = Rating.class)
+    // bi-directional many-to-one association to Show
+    @OneToMany(mappedBy = "movie", targetEntity = Rating.class)
     private List<Rating> ratings;
 
     public Movie( )
@@ -117,16 +112,6 @@ public class Movie implements Serializable
         this.fsk = fsk;
     }
 
-    public int getLength ( )
-    {
-        return length;
-    }
-
-    public void setLength ( int length )
-    {
-        this.length = length;
-    }
-
     public String getName ( )
     {
         return name;
@@ -155,6 +140,16 @@ public class Movie implements Serializable
     public void setGenre ( Genre genre )
     {
         this.genre = genre;
+    }
+
+    public long getLength ( )
+    {
+        return length;
+    }
+
+    public void setLength ( long length )
+    {
+        this.length = length;
     }
 
     public List<Show> getShows ( )

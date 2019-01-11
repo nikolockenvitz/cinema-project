@@ -10,7 +10,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,8 +34,6 @@ public class MovieResource
     private MovieService movieService;
 
     private ResponseBuilder responseBuilder;
-
-    private static ModelMapper modelMapper = new ModelMapper();
 
     public MovieResource( )
     {
@@ -96,6 +93,26 @@ public class MovieResource
         try
         {
             List<TicketTo> ticketTos = movieService.getAllTickets();
+            json = JSONConverter.toJSON(ticketTos);
+        } catch (Throwable e)
+        {
+            return responseBuilder.buildResponse(textMedia, e.getMessage(), e);
+        }
+        return responseBuilder.buildResponse(jsonMedia, json);
+    }
+
+    @GET
+    @Path("getAllTicketsForShow/{id}")
+    @Propagate
+    @Description(value = "Method to get all tickets for show!")
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces({ MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON })
+    public Response getAllTicketsForShow ( @PathParam("id") String id )
+    {
+        String json = null;
+        try
+        {
+            List<TicketTo> ticketTos = movieService.getAllTicketsForShow(id);
             json = JSONConverter.toJSON(ticketTos);
         } catch (Throwable e)
         {

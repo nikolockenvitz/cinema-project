@@ -11,10 +11,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 /**
  * The persistent class for the genre database table.
  * 
@@ -32,8 +28,6 @@ public class Genre implements Serializable
 
     private String genre;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @JsonIdentityReference(alwaysAsId = false)
     // bi-directional many-to-one association to Movie
     @OneToMany(mappedBy = "genre")
     private List<Movie> movies;

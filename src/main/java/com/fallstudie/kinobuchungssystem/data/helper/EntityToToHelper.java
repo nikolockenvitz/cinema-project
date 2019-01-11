@@ -3,12 +3,9 @@ package com.fallstudie.kinobuchungssystem.data.helper;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.modelmapper.ModelMapper;
-import org.modelmapper.config.Configuration.AccessLevel;
-import org.modelmapper.convention.NamingConventions;
-
 import com.fallstudie.kinobuchungssystem.common.transferobject.ActorTo;
 import com.fallstudie.kinobuchungssystem.common.transferobject.CategoryTo;
+import com.fallstudie.kinobuchungssystem.common.transferobject.CustomerTo;
 import com.fallstudie.kinobuchungssystem.common.transferobject.EmployeeTo;
 import com.fallstudie.kinobuchungssystem.common.transferobject.GenreTo;
 import com.fallstudie.kinobuchungssystem.common.transferobject.HallTo;
@@ -18,9 +15,9 @@ import com.fallstudie.kinobuchungssystem.common.transferobject.ReservationTo;
 import com.fallstudie.kinobuchungssystem.common.transferobject.SeatTo;
 import com.fallstudie.kinobuchungssystem.common.transferobject.ShowTo;
 import com.fallstudie.kinobuchungssystem.common.transferobject.TicketTo;
-import com.fallstudie.kinobuchungssystem.common.transferobject.UserTo;
 import com.fallstudie.kinobuchungssystem.data.entity.Actor;
 import com.fallstudie.kinobuchungssystem.data.entity.Category;
+import com.fallstudie.kinobuchungssystem.data.entity.Customer;
 import com.fallstudie.kinobuchungssystem.data.entity.Employee;
 import com.fallstudie.kinobuchungssystem.data.entity.Genre;
 import com.fallstudie.kinobuchungssystem.data.entity.Hall;
@@ -30,18 +27,20 @@ import com.fallstudie.kinobuchungssystem.data.entity.Reservation;
 import com.fallstudie.kinobuchungssystem.data.entity.Seat;
 import com.fallstudie.kinobuchungssystem.data.entity.Show;
 import com.fallstudie.kinobuchungssystem.data.entity.Ticket;
-import com.fallstudie.kinobuchungssystem.data.entity.User;
 
 public class EntityToToHelper
 {
-    // for converting entity to dto
-    private static ModelMapper modelMapper = new ModelMapper();
 
     public static EmployeeTo createEmployeeTo ( Employee entity )
     {
         if ( null != entity )
         {
-            EmployeeTo employeeTo = modelMapper.map(entity, EmployeeTo.class);
+            EmployeeTo employeeTo = new EmployeeTo();
+            employeeTo.setId(entity.getId());
+            employeeTo.setAge(entity.getAge());
+            employeeTo.setEmail(entity.getEmail());
+            employeeTo.setLastname(entity.getLastname());
+            employeeTo.setFirstname(entity.getFirstname());
             return employeeTo;
         } else
             return null;
@@ -49,12 +48,18 @@ public class EntityToToHelper
 
     public static MovieTo createMovieTo ( Movie entity )
     {
-        modelMapper.getConfiguration().setFieldMatchingEnabled(true);
-        modelMapper.getConfiguration().setFieldAccessLevel(AccessLevel.PRIVATE);
-        modelMapper.getConfiguration().setSourceNamingConvention(NamingConventions.JAVABEANS_MUTATOR);
         if ( null != entity )
         {
-            MovieTo movieTo = modelMapper.map(entity, MovieTo.class);
+            MovieTo movieTo = new MovieTo();
+            movieTo.setId(entity.getId());
+            movieTo.setDescription(entity.getDescription());
+            movieTo.setFsk(entity.getFsk());
+            movieTo.setDuration(entity.getDuration());
+            movieTo.setName(entity.getName());
+            movieTo.setGenre(createGenreTo(entity.getGenre()));
+            movieTo.setRatings(createRatingTos(entity.getRatings()));
+            movieTo.setShows(createShowTos(entity.getShows(), false));
+            movieTo.setActors(createActorTos(entity.getActors()));
             return movieTo;
         } else
             return null;
@@ -64,7 +69,11 @@ public class EntityToToHelper
     {
         if ( null != entity )
         {
-            RatingTo ratingTo = modelMapper.map(entity, RatingTo.class);
+            RatingTo ratingTo = new RatingTo();
+            ratingTo.setId(entity.getId());
+            ratingTo.setComment(entity.getComment());
+            ratingTo.setRating(entity.getRating());
+            ratingTo.setCustomer(createCustomerTo(entity.getUser()));
             return ratingTo;
         } else
             return null;
@@ -74,7 +83,9 @@ public class EntityToToHelper
     {
         if ( null != entity )
         {
-            GenreTo genreTo = modelMapper.map(entity, GenreTo.class);
+            GenreTo genreTo = new GenreTo();
+            genreTo.setId(entity.getId());
+            genreTo.setGenre(entity.getGenre());
             return genreTo;
         } else
             return null;
@@ -84,17 +95,55 @@ public class EntityToToHelper
     {
         if ( null != entity )
         {
-            ActorTo actorTo = modelMapper.map(entity, ActorTo.class);
+            ActorTo actorTo = new ActorTo();
+            actorTo.setId(entity.getId());
+            actorTo.setFirstname(entity.getFirstname());
+            actorTo.setLastname(entity.getLastname());
+            actorTo.setBirthdate(entity.getBirthdate());
             return actorTo;
         } else
             return null;
     }
 
-    private static ShowTo createShowTo ( Show entity )
+    private static ShowTo createShowTo ( Show entity, boolean withtickets )
     {
         if ( null != entity )
         {
-            ShowTo showTo = modelMapper.map(entity, ShowTo.class);
+            ShowTo showTo = new ShowTo();
+            showTo.setId(entity.getId());
+            showTo.setHall(createHallTo(entity.getHall()));
+            showTo.setStarttime(entity.getStarttime());
+            if ( withtickets )
+            {
+                showTo.setTickets(createTicketTos(entity.getTickets(), false));
+            }
+            return showTo;
+        }
+        return null;
+    }
+
+    private static ShowTo createShowToWithMovie ( Show entity )
+    {
+        if ( null != entity )
+        {
+            ShowTo showTo = new ShowTo();
+            showTo.setId(entity.getId());
+            showTo.setHall(createHallTo(entity.getHall()));
+            showTo.setMovie(createMovieTo(entity.getMovie()));
+            showTo.setStarttime(entity.getStarttime());
+            return showTo;
+        }
+        return null;
+    }
+
+    private static ShowTo createShowToWithoutMovie ( Show entity )
+    {
+        if ( null != entity )
+        {
+            ShowTo showTo = new ShowTo();
+            showTo.setId(entity.getId());
+            showTo.setHall(createHallTo(entity.getHall()));
+            showTo.setStarttime(entity.getStarttime());
             return showTo;
         }
         return null;
@@ -104,17 +153,28 @@ public class EntityToToHelper
     {
         if ( null != entity )
         {
-            ReservationTo reservationTo = modelMapper.map(entity, ReservationTo.class);
+            ReservationTo reservationTo = new ReservationTo();
+            reservationTo.setId(entity.getId());
+            reservationTo.setDateOfReservation(entity.getDateOfReservation());
+            reservationTo.setCustomer(createCustomerTo(entity.getCustomer()));
             return reservationTo;
         } else
             return null;
     }
 
-    private static TicketTo createTicketTo ( Ticket entity )
+    private static TicketTo createTicketTo ( Ticket entity, boolean withshow )
     {
         if ( null != entity )
         {
-            TicketTo ticketTo = modelMapper.map(entity, TicketTo.class);
+            TicketTo ticketTo = new TicketTo();
+            ticketTo.setId(entity.getId());
+            ticketTo.setReducedPrice(entity.isReducedPrice());
+            ticketTo.setSeat(createSeatTo(entity.getSeat()));
+            ticketTo.setReservation(createReservationTo(entity.getReservation()));
+            if ( withshow )
+            {
+                ticketTo.setShow(createShowTo(entity.getShow(), false));
+            }
             return ticketTo;
         } else
             return null;
@@ -124,7 +184,12 @@ public class EntityToToHelper
     {
         if ( null != entity )
         {
-            SeatTo seatTo = modelMapper.map(entity, SeatTo.class);
+            SeatTo seatTo = new SeatTo();
+            seatTo.setId(entity.getId());
+            seatTo.setNumber(entity.getNumber());
+            seatTo.setRow(entity.getRow());
+            seatTo.setCategory(createCategoryTo(entity.getCategory()));
+            seatTo.setHall(createHallTo(entity.getHall()));
             return seatTo;
         } else
             return null;
@@ -134,7 +199,9 @@ public class EntityToToHelper
     {
         if ( null != entity )
         {
-            CategoryTo categoryTo = modelMapper.map(entity, CategoryTo.class);
+            CategoryTo categoryTo = new CategoryTo();
+            categoryTo.setId(entity.getId());
+            categoryTo.setCategory(entity.getCategory());
             return categoryTo;
         } else
             return null;
@@ -144,19 +211,29 @@ public class EntityToToHelper
     {
         if ( null != entity )
         {
-
-            HallTo hallTo = modelMapper.map(entity, HallTo.class);
+            HallTo hallTo = new HallTo();
+            hallTo.setId(entity.getId());
+            hallTo.setName(entity.getName());
             return hallTo;
         } else
             return null;
     }
 
-    private static UserTo createUserTo ( User entity )
+    private static CustomerTo createCustomerTo ( Customer entity )
     {
         if ( null != entity )
         {
-            UserTo userTo = modelMapper.map(entity, UserTo.class);
-            return userTo;
+            CustomerTo customerTo = new CustomerTo();
+            customerTo.setId(entity.getId());
+            customerTo.setBirthday(entity.getDateofbirth());
+            customerTo.setEmail(entity.getEmail());
+            customerTo.setIsAdmin(entity.getIsadmin());
+            customerTo.setFirstname(entity.getFirstname());
+            customerTo.setLastname(entity.getLastname());
+            customerTo.setPwhash(entity.getPwhash());
+            customerTo.setSessiontoken(entity.getSessiontoken());
+            customerTo.setUsername(entity.getUsername());
+            return customerTo;
         } else
             return null;
     }
@@ -183,12 +260,32 @@ public class EntityToToHelper
         return list;
     }
 
-    private static List<ShowTo> createShowTos ( List<Show> entity )
+    private static List<ShowTo> createShowTos ( List<Show> entity, boolean withtickets )
     {
         List<ShowTo> list = new ArrayList<>();
         for ( Show element : entity )
         {
-            list.add(createShowTo(element));
+            list.add(createShowTo(element, withtickets));
+        }
+        return list;
+    }
+
+    private static List<ShowTo> createShowTosWithMovie ( List<Show> entity )
+    {
+        List<ShowTo> list = new ArrayList<>();
+        for ( Show element : entity )
+        {
+            list.add(createShowToWithMovie(element));
+        }
+        return list;
+    }
+
+    private static List<ShowTo> createShowTosWithoutMovie ( List<Show> entity )
+    {
+        List<ShowTo> list = new ArrayList<>();
+        for ( Show element : entity )
+        {
+            list.add(createShowToWithoutMovie(element));
         }
         return list;
     }
@@ -203,12 +300,12 @@ public class EntityToToHelper
         return list;
     }
 
-    public static List<TicketTo> createTicketTos ( List<Ticket> entity )
+    public static List<TicketTo> createTicketTos ( List<Ticket> entity, boolean withShow )
     {
         List<TicketTo> list = new ArrayList<>();
         for ( Ticket element : entity )
         {
-            list.add(createTicketTo(element));
+            list.add(createTicketTo(element, withShow));
         }
         return list;
     }
@@ -223,12 +320,12 @@ public class EntityToToHelper
         return list;
     }
 
-    private static List<UserTo> createUserTos ( List<User> entity )
+    private static List<CustomerTo> createUserTos ( List<Customer> entity )
     {
-        List<UserTo> list = new ArrayList<>();
-        for ( User element : entity )
+        List<CustomerTo> list = new ArrayList<>();
+        for ( Customer element : entity )
         {
-            list.add(createUserTo(element));
+            list.add(createCustomerTo(element));
         }
         return list;
     }

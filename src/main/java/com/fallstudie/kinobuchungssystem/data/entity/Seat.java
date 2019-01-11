@@ -1,8 +1,8 @@
 package com.fallstudie.kinobuchungssystem.data.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -11,13 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 /**
  * The persistent class for the seat database table.
@@ -37,38 +33,21 @@ public class Seat implements Serializable
 
     private int number;
 
-    private int row;
+    private String row;
 
-    @Column(name = "ticket_id")
-    private long ticketId;
+    // bi-directional many-to-one association to Ticket
+    @OneToMany(mappedBy = "seat", targetEntity = Ticket.class)
+    private List<Ticket> tickets;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @JsonIdentityReference(alwaysAsId = false)
-    // bi-directional many-to-one association to Category
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Category.class)
-    @JoinColumn(name = "category_id")
-    private Category category;
-
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @JsonIdentityReference(alwaysAsId = false)
-    // bi-directional one-to-one association to Ticket
-    @OneToOne(mappedBy = "seat", fetch = FetchType.LAZY)
-    @JoinColumn(name = "ticket_id")
-    private Ticket ticket;
-
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @JsonIdentityReference(alwaysAsId = false)
     // bi-directional many-to-one association to Hall
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Hall.class)
     @JoinColumn(name = "hall_id")
     private Hall hall;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @JsonIdentityReference(alwaysAsId = false)
-    // bi-directional many-to-one association to Hall
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Reservation.class)
-    @JoinColumn(name = "reservation_id")
-    private Reservation reservation;
+    // bi-directional many-to-one association to Category
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Category.class)
+    @JoinColumn(name = "category_id")
+    private Category category;
 
     public Seat( )
     {
@@ -94,44 +73,14 @@ public class Seat implements Serializable
         this.number = number;
     }
 
-    public int getRow ( )
+    public String getRow ( )
     {
         return row;
     }
 
-    public void setRow ( int row )
+    public void setRow ( String row )
     {
         this.row = row;
-    }
-
-    public Category getCategory ( )
-    {
-        return category;
-    }
-
-    public void setCategory ( Category category )
-    {
-        this.category = category;
-    }
-
-    public long getTicketId ( )
-    {
-        return ticketId;
-    }
-
-    public void setTicketId ( long ticketId )
-    {
-        this.ticketId = ticketId;
-    }
-
-    public Ticket getTicket ( )
-    {
-        return ticket;
-    }
-
-    public void setTicket ( Ticket ticket )
-    {
-        this.ticket = ticket;
     }
 
     public Hall getHall ( )
@@ -144,14 +93,24 @@ public class Seat implements Serializable
         this.hall = hall;
     }
 
-    public Reservation getReservation ( )
+    public Category getCategory ( )
     {
-        return reservation;
+        return category;
     }
 
-    public void setReservation ( Reservation reservation )
+    public void setCategory ( Category category )
     {
-        this.reservation = reservation;
+        this.category = category;
+    }
+
+    public List<Ticket> getTickets ( )
+    {
+        return tickets;
+    }
+
+    public void setTickets ( List<Ticket> tickets )
+    {
+        this.tickets = tickets;
     }
 
 }

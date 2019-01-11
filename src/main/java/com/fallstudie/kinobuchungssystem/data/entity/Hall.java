@@ -21,6 +21,8 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
  * The persistent class for the hall database table.
  * 
  */
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "@id")
+@JsonIdentityReference(alwaysAsId = false)
 @Entity
 @Table(name = "hall")
 @NamedQuery(name = "Hall.findAll", query = "SELECT h FROM Hall h")
@@ -36,8 +38,6 @@ public class Hall implements Serializable
     @Column(name = "name", columnDefinition = "VARCHAR(20)")
     private String name;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @JsonIdentityReference(alwaysAsId = false)
     // bi-directional many-to-one association to Seat
     @OneToMany(mappedBy = "hall", targetEntity = Seat.class)
     private List<Seat> seats;
@@ -68,28 +68,12 @@ public class Hall implements Serializable
 
     public List<Seat> getSeats ( )
     {
-        return this.seats;
+        return seats;
     }
 
     public void setSeats ( List<Seat> seats )
     {
         this.seats = seats;
-    }
-
-    public Seat addSeat ( Seat seat )
-    {
-        getSeats().add(seat);
-        seat.setHall(this);
-
-        return seat;
-    }
-
-    public Seat removeSeat ( Seat seat )
-    {
-        getSeats().remove(seat);
-        seat.setHall(null);
-
-        return seat;
     }
 
 }

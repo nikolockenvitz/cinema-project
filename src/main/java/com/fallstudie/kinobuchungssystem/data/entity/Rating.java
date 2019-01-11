@@ -22,6 +22,8 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
  * The persistent class for the rating database table.
  * 
  */
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "@id")
+@JsonIdentityReference(alwaysAsId = false)
 @Entity
 @Table(name = "rating")
 @NamedQuery(name = "Rating.findAll", query = "SELECT r FROM Rating r")
@@ -39,15 +41,11 @@ public class Rating implements Serializable
     @Column(name = "rating")
     private int rating;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @JsonIdentityReference(alwaysAsId = false)
     // bi-directional many-to-many association to User
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = User.class)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Customer.class)
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @JsonIdentityReference(alwaysAsId = false)
     // bi-directional one-to-one association to Movie
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Movie.class)
     @JoinColumn(name = "movie_id")
@@ -87,14 +85,14 @@ public class Rating implements Serializable
         this.rating = rating;
     }
 
-    public User getUser ( )
+    public Customer getUser ( )
     {
-        return user;
+        return customer;
     }
 
-    public void setUser ( User user )
+    public void setUser ( Customer user )
     {
-        this.user = user;
+        this.customer = user;
     }
 
     public Movie getMovie ( )

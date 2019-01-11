@@ -16,10 +16,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 /**
  * The persistent class for the show database table.
  * 
@@ -33,28 +29,24 @@ public class Show implements Serializable
 
     @Id
     private long id;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "starttime")
     private Date starttime;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @JsonIdentityReference(alwaysAsId = false)
-    // bi-directional many-to-one association to Reservation
-    @OneToMany(mappedBy = "show", targetEntity = Reservation.class)
-    private List<Reservation> reservations;
-
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @JsonIdentityReference(alwaysAsId = false)
     // bi-directional one-to-one association to Ticket
     @OneToMany(mappedBy = "show", fetch = FetchType.LAZY, targetEntity = Ticket.class)
     private List<Ticket> tickets;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @JsonIdentityReference(alwaysAsId = false)
     // bi-directional many-to-one association to Movie
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Movie.class)
     @JoinColumn(name = "movie_id")
     private Movie movie;
+
+    // bi-directional many-to-one association to Hall
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Hall.class)
+    @JoinColumn(name = "hall_id")
+    private Hall hall;
 
     public Show( )
     {
@@ -80,16 +72,6 @@ public class Show implements Serializable
         this.starttime = starttime;
     }
 
-    public List<Reservation> getReservations ( )
-    {
-        return reservations;
-    }
-
-    public void setReservations ( List<Reservation> reservations )
-    {
-        this.reservations = reservations;
-    }
-
     public List<Ticket> getTickets ( )
     {
         return tickets;
@@ -108,6 +90,16 @@ public class Show implements Serializable
     public void setMovie ( Movie movie )
     {
         this.movie = movie;
+    }
+
+    public Hall getHall ( )
+    {
+        return hall;
+    }
+
+    public void setHall ( Hall hall )
+    {
+        this.hall = hall;
     }
 
 }
