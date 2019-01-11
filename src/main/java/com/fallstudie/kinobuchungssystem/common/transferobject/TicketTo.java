@@ -1,11 +1,5 @@
 package com.fallstudie.kinobuchungssystem.common.transferobject;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-@JsonIdentityReference(alwaysAsId = false)
 public class TicketTo
 {
     private long          id;
@@ -44,16 +38,6 @@ public class TicketTo
         this.show = show;
     }
 
-    public SeatTo getSeat ( )
-    {
-        return seat;
-    }
-
-    public void setSeat ( SeatTo seat )
-    {
-        this.seat = seat;
-    }
-
     public ReservationTo getReservation ( )
     {
         return reservation;
@@ -62,6 +46,16 @@ public class TicketTo
     public void setReservation ( ReservationTo reservation )
     {
         this.reservation = reservation;
+    }
+
+    public SeatTo getSeat ( )
+    {
+        return seat;
+    }
+
+    public void setSeat ( SeatTo seat )
+    {
+        this.seat = seat;
     }
 
 }

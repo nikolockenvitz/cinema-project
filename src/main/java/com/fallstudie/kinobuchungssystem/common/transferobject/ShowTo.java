@@ -3,21 +3,13 @@ package com.fallstudie.kinobuchungssystem.common.transferobject;
 import java.util.Date;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-@JsonInclude(JsonInclude.Include.ALWAYS)
 public class ShowTo
 {
-    private long                id;
-    @JsonInclude(JsonInclude.Include.ALWAYS)
-    private Date                starttime;
-    private List<ReservationTo> reservations;
-    private List<TicketTo>      tickets;
-    @JsonInclude(JsonInclude.Include.ALWAYS)
-    private MovieTo             movie;
+    private long           id;
+    private Date           starttime;
+    private List<TicketTo> tickets;
+    private MovieTo        movie;
+    private HallTo         hall;
 
     public long getId ( )
     {
@@ -39,16 +31,6 @@ public class ShowTo
         this.starttime = starttime;
     }
 
-    public List<ReservationTo> getReservations ( )
-    {
-        return reservations;
-    }
-
-    public void setReservations ( List<ReservationTo> reservations )
-    {
-        this.reservations = reservations;
-    }
-
     public List<TicketTo> getTickets ( )
     {
         return tickets;
@@ -67,6 +49,16 @@ public class ShowTo
     public void setMovie ( MovieTo movie )
     {
         this.movie = movie;
+    }
+
+    public HallTo getHall ( )
+    {
+        return hall;
+    }
+
+    public void setHall ( HallTo hall )
+    {
+        this.hall = hall;
     }
 
 }

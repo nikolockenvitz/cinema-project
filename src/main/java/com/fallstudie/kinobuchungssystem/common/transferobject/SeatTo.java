@@ -1,20 +1,12 @@
 package com.fallstudie.kinobuchungssystem.common.transferobject;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-@JsonIdentityReference(alwaysAsId = false)
 public class SeatTo
 {
-    private long          id;
-    private int           row;
-    private int           number;
-    private CategoryTo    category;
-    private HallTo        hall;
-    private TicketTo      ticket;
-    private ReservationTo reservation;
+    private long       id;
+    private int        number;
+    private String     row;
+    private HallTo     hall;
+    private CategoryTo category;
 
     public long getId ( )
     {
@@ -24,16 +16,6 @@ public class SeatTo
     public void setId ( long id )
     {
         this.id = id;
-    }
-
-    public int getRow ( )
-    {
-        return row;
-    }
-
-    public void setRow ( int row )
-    {
-        this.row = row;
     }
 
     public int getNumber ( )
@@ -46,14 +28,14 @@ public class SeatTo
         this.number = number;
     }
 
-    public CategoryTo getCategory ( )
+    public String getRow ( )
     {
-        return category;
+        return row;
     }
 
-    public void setCategory ( CategoryTo category )
+    public void setRow ( String row )
     {
-        this.category = category;
+        this.row = row;
     }
 
     public HallTo getHall ( )
@@ -66,24 +48,14 @@ public class SeatTo
         this.hall = hall;
     }
 
-    public TicketTo getTicket ( )
+    public CategoryTo getCategory ( )
     {
-        return ticket;
+        return category;
     }
 
-    public void setTicket ( TicketTo ticket )
+    public void setCategory ( CategoryTo category )
     {
-        this.ticket = ticket;
-    }
-
-    public ReservationTo getReservation ( )
-    {
-        return reservation;
-    }
-
-    public void setReservation ( ReservationTo reservation )
-    {
-        this.reservation = reservation;
+        this.category = category;
     }
 
 }

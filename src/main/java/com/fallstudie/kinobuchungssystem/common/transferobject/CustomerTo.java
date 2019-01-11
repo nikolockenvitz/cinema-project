@@ -1,24 +1,18 @@
 package com.fallstudie.kinobuchungssystem.common.transferobject;
 
 import java.util.Date;
-import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-@JsonIdentityReference(alwaysAsId = false)
-public class UserTo
+public class CustomerTo
 {
-    private long           id;
-    private String         name;
-    private String         email;
-    private Date           birthday;
-    private int            isAdmin;
-    private String         sessiontoken;
-    private String         pwhash;
-    private List<RatingTo> ratings;
+    private long   id;
+    private String firstname;
+    private String lastname;
+    private String username;
+    private String email;
+    private Date   birthday;
+    private int    isAdmin;
+    private String sessiontoken;
+    private String pwhash;
 
     public long getId ( )
     {
@@ -28,16 +22,6 @@ public class UserTo
     public void setId ( long id )
     {
         this.id = id;
-    }
-
-    public String getName ( )
-    {
-        return name;
-    }
-
-    public void setName ( String name )
-    {
-        this.name = name;
     }
 
     public String getEmail ( )
@@ -90,14 +74,34 @@ public class UserTo
         this.pwhash = pwhash;
     }
 
-    public List<RatingTo> getRatings ( )
+    public String getFirstname ( )
     {
-        return ratings;
+        return firstname;
     }
 
-    public void setRatings ( List<RatingTo> ratings )
+    public void setFirstname ( String firstname )
     {
-        this.ratings = ratings;
+        this.firstname = firstname;
+    }
+
+    public String getLastname ( )
+    {
+        return lastname;
+    }
+
+    public void setLastname ( String lastname )
+    {
+        this.lastname = lastname;
+    }
+
+    public String getUsername ( )
+    {
+        return username;
+    }
+
+    public void setUsername ( String username )
+    {
+        this.username = username;
     }
 
 }

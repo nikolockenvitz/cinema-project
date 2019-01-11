@@ -1,18 +1,11 @@
 package com.fallstudie.kinobuchungssystem.common.transferobject;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-@JsonIdentityReference(alwaysAsId = false)
 public class RatingTo
 {
-    private long    id;
-    private String  comment;
-    private int     rating;
-    private UserTo  user;
-    private MovieTo movie;
+    private long       id;
+    private String     comment;
+    private int        rating;
+    private CustomerTo customer;
 
     public long getId ( )
     {
@@ -44,24 +37,14 @@ public class RatingTo
         this.rating = rating;
     }
 
-    public UserTo getUser ( )
+    public CustomerTo getCustomer ( )
     {
-        return user;
+        return customer;
     }
 
-    public void setUser ( UserTo user )
+    public void setCustomer ( CustomerTo customer )
     {
-        this.user = user;
-    }
-
-    public MovieTo getMovie ( )
-    {
-        return movie;
-    }
-
-    public void setMovie ( MovieTo movie )
-    {
-        this.movie = movie;
+        this.customer = customer;
     }
 
 }

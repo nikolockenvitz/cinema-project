@@ -1,20 +1,12 @@
 package com.fallstudie.kinobuchungssystem.common.transferobject;
 
 import java.util.Date;
-import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-@JsonIdentityReference(alwaysAsId = false)
 public class ReservationTo
 {
-    private long           id;
-    private Date           dateOfReservation;
-    private ShowTo         show;
-    private List<TicketTo> tickets;
+    private long       id;
+    private Date       dateOfReservation;
+    private CustomerTo customer;
 
     public long getId ( )
     {
@@ -36,24 +28,14 @@ public class ReservationTo
         this.dateOfReservation = dateOfReservation;
     }
 
-    public ShowTo getShow ( )
+    public CustomerTo getCustomer ( )
     {
-        return show;
+        return customer;
     }
 
-    public void setShow ( ShowTo show )
+    public void setCustomer ( CustomerTo customer )
     {
-        this.show = show;
-    }
-
-    public List<TicketTo> getTickets ( )
-    {
-        return tickets;
-    }
-
-    public void setTickets ( List<TicketTo> tickets )
-    {
-        this.tickets = tickets;
+        this.customer = customer;
     }
 
 }

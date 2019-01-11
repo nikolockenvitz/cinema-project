@@ -2,24 +2,18 @@ package com.fallstudie.kinobuchungssystem.common.transferobject;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-@JsonInclude(JsonInclude.Include.ALWAYS)
 public class MovieTo
 {
     private long           id;
     private String         description;
     private int            duration;
     private int            fsk;
-    private int            length;
     private String         name;
+    private long           length;
+    private List<ActorTo>  actors;
+    private GenreTo        genre;
     private List<ShowTo>   shows;
     private List<RatingTo> ratings;
-    private GenreTo        genre;
-    private List<ActorTo>  actors;
 
     public long getId ( )
     {
@@ -61,16 +55,6 @@ public class MovieTo
         this.fsk = fsk;
     }
 
-    public int getLength ( )
-    {
-        return length;
-    }
-
-    public void setLength ( int length )
-    {
-        this.length = length;
-    }
-
     public String getName ( )
     {
         return name;
@@ -81,6 +65,16 @@ public class MovieTo
         this.name = name;
     }
 
+    public long getLength ( )
+    {
+        return length;
+    }
+
+    public void setLength ( long length )
+    {
+        this.length = length;
+    }
+
     public List<ActorTo> getActors ( )
     {
         return actors;
@@ -89,6 +83,16 @@ public class MovieTo
     public void setActors ( List<ActorTo> actors )
     {
         this.actors = actors;
+    }
+
+    public GenreTo getGenre ( )
+    {
+        return genre;
+    }
+
+    public void setGenre ( GenreTo genre )
+    {
+        this.genre = genre;
     }
 
     public List<ShowTo> getShows ( )
@@ -109,16 +113,6 @@ public class MovieTo
     public void setRatings ( List<RatingTo> ratings )
     {
         this.ratings = ratings;
-    }
-
-    public GenreTo getGenre ( )
-    {
-        return genre;
-    }
-
-    public void setGenre ( GenreTo genre )
-    {
-        this.genre = genre;
     }
 
 }
