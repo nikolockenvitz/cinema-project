@@ -1,0 +1,45 @@
+/* GLOBAL STYLES */
+
+a.hidden:link, a.hidden:visited, a.hidden:hover, a.hidden:active {
+  color: inherit;
+  text-decoration: inherit;
+  background-color: inherit;
+}
+
+.float-right {
+  margin-left: 3rem;
+}
+
+p {
+  margin-bottom: 1rem;
+}
+
+.rating-1:before {
+  font-size: 2rem;
+  content: "★☆☆☆☆ ";
+}
+.rating-2:before {
+  font-size: 2rem;
+  content: "★★☆☆☆ ";
+}
+.rating-3:before {
+  font-size: 2rem;
+  content: "★★★☆☆ ";
+}
+.rating-4:before {
+  font-size: 2rem;
+  content: "★★★★☆ ";
+}
+.rating-5:before {
+  font-size: 2rem;
+  content: "★★★★★ ";
+}
+
+.table tr td {
+  vertical-align: middle;
+}
+
+.btn-show {
+  width: 6rem;
+  margin: .1rem;
+}
