@@ -3,9 +3,9 @@
 	<artifactId>cinema-data</artifactId>
   <parent>
 		<groupId>com.fallstudie.cinemasystem</groupId>
-		<artifactId>cinemasystem-parent</artifactId>
+		<artifactId>cinema-parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath>../cinemasystem-parent</relativePath>
+		<relativePath>../cinema-parent</relativePath>
 	</parent>
 	<packaging>war</packaging>
 	<build>
@@ -25,7 +25,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.fallstudie.cinemasystem</groupId>
-			<artifactId>cinemasystem-shared</artifactId>
+			<artifactId>cinema-shared</artifactId>
 			<version>${project.parent.version}</version>
 			<scope>compile</scope>
 		</dependency>
