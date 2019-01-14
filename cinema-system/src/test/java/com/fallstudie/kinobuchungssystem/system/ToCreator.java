@@ -14,7 +14,6 @@ import com.fallstudie.kinobuchungssystem.common.transferobject.ReservationTo;
 import com.fallstudie.kinobuchungssystem.common.transferobject.SeatTo;
 import com.fallstudie.kinobuchungssystem.common.transferobject.ShowTo;
 import com.fallstudie.kinobuchungssystem.common.transferobject.TicketTo;
-import com.fallstudie.kinobuchungssystem.common.transferobject.UserTo;
 
 public class ToCreator
 {
@@ -64,9 +63,8 @@ public class ToCreator
     {
         RatingTo ratingTo = new RatingTo();
         ratingTo.setId(1L);
-        ratingTo.setMovie(movie);
         ratingTo.setRating(3);
-        ratingTo.setUser(createUser());
+        ratingTo.setComment("Test Comment");
         return ratingTo;
     }
 
@@ -74,7 +72,6 @@ public class ToCreator
     {
         RatingTo rating = new RatingTo();
         rating.setId(1L);
-        rating.setMovie(movieTo);
         rating.setRating(4);
 //        rating.setUser(user);
         rating.setComment("Test Comment");
@@ -103,7 +100,7 @@ public class ToCreator
         show1.setId(1L);
         show1.setMovie(movieTo);
         show1.setStarttime(new Date());
-        show1.setReservations(null);
+//        show1.setReservations(null);
         show1.setTickets(null);
         return show1;
     }
@@ -114,8 +111,6 @@ public class ToCreator
         seat.setId(1L);
         seat.setHall(createHall());
         seat.setNumber(15);
-        seat.setRow(10);
-        seat.setTicket(createTicket());
 //        seat.setCategory(createCategory());
         return seat;
     }

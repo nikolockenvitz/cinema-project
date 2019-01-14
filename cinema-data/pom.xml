@@ -1,11 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-	<artifactId>kinobuchungssystem-data</artifactId>
+	<artifactId>cinema-data</artifactId>
   <parent>
-		<groupId>com.fallstudie.kinosystem</groupId>
-		<artifactId>kinobuchungssystem-parent</artifactId>
+		<groupId>com.fallstudie.cinemasystem</groupId>
+		<artifactId>cinemasystem-parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath>../kinobuchungssystem-parent</relativePath>
+		<relativePath>../cinemasystem-parent</relativePath>
 	</parent>
 	<packaging>war</packaging>
 	<build>
@@ -24,8 +24,8 @@
 	</build>
 	<dependencies>
 		<dependency>
-			<groupId>com.fallstudie.kinosystem</groupId>
-			<artifactId>kinobuchungssystem-shared</artifactId>
+			<groupId>com.fallstudie.cinemasystem</groupId>
+			<artifactId>cinemasystem-shared</artifactId>
 			<version>${project.parent.version}</version>
 			<scope>compile</scope>
 		</dependency>

@@ -3,18 +3,18 @@
 	<persistence-unit name="kinosystemdatawarehouse" transaction-type="RESOURCE_LOCAL">
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<mapping-file>META-INF/orm.xml</mapping-file>
-		<class>com.fallstudie.kinobuchungssystem.data.entity.Actor</class>
-		<class>com.fallstudie.kinobuchungssystem.data.entity.Category</class>
-		<class>com.fallstudie.kinobuchungssystem.data.entity.Customer</class>
-		<class>com.fallstudie.kinobuchungssystem.data.entity.Employee</class>
-		<class>com.fallstudie.kinobuchungssystem.data.entity.Genre</class>
-		<class>com.fallstudie.kinobuchungssystem.data.entity.Hall</class>
-		<class>com.fallstudie.kinobuchungssystem.data.entity.Movie</class>
-		<class>com.fallstudie.kinobuchungssystem.data.entity.Rating</class>
-		<class>com.fallstudie.kinobuchungssystem.data.entity.Reservation</class>
-		<class>com.fallstudie.kinobuchungssystem.data.entity.Seat</class>
-		<class>com.fallstudie.kinobuchungssystem.data.entity.Show</class>
-		<class>com.fallstudie.kinobuchungssystem.data.entity.Ticket</class>
+		<class>com.fallstudie.cinemasystem.data.entity.Actor</class>
+		<class>com.fallstudie.cinemasystem.data.entity.Category</class>
+		<class>com.fallstudie.cinemasystem.data.entity.Customer</class>
+		<class>com.fallstudie.cinemasystem.data.entity.Employee</class>
+		<class>com.fallstudie.cinemasystem.data.entity.Genre</class>
+		<class>com.fallstudie.cinemasystem.data.entity.Hall</class>
+		<class>com.fallstudie.cinemasystem.data.entity.Movie</class>
+		<class>com.fallstudie.cinemasystem.data.entity.Rating</class>
+		<class>com.fallstudie.cinemasystem.data.entity.Reservation</class>
+		<class>com.fallstudie.cinemasystem.data.entity.Seat</class>
+		<class>com.fallstudie.cinemasystem.data.entity.Show</class>
+		<class>com.fallstudie.cinemasystem.data.entity.Ticket</class>
 		<properties>
 			<!--  <property name="javax.persistence.nonJtaDataSource" value="java:comp/env/kinosystemDS"/> -->
 		  	<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/kinosystem"/> 
