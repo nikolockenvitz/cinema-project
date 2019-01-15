@@ -1,0 +1,39 @@
+.cinemaHall {
+  border: 1px solid black;
+  position: relative;
+  padding: 10px;
+}
+
+.screen {
+  border: solid 1px black;
+  color: white;
+  text-align: center;
+}
+
+.seat {
+  width: 20px;
+  height: 20px;
+  border: 1px solid black;
+  position: absolute;
+}
+
+.available {
+  background-color: #0d0;
+}
+
+.occupied {
+  background-color: #ccc;
+  text-align: center;
+  vertical-align: middle;
+}
+.occupied:after {
+  content: "X";
+}
+
+.hovering {
+  background-color: #0f0;
+}
+
+.selected {
+  background-color: #55f;
+}
