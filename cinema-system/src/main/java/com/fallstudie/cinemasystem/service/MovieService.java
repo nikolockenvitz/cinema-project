@@ -30,11 +30,18 @@ public class MovieService
     @SuppressWarnings("unchecked")
     public List<MovieTo> getAllMovies ( ) throws IOException, GeneralException
     {
-//        List<MovieTo> movieTos = new ArrayList<>();
         Map<String, String> parameters = new HashMap<>();
         String json = urlCallHelper.sendGet(URLS.KINOBUCHUNGSSYSTEM_DATA_MOVIE + URLS.GETALLMOVIES, parameters, MediaType.TEXT_PLAIN);
         List<MovieTo> movieTos = (List<MovieTo>) JSONConverter.fromJSONList(json, MovieTo.class);
         return movieTos;
+    }
+
+    public MovieTo getMovieById ( String id ) throws IOException, GeneralException
+    {
+        Map<String, String> parameters = new HashMap<>();
+        String json = urlCallHelper.sendGet(URLS.KINOBUCHUNGSSYSTEM_DATA_MOVIE + id, parameters, MediaType.TEXT_PLAIN);
+        MovieTo movieTo = (MovieTo) JSONConverter.fromJSON(json, MovieTo.class);
+        return movieTo;
     }
 
 }

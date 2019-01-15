@@ -34,6 +34,9 @@ public class Show implements Serializable
     @Column(name = "starttime")
     private Date starttime;
 
+    @Column(name = "3d")
+    private boolean is3D;
+
     // bi-directional one-to-one association to Ticket
     @OneToMany(mappedBy = "show", fetch = FetchType.LAZY, targetEntity = Ticket.class)
     private List<Ticket> tickets;
@@ -100,6 +103,16 @@ public class Show implements Serializable
     public void setHall ( Hall hall )
     {
         this.hall = hall;
+    }
+
+    public boolean is3D ( )
+    {
+        return is3D;
+    }
+
+    public void setIs3D ( boolean is3d )
+    {
+        is3D = is3d;
     }
 
 }

@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 
 import com.fallstudie.cinemasystem.common.transferobject.MovieTo;
 import com.fallstudie.cinemasystem.common.transferobject.TicketTo;
-import com.fallstudie.cinemasystem.data.entity.Movie;
 import com.fallstudie.cinemasystem.data.entity.dao.MovieDao;
 import com.fallstudie.cinemasystem.data.helper.EntityToToHelper;
 import com.fallstudie.cinemasystem.data.helper.ToToEntityHelper;
@@ -24,10 +23,8 @@ public class MovieService
 
     public MovieTo getMovie ( String idString )
     {
-        Long id = Long.parseLong(idString);
-        Movie movie = new Movie();
-
-        return EntityToToHelper.createMovieTo(movie);
+        Long movieId = Long.parseLong(idString);
+        return EntityToToHelper.createMovieTo(movieDao.find(movieId));
     }
 
     public MovieTo save ( MovieTo movieTo )

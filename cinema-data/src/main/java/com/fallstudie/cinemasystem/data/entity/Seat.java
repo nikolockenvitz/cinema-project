@@ -3,6 +3,7 @@ package com.fallstudie.cinemasystem.data.entity;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -33,7 +34,14 @@ public class Seat implements Serializable
 
     private int number;
 
+    @Column(name = "row")
     private String row;
+
+    @Column(name = "y")
+    private int y;
+
+    @Column(name = "x")
+    private int x;
 
     // bi-directional many-to-one association to Ticket
     @OneToMany(mappedBy = "seat", targetEntity = Ticket.class)
@@ -111,6 +119,26 @@ public class Seat implements Serializable
     public void setTickets ( List<Ticket> tickets )
     {
         this.tickets = tickets;
+    }
+
+    public int getY ( )
+    {
+        return y;
+    }
+
+    public void setY ( int y )
+    {
+        this.y = y;
+    }
+
+    public int getX ( )
+    {
+        return x;
+    }
+
+    public void setX ( int x )
+    {
+        this.x = x;
     }
 
 }

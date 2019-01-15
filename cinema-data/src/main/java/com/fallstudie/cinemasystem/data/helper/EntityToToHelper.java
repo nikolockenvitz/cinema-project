@@ -56,7 +56,7 @@ public class EntityToToHelper
             movieTo.setFsk(entity.getFsk());
             movieTo.setDuration(entity.getDuration());
             movieTo.setName(entity.getName());
-            movieTo.setGenre(createGenreTo(entity.getGenre()));
+            movieTo.setGenres(createGenreTos(entity.getGenres()));
             movieTo.setRatings(createRatingTos(entity.getRatings()));
             movieTo.setShows(createShowTos(entity.getShows(), false));
             movieTo.setActors(createActorTos(entity.getActors()));
@@ -73,7 +73,7 @@ public class EntityToToHelper
             ratingTo.setId(entity.getId());
             ratingTo.setComment(entity.getComment());
             ratingTo.setRating(entity.getRating());
-            ratingTo.setCustomer(createCustomerTo(entity.getUser()));
+            ratingTo.setCustomer(createCustomerToForRating(entity.getUser()));
             return ratingTo;
         } else
             return null;
@@ -190,6 +190,8 @@ public class EntityToToHelper
             seatTo.setRow(entity.getRow());
             seatTo.setCategory(createCategoryTo(entity.getCategory()));
             seatTo.setHall(createHallTo(entity.getHall()));
+            seatTo.setX(entity.getX());
+            seatTo.setY(entity.getY());
             return seatTo;
         } else
             return null;
@@ -214,6 +216,8 @@ public class EntityToToHelper
             HallTo hallTo = new HallTo();
             hallTo.setId(entity.getId());
             hallTo.setName(entity.getName());
+            hallTo.setWidth(entity.getWidth());
+            hallTo.setLength(entity.getLength());
             return hallTo;
         } else
             return null;
@@ -232,6 +236,20 @@ public class EntityToToHelper
             customerTo.setLastname(entity.getLastname());
             customerTo.setPwhash(entity.getPwhash());
             customerTo.setSessiontoken(entity.getSessiontoken());
+            customerTo.setUsername(entity.getUsername());
+            return customerTo;
+        } else
+            return null;
+    }
+
+    private static CustomerTo createCustomerToForRating ( Customer entity )
+    {
+        if ( null != entity )
+        {
+            CustomerTo customerTo = new CustomerTo();
+            customerTo.setId(entity.getId());
+            customerTo.setFirstname(entity.getFirstname());
+            customerTo.setLastname(entity.getLastname());
             customerTo.setUsername(entity.getUsername());
             return customerTo;
         } else
@@ -346,6 +364,16 @@ public class EntityToToHelper
         for ( Rating element : entity )
         {
             list.add(createRatingTo(element));
+        }
+        return list;
+    }
+
+    private static List<GenreTo> createGenreTos ( List<Genre> entity )
+    {
+        List<GenreTo> list = new ArrayList<>();
+        for ( Genre element : entity )
+        {
+            list.add(createGenreTo(element));
         }
         return list;
     }

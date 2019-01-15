@@ -38,6 +38,12 @@ public class Hall implements Serializable
     @Column(name = "name", columnDefinition = "VARCHAR(20)")
     private String name;
 
+    @Column(name = "width")
+    private int width;
+
+    @Column(name = "length")
+    private int length;
+
     // bi-directional many-to-one association to Seat
     @OneToMany(mappedBy = "hall", targetEntity = Seat.class)
     private List<Seat> seats;
@@ -74,6 +80,26 @@ public class Hall implements Serializable
     public void setSeats ( List<Seat> seats )
     {
         this.seats = seats;
+    }
+
+    public int getWidth ( )
+    {
+        return width;
+    }
+
+    public void setWidth ( int width )
+    {
+        this.width = width;
+    }
+
+    public int getLength ( )
+    {
+        return length;
+    }
+
+    public void setLength ( int length )
+    {
+        this.length = length;
     }
 
 }

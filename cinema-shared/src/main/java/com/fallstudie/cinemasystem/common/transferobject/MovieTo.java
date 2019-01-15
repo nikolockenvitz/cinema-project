@@ -9,9 +9,8 @@ public class MovieTo
     private int            duration;
     private int            fsk;
     private String         name;
-    private long           length;
     private List<ActorTo>  actors;
-    private GenreTo        genre;
+    private List<GenreTo>  genres;
     private List<ShowTo>   shows;
     private List<RatingTo> ratings;
 
@@ -65,16 +64,6 @@ public class MovieTo
         this.name = name;
     }
 
-    public long getLength ( )
-    {
-        return length;
-    }
-
-    public void setLength ( long length )
-    {
-        this.length = length;
-    }
-
     public List<ActorTo> getActors ( )
     {
         return actors;
@@ -85,14 +74,14 @@ public class MovieTo
         this.actors = actors;
     }
 
-    public GenreTo getGenre ( )
+    public List<GenreTo> getGenres ( )
     {
-        return genre;
+        return genres;
     }
 
-    public void setGenre ( GenreTo genre )
+    public void setGenres ( List<GenreTo> genres )
     {
-        this.genre = genre;
+        this.genres = genres;
     }
 
     public List<ShowTo> getShows ( )

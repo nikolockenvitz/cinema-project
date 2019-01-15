@@ -7,8 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
 /**
@@ -29,7 +29,7 @@ public class Genre implements Serializable
     private String genre;
 
     // bi-directional many-to-one association to Movie
-    @OneToMany(mappedBy = "genre")
+    @ManyToMany(mappedBy = "genres")
     private List<Movie> movies;
 
     public Genre( )

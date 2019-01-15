@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -36,6 +37,27 @@ public class MovieResource
     {
         this.movieService = new MovieService();
         this.responseBuilder = new ResponseBuilder();
+    }
+
+    @GET
+    @Path("{id}")
+    @Propagate
+    @Description(value = "Method to get a movie by id!")
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces({ MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON })
+    public Response getMovieById ( @PathParam("id") String id )
+    {
+        String json = "";
+        try
+        {
+            MovieTo movieTo = movieService.getMovieById(id);
+            json = JSONConverter.toJSON(movieTo);
+        } catch (Exception e)
+        {
+            LOGGER.error(e.getMessage());
+            return responseBuilder.buildResponse(errorMedia, e.getMessage(), e);
+        }
+        return responseBuilder.buildResponse(media, json);
     }
 
     @GET

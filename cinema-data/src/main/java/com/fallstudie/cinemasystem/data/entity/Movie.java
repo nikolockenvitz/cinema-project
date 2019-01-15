@@ -12,7 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
@@ -47,8 +46,6 @@ public class Movie implements Serializable
     private int    fsk;
     @Column(name = "name", columnDefinition = "VARCHAR(40)")
     private String name;
-    @Column(name = "length")
-    private long   length;
 
     // bi-directional many-to-many association to Actor
     @ManyToMany(mappedBy = "movies", targetEntity = Actor.class)
@@ -56,9 +53,9 @@ public class Movie implements Serializable
     private List<Actor> actors;
 
     // bi-directional many-to-one association to Genre
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Genre.class)
-    @JoinColumn(name = "genre_id")
-    private Genre genre;
+    @ManyToMany(fetch = FetchType.LAZY, targetEntity = Genre.class)
+    @JoinTable(name = "movie_genre", joinColumns = { @JoinColumn(name = "movie_id") }, inverseJoinColumns = { @JoinColumn(name = "genre_id") })
+    private List<Genre> genres;
 
     // bi-directional many-to-one association to Show
     @OneToMany(mappedBy = "movie", targetEntity = Show.class)
@@ -132,24 +129,14 @@ public class Movie implements Serializable
         this.actors = actors;
     }
 
-    public Genre getGenre ( )
+    public List<Genre> getGenres ( )
     {
-        return genre;
+        return genres;
     }
 
-    public void setGenre ( Genre genre )
+    public void setGenres ( List<Genre> genres )
     {
-        this.genre = genre;
-    }
-
-    public long getLength ( )
-    {
-        return length;
-    }
-
-    public void setLength ( long length )
-    {
-        this.length = length;
+        this.genres = genres;
     }
 
     public List<Show> getShows ( )
