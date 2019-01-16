@@ -12,6 +12,7 @@ $(document).ready(function () {
 	createCinemaScreen();
 	createSeats();
 	adjustToScreen();
+	makeCinemaHallVisible();
 });
 
 function getData () {
@@ -96,6 +97,10 @@ function adjustToScreen() {
 	$("#cinemaHall").height(divHeight+"px");
 	$(".seat").width(seatSize+"px");
 	$(".seat").height(seatSize+"px");
+}
+
+function makeCinemaHallVisible() {
+	$("#cinemaHall").css("display","block");
 }
 
 $(window).on('resize', () => {

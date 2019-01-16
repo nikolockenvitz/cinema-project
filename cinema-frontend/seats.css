@@ -3,6 +3,7 @@
   position: relative;
   padding: 10px;
   margin: 5px;
+  display: none; /* do not show while content is loading */
 }
 
 .screen {
