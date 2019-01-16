@@ -1,19 +1,20 @@
 /* TODO's
- * - relative positioning -> calculate percentages from coordinates
  * - storing selected seats, price calculation
  * - colors, text
  * - get JSON from API
  */
 
 var seats = [];
+var hall = {};
 
 $(document).ready(function () {
 	getData();
-	createScreen();
-	createSeats();	
+	createCinemaScreen();
+	createSeats();
+	adjustToScreen();
 });
 
-function getData () {	
+function getData () {
 	var width = 15;
 	var length = 10;
 	for(var y=0; y<length; y++) {
@@ -27,37 +28,31 @@ function getData () {
 						number: x});
 		}
 	}
+	
+	hall = { width: width*25+15,
+	         length: length*25+65 };
 }
 
-function createScreen () {
+function createCinemaScreen () {
 	var screen = "<div class='screen bg-dark'>Leinwand</div>";
 	$('#cinemaHall').append(screen);
 }
 
 function createSeats () {
-	var template = "<div id='{seatID}' class='seat {classes}' style='left: {posx}px; top: {posy}px;' data-toggle='tooltip' data-placement='top' title='{tooltip}' category='{category}' row='{row}' number='{number}'></div>";
-
-	var maxx = 0;
-	var maxy = 0;
+	var template = "<div id='{seatID}' class='seat {classes}' style='left: {posx}%; top: {posy}%;' data-toggle='tooltip' data-placement='top' title='{tooltip}' category='{category}' row='{row}' number='{number}'></div>";
+	
 	for(var i=0; i<seats.length; i++) {
 		var cur = template;
 		cur = cur.replace("{seatID}",seats[i].id);
 		cur = cur.replace("{classes}",seats[i].classes);
-		cur = cur.replace("{posx}",seats[i].posx);
-		cur = cur.replace("{posy}",seats[i].posy);
+		cur = cur.replace("{posx}", (100 * seats[i].posx) / (hall.width + 20));
+		cur = cur.replace("{posy}", (100 * seats[i].posy) / (hall.length + 20));
 		cur = cur.replace("{tooltip}", "Reihe: " + seats[i].row + ", Platz: " + seats[i].number + " (" + seats[i].category + ")");
 		cur = cur.replace("{category}",seats[i].category);
 		cur = cur.replace("{row}",seats[i].row);
 		cur = cur.replace("{number}",seats[i].number);
 		$('#cinemaHall').append(cur);
-		
-		maxx = Math.max(maxx, seats[i].posx);
-		maxy = Math.max(maxy, seats[i].posy);
 	}
-	
-	$('#cinemaHall').width((maxx+12)+"px");
-	$('#cinemaHall').height((maxy+12)+"px");
-
 	
 	$(function () {
 		$('.seat').on('click', function () {
@@ -84,7 +79,25 @@ function createSeats () {
 	});
 }
 
+function adjustToScreen() {
+	maxDivWidth = $("div.container").width();
+	maxDivHeight = $(document).height() * 2 / 3;
+	
+	var divWidth = maxDivWidth;
+	var divHeight = (hall.length * divWidth) / hall.width;
+	if(divHeight > maxDivHeight) {
+		divHeight = maxDivHeight;
+		divWidth = (hall.width * divHeight) / hall.length;
+	}
+	
+	var seatSize = (20 * divWidth) / hall.width;
+	
+	$("#cinemaHall").width(divWidth+"px");
+	$("#cinemaHall").height(divHeight+"px");
+	$(".seat").width(seatSize+"px");
+	$(".seat").height(seatSize+"px");
+}
+
 $(window).on('resize', () => {
-	console.log($("#cinemaHall").width());
-	// TODO: update
+	adjustToScreen();
 });
