@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.fallstudie.cinemasystem.common.transferobject.MovieTo;
+import com.fallstudie.cinemasystem.common.transferobject.ShowTo;
 import com.fallstudie.cinemasystem.common.transferobject.TicketTo;
 import com.fallstudie.cinemasystem.data.entity.dao.MovieDao;
 import com.fallstudie.cinemasystem.data.helper.EntityToToHelper;
@@ -47,6 +48,12 @@ public class MovieService
     {
         Long showId = Long.parseLong(id);
         return EntityToToHelper.createTicketTos(movieDao.getAllTicketsForShow(showId), true);
+    }
+
+    public ShowTo getShow ( String id )
+    {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }

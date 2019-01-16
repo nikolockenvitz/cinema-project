@@ -5,7 +5,6 @@ public class SeatTo
     private long       id;
     private int        number;
     private String     row;
-    private HallTo     hall;
     private CategoryTo category;
     private PriceTo    price;
     private boolean    isBlocked;
@@ -41,16 +40,6 @@ public class SeatTo
     public void setRow ( String row )
     {
         this.row = row;
-    }
-
-    public HallTo getHall ( )
-    {
-        return hall;
-    }
-
-    public void setHall ( HallTo hall )
-    {
-        this.hall = hall;
     }
 
     public CategoryTo getCategory ( )

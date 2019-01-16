@@ -1,16 +1,16 @@
 package com.fallstudie.cinemasystem.common.transferobject;
 
 import java.util.Date;
-import java.util.List;
 
 public class ShowTo
 {
-    private long           id;
-    private Date           starttime;
-    private List<TicketTo> tickets;
-    private MovieTo        movie;
-    private HallTo         hall;
-    private boolean        is3D;
+    private long   id;
+    private Date   date;
+    private String time;
+//    private List<TicketTo> tickets;
+    private MovieTo movie;
+    private HallTo  hall;
+    private boolean is3D;
 
     public long getId ( )
     {
@@ -22,24 +22,24 @@ public class ShowTo
         this.id = id;
     }
 
-    public Date getStarttime ( )
+    public Date getDate ( )
     {
-        return starttime;
+        return date;
     }
 
-    public void setStarttime ( Date starttime )
+    public void setDate ( Date date )
     {
-        this.starttime = starttime;
+        this.date = date;
     }
 
-    public List<TicketTo> getTickets ( )
+    public String getTime ( )
     {
-        return tickets;
+        return time;
     }
 
-    public void setTickets ( List<TicketTo> tickets )
+    public void setTime ( String time )
     {
-        this.tickets = tickets;
+        this.time = time;
     }
 
     public MovieTo getMovie ( )

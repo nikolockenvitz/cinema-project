@@ -1,11 +1,14 @@
 package com.fallstudie.cinemasystem.common.transferobject;
 
+import java.util.List;
+
 public class HallTo
 {
-    private long   id;
-    private String name;
-    private int    width;
-    private int    length;
+    private long         id;
+    private String       name;
+    private int          width;
+    private int          length;
+    private List<SeatTo> seats;
 
     public long getId ( )
     {
@@ -45,6 +48,16 @@ public class HallTo
     public void setLength ( int length )
     {
         this.length = length;
+    }
+
+    public List<SeatTo> getSeats ( )
+    {
+        return seats;
+    }
+
+    public void setSeats ( List<SeatTo> seats )
+    {
+        this.seats = seats;
     }
 
 }

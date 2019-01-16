@@ -18,6 +18,7 @@ import com.fallstudie.cinemasystem.common.annotation.Propagate;
 import com.fallstudie.cinemasystem.common.json.JSONConverter;
 import com.fallstudie.cinemasystem.common.responsebuilder.ResponseBuilder;
 import com.fallstudie.cinemasystem.common.transferobject.MovieTo;
+import com.fallstudie.cinemasystem.common.transferobject.ShowTo;
 import com.fallstudie.cinemasystem.common.transferobject.TicketTo;
 import com.fallstudie.cinemasystem.data.service.MovieService;
 
@@ -114,6 +115,26 @@ public class MovieResource
         {
             List<TicketTo> ticketTos = movieService.getAllTicketsForShow(id);
             json = JSONConverter.toJSON(ticketTos);
+        } catch (Throwable e)
+        {
+            return responseBuilder.buildResponse(textMedia, e.getMessage(), e);
+        }
+        return responseBuilder.buildResponse(jsonMedia, json);
+    }
+
+    @GET
+    @Path("getShow/{id}")
+    @Propagate
+    @Description(value = "Method to get a show to a specific movie by id!")
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces({ MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON })
+    public Response getShowByID ( @PathParam("id") String id )
+    {
+        String json = null;
+        try
+        {
+            ShowTo showTo = movieService.getShow(id);
+            json = JSONConverter.toJSON(showTo);
         } catch (Throwable e)
         {
             return responseBuilder.buildResponse(textMedia, e.getMessage(), e);

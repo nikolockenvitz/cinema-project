@@ -30,9 +30,12 @@ public class Show implements Serializable
     @Id
     private long id;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "starttime")
-    private Date starttime;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "date")
+    private Date date;
+
+    @Column(name = "time", columnDefinition = "VARCHAR(5)")
+    private String time;
 
     @Column(name = "3d")
     private boolean is3D;
@@ -63,16 +66,6 @@ public class Show implements Serializable
     public void setId ( long id )
     {
         this.id = id;
-    }
-
-    public Date getStarttime ( )
-    {
-        return starttime;
-    }
-
-    public void setStarttime ( Date starttime )
-    {
-        this.starttime = starttime;
     }
 
     public List<Ticket> getTickets ( )
@@ -113,6 +106,26 @@ public class Show implements Serializable
     public void setIs3D ( boolean is3d )
     {
         is3D = is3d;
+    }
+
+    public Date getDate ( )
+    {
+        return date;
+    }
+
+    public void setDate ( Date date )
+    {
+        this.date = date;
+    }
+
+    public String getTime ( )
+    {
+        return time;
+    }
+
+    public void setTime ( String time )
+    {
+        this.time = time;
     }
 
 }

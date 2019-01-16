@@ -10,6 +10,7 @@ import com.fallstudie.cinemasystem.common.transferobject.EmployeeTo;
 import com.fallstudie.cinemasystem.common.transferobject.GenreTo;
 import com.fallstudie.cinemasystem.common.transferobject.HallTo;
 import com.fallstudie.cinemasystem.common.transferobject.MovieTo;
+import com.fallstudie.cinemasystem.common.transferobject.PriceTo;
 import com.fallstudie.cinemasystem.common.transferobject.RatingTo;
 import com.fallstudie.cinemasystem.common.transferobject.ReservationTo;
 import com.fallstudie.cinemasystem.common.transferobject.SeatTo;
@@ -105,17 +106,18 @@ public class EntityToToHelper
             return null;
     }
 
-    private static ShowTo createShowTo ( Show entity, boolean withtickets )
+    public static ShowTo createShowTo ( Show entity, boolean withtickets )
     {
         if ( null != entity )
         {
             ShowTo showTo = new ShowTo();
             showTo.setId(entity.getId());
             showTo.setHall(createHallTo(entity.getHall()));
-            showTo.setStarttime(entity.getStarttime());
+            showTo.setDate(entity.getDate());
+            showTo.setTime(entity.getTime());
             if ( withtickets )
             {
-                showTo.setTickets(createTicketTos(entity.getTickets(), false));
+//                showTo.setTickets(createTicketTos(entity.getTickets(), false));
             }
             return showTo;
         }
@@ -130,7 +132,8 @@ public class EntityToToHelper
             showTo.setId(entity.getId());
             showTo.setHall(createHallTo(entity.getHall()));
             showTo.setMovie(createMovieTo(entity.getMovie()));
-            showTo.setStarttime(entity.getStarttime());
+            showTo.setDate(entity.getDate());
+            showTo.setTime(entity.getTime());
             return showTo;
         }
         return null;
@@ -143,7 +146,6 @@ public class EntityToToHelper
             ShowTo showTo = new ShowTo();
             showTo.setId(entity.getId());
             showTo.setHall(createHallTo(entity.getHall()));
-            showTo.setStarttime(entity.getStarttime());
             return showTo;
         }
         return null;
@@ -189,12 +191,20 @@ public class EntityToToHelper
             seatTo.setNumber(entity.getNumber());
             seatTo.setRow(entity.getRow());
             seatTo.setCategory(createCategoryTo(entity.getCategory()));
-            seatTo.setHall(createHallTo(entity.getHall()));
             seatTo.setX(entity.getX());
             seatTo.setY(entity.getY());
+            seatTo.setPrice(createPriceTo());
             return seatTo;
         } else
             return null;
+    }
+
+    private static PriceTo createPriceTo ( )
+    {
+        PriceTo priceTo = new PriceTo();
+        priceTo.setDefaultPrice(1000);
+        priceTo.setReducedPrice(800);
+        return priceTo;
     }
 
     private static CategoryTo createCategoryTo ( Category entity )
@@ -218,6 +228,7 @@ public class EntityToToHelper
             hallTo.setName(entity.getName());
             hallTo.setWidth(entity.getWidth());
             hallTo.setLength(entity.getLength());
+            hallTo.setSeats(createSeatTos(entity.getSeats()));
             return hallTo;
         } else
             return null;
