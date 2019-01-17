@@ -82,8 +82,8 @@ function createSeats () {
 
 function adjustToScreen() {
 	maxDivWidth = $("div.container").width();
-	maxDivHeight = $(document).height() * 2 / 3;
-	
+	maxDivHeight = Math.min($(window).height() - $("main").offset().top, window.screen.height * 2 / 3);
+
 	var divWidth = maxDivWidth;
 	var divHeight = (hall.length * divWidth) / hall.width;
 	if(divHeight > maxDivHeight) {
