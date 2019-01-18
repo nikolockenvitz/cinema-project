@@ -54,3 +54,17 @@
 .selected {
   background-color: #55f;
 }
+
+.btn-seat-select {
+  width: 2rem;
+}
+.btn-seat-select-number {
+  width: 3rem;
+}
+
+.price-box {
+  padding-left: 15px;
+  padding-right: 15px;
+  flex: 1;
+  max-width: 32rem;
+}

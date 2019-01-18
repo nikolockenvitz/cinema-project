@@ -20,13 +20,15 @@ function getData () {
 	var length = 10;
 	for(var y=0; y<length; y++) {
 		for(var x=0; x<width; x++) {
-			seats.push({id: y*length+x,
+			seats.push({id: y*width+x,
 			            classes: (Math.random() < 0.8 ? "available" : "occupied"),
 			            posx: 25*x + 10 + (x > 3 ? 10 : 0) + (x > 10 ? 10 : 0),
 						posy: 25*y + 70 + (y > 6 ? 10 : 0),
 						category: (y > 6 ? "Loge" : "Parkett"),
 						row: y,
-						number: x});
+						number: x,
+						defaultPrice: (y > 6 ? 10 : 8),
+						reducedPrice: (y > 6 ?  8 : 6)});
 		}
 	}
 	
@@ -58,14 +60,16 @@ function createSeats () {
 	$(function () {
 		$('.seat').on('click', function () {
 			if($(this).hasClass("available")) {
+				var seat = $(this).attr("id");
 				if($(this).hasClass("selected")) {
 					$(this).removeClass("selected");
+					// TODO: remove seat
 				}
 				else {
 					$(this).addClass("selected");
+					// TODO: add seat
 				}
 				console.log($(this).attr("category") + " Reihe " + $(this).attr("row") + " Platz " + $(this).attr("number"));
-				// TODO
 			}
 		});
 		
@@ -82,7 +86,7 @@ function createSeats () {
 
 function adjustToScreen() {
 	maxDivWidth = $("div.container").width();
-	maxDivHeight = Math.min($(window).height() - $("main").offset().top, window.screen.height * 2 / 3);
+	maxDivHeight = Math.max(300, Math.min($(window).height() - $("main").offset().top, window.screen.height * 2 / 3));
 
 	var divWidth = maxDivWidth;
 	var divHeight = (hall.length * divWidth) / hall.width;

@@ -10,6 +10,10 @@ body {
   margin-top: 1rem;
 }
 
+footer.container {
+  margin-top: 2rem;
+}
+
 a.hidden:link, a.hidden:visited, a.hidden:hover, a.hidden:active {
   color: inherit;
   text-decoration: inherit;
