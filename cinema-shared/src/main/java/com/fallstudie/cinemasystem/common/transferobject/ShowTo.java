@@ -1,12 +1,11 @@
 package com.fallstudie.cinemasystem.common.transferobject;
 
-import java.util.Date;
-
 public class ShowTo
 {
     private long   id;
-    private Date   date;
+    private String date;
     private String time;
+    private String weekday;
 //    private List<TicketTo> tickets;
     private MovieTo movie;
     private HallTo  hall;
@@ -22,12 +21,12 @@ public class ShowTo
         this.id = id;
     }
 
-    public Date getDate ( )
+    public String getDate ( )
     {
         return date;
     }
 
-    public void setDate ( Date date )
+    public void setDate ( String date )
     {
         this.date = date;
     }
@@ -70,6 +69,16 @@ public class ShowTo
     public void setIs3D ( boolean is3d )
     {
         is3D = is3d;
+    }
+
+    public String getWeekday ( )
+    {
+        return weekday;
+    }
+
+    public void setWeekday ( String weekday )
+    {
+        this.weekday = weekday;
     }
 
 }

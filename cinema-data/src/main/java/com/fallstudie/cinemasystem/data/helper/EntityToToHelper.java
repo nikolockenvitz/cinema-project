@@ -16,6 +16,7 @@ import com.fallstudie.cinemasystem.common.transferobject.ReservationTo;
 import com.fallstudie.cinemasystem.common.transferobject.SeatTo;
 import com.fallstudie.cinemasystem.common.transferobject.ShowTo;
 import com.fallstudie.cinemasystem.common.transferobject.TicketTo;
+import com.fallstudie.cinemasystem.common.utils.Utils;
 import com.fallstudie.cinemasystem.data.entity.Actor;
 import com.fallstudie.cinemasystem.data.entity.Category;
 import com.fallstudie.cinemasystem.data.entity.Customer;
@@ -47,7 +48,7 @@ public class EntityToToHelper
             return null;
     }
 
-    public static MovieTo createMovieTo ( Movie entity )
+    public static MovieTo createMovieTo ( Movie entity, boolean withShow )
     {
         if ( null != entity )
         {
@@ -59,7 +60,10 @@ public class EntityToToHelper
             movieTo.setName(entity.getName());
             movieTo.setGenres(createGenreTos(entity.getGenres()));
             movieTo.setRatings(createRatingTos(entity.getRatings()));
-            movieTo.setShows(createShowTos(entity.getShows(), false));
+            if ( withShow )
+            {
+                movieTo.setShows(createShowTos(entity.getShows(), false));
+            }
             movieTo.setActors(createActorTos(entity.getActors()));
             return movieTo;
         } else
@@ -100,7 +104,7 @@ public class EntityToToHelper
             actorTo.setId(entity.getId());
             actorTo.setFirstname(entity.getFirstname());
             actorTo.setLastname(entity.getLastname());
-            actorTo.setBirthdate(entity.getBirthdate());
+            actorTo.setBirthdate(Utils.convertDateToString(entity.getBirthdate()));
             return actorTo;
         } else
             return null;
@@ -113,8 +117,9 @@ public class EntityToToHelper
             ShowTo showTo = new ShowTo();
             showTo.setId(entity.getId());
             showTo.setHall(createHallTo(entity.getHall()));
-            showTo.setDate(entity.getDate());
+            showTo.setDate(Utils.convertDateToString(entity.getDate()));
             showTo.setTime(entity.getTime());
+            showTo.setWeekday(Utils.getWeekDay(entity.getDate()));
             if ( withtickets )
             {
 //                showTo.setTickets(createTicketTos(entity.getTickets(), false));
@@ -124,16 +129,17 @@ public class EntityToToHelper
         return null;
     }
 
-    private static ShowTo createShowToWithMovie ( Show entity )
+    public static ShowTo createShowToWithMovie ( Show entity )
     {
         if ( null != entity )
         {
             ShowTo showTo = new ShowTo();
             showTo.setId(entity.getId());
             showTo.setHall(createHallTo(entity.getHall()));
-            showTo.setMovie(createMovieTo(entity.getMovie()));
-            showTo.setDate(entity.getDate());
+            showTo.setMovie(createMovieTo(entity.getMovie(), false));
+            showTo.setDate(Utils.convertDateToString(entity.getDate()));
             showTo.setTime(entity.getTime());
+            showTo.setWeekday(Utils.getWeekDay(entity.getDate()));
             return showTo;
         }
         return null;
@@ -146,6 +152,9 @@ public class EntityToToHelper
             ShowTo showTo = new ShowTo();
             showTo.setId(entity.getId());
             showTo.setHall(createHallTo(entity.getHall()));
+            showTo.setDate(Utils.convertDateToString(entity.getDate()));
+            showTo.setTime(entity.getTime());
+            showTo.setWeekday(Utils.getWeekDay(entity.getDate()));
             return showTo;
         }
         return null;
@@ -364,7 +373,7 @@ public class EntityToToHelper
         List<MovieTo> list = new ArrayList<>();
         for ( Movie element : entity )
         {
-            list.add(createMovieTo(element));
+            list.add(createMovieTo(element, true));
         }
         return list;
     }

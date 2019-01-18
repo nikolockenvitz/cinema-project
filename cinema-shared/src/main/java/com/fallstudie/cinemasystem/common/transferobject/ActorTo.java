@@ -1,13 +1,11 @@
 package com.fallstudie.cinemasystem.common.transferobject;
 
-import java.util.Date;
-
 public class ActorTo
 {
     private long   id;
     private String firstname;
     private String lastname;
-    private Date   birthdate;
+    private String birthdate;
 
     public long getId ( )
     {
@@ -39,12 +37,12 @@ public class ActorTo
         this.lastname = lastname;
     }
 
-    public Date getBirthdate ( )
+    public String getBirthdate ( )
     {
         return birthdate;
     }
 
-    public void setBirthdate ( Date birthdate )
+    public void setBirthdate ( String birthdate )
     {
         this.birthdate = birthdate;
     }

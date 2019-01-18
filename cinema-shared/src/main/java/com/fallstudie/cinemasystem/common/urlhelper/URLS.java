@@ -11,4 +11,6 @@ public interface URLS
 
     public final String GETALLMOVIES = "getAllMovies/";
 
+    public final String KINOBUCHUNGSSYSTEM_DATA_SHOW = SERVER + APPNAME + "show/";
+
 }

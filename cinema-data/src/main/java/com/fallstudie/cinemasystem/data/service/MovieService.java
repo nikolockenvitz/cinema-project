@@ -25,18 +25,17 @@ public class MovieService
     public MovieTo getMovie ( String idString )
     {
         Long movieId = Long.parseLong(idString);
-        return EntityToToHelper.createMovieTo(movieDao.find(movieId));
+        return EntityToToHelper.createMovieTo(movieDao.find(movieId), true);
     }
 
     public MovieTo save ( MovieTo movieTo )
     {
-        return EntityToToHelper.createMovieTo(movieDao.persist(ToToEntityHelper.createMovieEntity(movieTo)));
+        return EntityToToHelper.createMovieTo(movieDao.persist(ToToEntityHelper.createMovieEntity(movieTo)), true);
     }
 
     public List<MovieTo> getAllMovies ( )
     {
         return EntityToToHelper.createMovieTos(movieDao.getAllMovies());
-//        return movieDao.getAllMovies();
     }
 
     public List<TicketTo> getAllTickets ( )

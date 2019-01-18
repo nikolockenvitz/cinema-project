@@ -1,12 +1,15 @@
-package com.fallstudie.kinobuchungssystem.system.service;
+package com.fallstudie.cinemasystem.system.service;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,13 +18,14 @@ import javax.ws.rs.core.MediaType;
 
 import org.junit.jupiter.api.Test;
 
-import com.fallstudie.kinobuchungssystem.common.exception.GeneralException;
-import com.fallstudie.kinobuchungssystem.common.json.JSONConverter;
-import com.fallstudie.kinobuchungssystem.common.transferobject.CustomerTo;
-import com.fallstudie.kinobuchungssystem.common.transferobject.MovieTo;
-import com.fallstudie.kinobuchungssystem.common.urlhelper.URLS;
-import com.fallstudie.kinobuchungssystem.common.urlhelper.UrlCallHelper;
-import com.fallstudie.kinobuchungssystem.system.ToCreator;
+import com.fallstudie.cinemasystem.common.exception.GeneralException;
+import com.fallstudie.cinemasystem.common.json.JSONConverter;
+import com.fallstudie.cinemasystem.common.transferobject.CustomerTo;
+import com.fallstudie.cinemasystem.common.transferobject.MovieTo;
+import com.fallstudie.cinemasystem.common.urlhelper.URLS;
+import com.fallstudie.cinemasystem.common.urlhelper.UrlCallHelper;
+import com.fallstudie.cinemasystem.common.utils.Utils;
+import com.fallstudie.cinemasystem.system.ToCreator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -93,6 +97,46 @@ public class MovieServiceTest
         String json = urlCallHelper.sendGet(URLS.KINOBUCHUNGSSYSTEM_DATA_MOVIE + id, parameters, MediaType.TEXT_PLAIN);
         MovieTo movieTo = (MovieTo) JSONConverter.fromJSON(json, MovieTo.class);
         return movieTo;
+    }
+
+    @Test
+    public void convertDateToString ( )
+    {
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, 2019);
+        cal.set(Calendar.MONTH, Calendar.JANUARY);
+        cal.set(Calendar.DAY_OF_MONTH, 17);
+
+        Date date = cal.getTime();
+        String convertedDate = Utils.convertDateToString(date);
+
+        String toProof = "17.01.2019";
+        assertEquals(convertedDate, toProof);
+    }
+
+    @Test
+    public void getWeekDay ( )
+    {
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, 2019);
+        cal.set(Calendar.MONTH, Calendar.JANUARY);
+        cal.set(Calendar.DAY_OF_MONTH, 17);
+
+        Date date = cal.getTime();
+
+        String s = Utils.getWeekDay(date);
+        assertThat(s, containsString("Donnerstag"));
+    }
+
+    @Test
+    public void getTimeOfDate ( )
+    {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 20);
+        calendar.set(Calendar.MINUTE, 15);
+
+        String s = Utils.convertDateToTime(calendar.getTime());
+        assertEquals("20:15", s);
     }
 
 }

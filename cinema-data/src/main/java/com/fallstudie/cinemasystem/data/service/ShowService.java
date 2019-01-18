@@ -23,7 +23,7 @@ public class ShowService
     public ShowTo getShow ( String idString )
     {
         Long showId = Long.parseLong(idString);
-        return EntityToToHelper.createShowTo(showDao.find(showId), false);
+        return EntityToToHelper.createShowToWithMovie(showDao.find(showId));
     }
 
     public List<TicketTo> getAllTicketsForShow ( String id )

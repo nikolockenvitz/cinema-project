@@ -1,6 +1,4 @@
-package com.fallstudie.cinemasystem.data.resource;
-
-import java.util.List;
+package com.fallstudie.cinemasystem.resource;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -18,19 +16,16 @@ import com.fallstudie.cinemasystem.common.annotation.Propagate;
 import com.fallstudie.cinemasystem.common.json.JSONConverter;
 import com.fallstudie.cinemasystem.common.responsebuilder.ResponseBuilder;
 import com.fallstudie.cinemasystem.common.transferobject.ShowTo;
-import com.fallstudie.cinemasystem.common.transferobject.TicketTo;
-import com.fallstudie.cinemasystem.common.utils.Utils;
-import com.fallstudie.cinemasystem.data.service.ShowService;
+import com.fallstudie.cinemasystem.service.ShowService;
 
 @Path("/show")
 public class ShowResource
 {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(ShowResource.class);
 
-    private static final MediaType textMedia = MediaType.TEXT_PLAIN_TYPE;
+    private static final MediaType errorMedia = MediaType.TEXT_PLAIN_TYPE;
 
-    private static final MediaType jsonMedia = MediaType.APPLICATION_JSON_TYPE;
+    private static final MediaType media = MediaType.APPLICATION_JSON_TYPE;
 
     private ShowService showService;
 
@@ -48,20 +43,18 @@ public class ShowResource
     @Description(value = "Method to get a show by id!")
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces({ MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON })
-    public Response getShowByID ( @PathParam("id") String id )
+    public Response getShowById ( @PathParam("id") String id )
     {
-        String json = null;
+        String json = "";
         try
         {
-            ShowTo showTo = showService.getShow(id);
-            List<TicketTo> ticketTos = showService.getAllTicketsForShow(id);
-            Utils.checkIfSeatIsOccupied(showTo, ticketTos);
+            ShowTo showTo = showService.getShowById(id);
             json = JSONConverter.toJSON(showTo);
-        } catch (Throwable e)
+        } catch (Exception e)
         {
-            return responseBuilder.buildResponse(textMedia, e.getMessage(), e);
+            LOGGER.error(e.getMessage());
+            return responseBuilder.buildResponse(errorMedia, e.getMessage(), e);
         }
-        return responseBuilder.buildResponse(jsonMedia, json);
+        return responseBuilder.buildResponse(media, json);
     }
-
 }
