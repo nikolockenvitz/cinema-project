@@ -2,6 +2,8 @@ package com.fallstudie.cinemasystem.common.transferobject;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 public class MovieTo
 {
     private long           id;
@@ -11,6 +13,7 @@ public class MovieTo
     private String         name;
     private List<ActorTo>  actors;
     private List<GenreTo>  genres;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<ShowTo>   shows;
     private List<RatingTo> ratings;
 

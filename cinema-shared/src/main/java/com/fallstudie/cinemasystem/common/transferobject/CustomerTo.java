@@ -2,6 +2,8 @@ package com.fallstudie.cinemasystem.common.transferobject;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class CustomerTo
 {
     private long   id;
@@ -11,7 +13,9 @@ public class CustomerTo
     private String email;
     private Date   birthday;
     private int    isAdmin;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String sessiontoken;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String pwhash;
 
     public long getId ( )
