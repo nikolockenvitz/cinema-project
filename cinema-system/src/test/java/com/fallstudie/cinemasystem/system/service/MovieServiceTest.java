@@ -37,10 +37,10 @@ public class MovieServiceTest
     @Test
     public void ka ( ) throws JsonProcessingException
     {
-        CustomerTo item = ToCreator.createUser();
+        CustomerTo item = ToCreator.createCustomer();
         String result = new ObjectMapper().writeValueAsString(item);
 
-        assertThat(result, containsString("Test Comment"));
+        assertThat(result, (containsString("Test Comment")));
     }
 
     public void createUser ( ) throws IOException, GeneralException
