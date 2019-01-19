@@ -11,14 +11,22 @@
 	<!-- General custom styles -->
     <link href="style.css" rel="stylesheet">
 	
-	<!-- Custom styles for this page -->
-    <link href="seats.css" rel="stylesheet">
-	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="./seats.js" type="text/javascript"></script>
 
     <title>Das große Wandern der Enten - Kino Ententeich</title>
   </head>
+  
+  <script>
+	$(function () {
+		$('#agb').on('click', function () {
+			$("#button-purchase").prop("disabled", !$(this).is(":checked"));
+		});
+		
+		$('#button-purchase').on('click', function () {
+			window.location.href = "./bestaetigung.html";
+		});
+	});
+  </script>
 
   <body>
 
@@ -61,73 +69,36 @@
         </div>
 		
 		<div class="row featurette" style="margin-top: 1rem">
-		  <div id="cinemaHall" class="cinemaHall">
-
-		  </div>
-		  <div class="price-box">
-            
+		  <div class="col-12 col-md-4">
 			<h2>Sitzplätze</h2>
-			<div id="box-default">
-				Bitte wählen Sie zunächst einen Sitzplatz aus.
+			<p class="lead">Reihe 9, Platz 6-10 (Loge)</p>
+			<p class="lead">5x ermäßigt</p>
+			<p class="lead">Gesamt: 40,00 €</p>
+		  </div>
+		  <div class="col-12 col-md-4">
+		    <h2>Persönliche Daten</h2>
+			<div class="form-group">
+			  <label for="firstName" class="lead">Vorname:</label>
+			  <input type="text" class="form-control" id="firstName">
+			  <label for="lastName" class="lead">Nachname:</label>
+			  <input type="text" class="form-control" id="lastName">
+			  <label for="email" class="lead">E-Mail-Adresse*:</label>
+			  <input type="email" class="form-control" id="email">
 			</div>
-			<div id="box-parkett">
-				<p class="lead">Parkett</p>
-				<div class="col-12" style="clear: both; margin-bottom: 3rem;">
-					<div class="lead" style="float: left;">Normal</div>
-					<div style="float: right;">
-						<div class="btn-group" role="group">
-							<button id="pn-" class="btn btn-outline-primary btn-seat-select">-</button>
-							<button id="pn" class="btn btn-outline-primary btn-seat-select-number" disabled>0</button>
-							<button id="pn+" class="btn btn-outline-primary btn-seat-select">+</button>
-						</div>
-					</div>
-				</div>
-				<div class="col-12" style="clear: both; margin-bottom: 3rem;">
-					<div class="lead" style="float: left;">Ermäßigt</div>
-					<div style="float: right;">
-						<div class="btn-group" role="group">
-							<button id="pe-" class="btn btn-outline-primary btn-seat-select">-</button>
-							<button id="pe" class="btn btn-outline-primary btn-seat-select-number" disabled>0</button>
-							<button id="pe+" class="btn btn-outline-primary btn-seat-select">+</button>
-						</div>
-					</div>
-				</div>
+		  </div>
+		  <div class="col-12 col-md-4">
+			<h2>Bezahlung</h2>
+			<div class="form-group">
+			  <label for="token" class="lead">Gutschein-Code:</label>
+			  <input type="text" class="form-control" id="token">
 			</div>
-			<div id="box-loge">
-				<p class="lead">Loge</p>
-				<div class="col-12" style="clear: both; margin-bottom: 3rem;">
-					<div style="float: left;">
-						<span class="lead">Normal</span>
-					</div>
-					<div style="float: right;">
-						<div class="btn-group" role="group">
-							<button id="ln-" class="btn btn-outline-primary btn-seat-select">-</button>
-							<button id="ln" class="btn btn-outline-primary btn-seat-select-number" disabled>0</button>
-							<button id="ln+" class="btn btn-outline-primary btn-seat-select">+</button>
-						</div>
-					</div>
-				</div>
-				<div class="col-12" style="clear: both; margin-bottom: 3rem;">
-					<div style="float: left;">
-						<span class="lead">Ermäßigt</span>
-					</div>
-					<div style="float: right;">
-						<div class="btn-group" role="group">
-							<button id="le-" class="btn btn-outline-primary btn-seat-select">-</button>
-							<button id="le" class="btn btn-outline-primary btn-seat-select-number" disabled>0</button>
-							<button id="le+" class="btn btn-outline-primary btn-seat-select">+</button>
-						</div>
-					</div>
-				</div>
+			<div class="checkbox">
+			  <label><input id="agb" type="checkbox" value=""> Ich habe die <a href="https://de.statista.com/statistik/daten/studie/4113/umfrage/aspekte-beim-online-banking-nach-geschlecht/">AGB</a> gelesen und akzeptiert.</label>
 			</div>
-			
-			<div id="box-price" style="clear: both; margin-right: 15px; margin-top: 6rem;">
-				<div style="float: left;" class="lead">Gesamt: <span id="price">22,00</span> €</div>
-				<div style="float: right;">
-					<button id="button-purchase" class="btn btn-primary">Kaufen</button>
-				</div>
+			<div style="float: right; margin-top: 3rem;">
+			  <button id="button-purchase" class="btn btn-primary" disabled>Bezahlen</button>
 			</div>
-          </div>
+		  </div>
         </div>
         
       </div>

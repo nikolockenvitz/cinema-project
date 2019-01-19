@@ -200,6 +200,24 @@ $(function () {
 		numberOfTickets[idButton.charAt(0)+(idButton.charAt(1)=="n"?"e":"n")] += (idButton.charAt(2) == "+" ? -1 : 1);
 		updatePriceBox();
 	});
+	
+	$('#button-purchase').on('click', function () {
+		var urlSeats = "";
+		for(var seatId in selection) {
+			urlSeats += seatId + ",";
+		}
+		urlSeats = urlSeats.substr(0, urlSeats.length-1);
+		
+		var urlPrice = numberOfTickets["pn"];
+		urlPrice += "," + numberOfTickets["pe"];
+		urlPrice += "," + numberOfTickets["ln"];
+		urlPrice += "," + numberOfTickets["le"];
+		
+		var url = "./bezahlen.html";
+		url += "?s=" + urlSeats;
+		url += "&p=" + urlPrice;
+		window.location.href = url;
+	});
 });
 
 /* Tooltips */

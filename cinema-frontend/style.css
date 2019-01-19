@@ -85,6 +85,10 @@ p {
   white-space: pre-wrap;
 }
 
+.form-control {
+  margin-bottom: 1rem;
+}
+
 /* RESPONSIVE CSS
 -------------------------------------------------- */
 
