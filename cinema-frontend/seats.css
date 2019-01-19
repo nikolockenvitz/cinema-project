@@ -67,4 +67,5 @@
   padding-right: 15px;
   flex: 1;
   max-width: 32rem;
+  display: none; /* do not show while content is loading */
 }
