@@ -58,6 +58,11 @@ p {
   margin: .1rem;
 }
 
+.show-3d:after {
+  /*color: #888;*/
+  content: " 3D";
+}
+
 .tooltip-inner {
   white-space: pre-wrap;
 }
