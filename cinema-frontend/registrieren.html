@@ -13,8 +13,16 @@
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-    <title>Das große Wandern der Enten - Kino Ententeich</title>
+    <title>Registrieren - Kino Ententeich</title>
   </head>
+  
+  <script>
+	$(function () {		
+		$('#button-register').on('click', function () {
+			window.location.href = "./index.html";
+		});
+	});
+  </script>
   
   <body>
 
@@ -26,8 +34,8 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="./index.html">Kinoprogramm <span class="sr-only">(current)</span></a>
+            <li class="nav-item">
+              <a class="nav-link" href="./index.html">Kinoprogramm</a>
             </li>
 			<li class="nav-item">
               <a class="nav-link" href="#">Preise</a>
@@ -43,31 +51,28 @@
 	
 	<main role="main">
 
-      <div class="container" style="margin-bottom: 5rem;">
-
-		<div class="row featurette">
-		  <div class="col-12 col-sm-4">
-            <a href="./film.html"><img class="featurette-image img-fluid mx-auto" src="./img/duck.jpg" alt="Das große Wandern der Enten" width="100%"></a>
-          </div>
-          <div class="col-12 col-sm-8">
-            <h2 class="featurette-heading"><a class="hidden" href="./film.html">Das große Wandern der Enten</a></h2>
-            <p class="lead">FSK 12, 118 Minuten, Abenteuer</p>
-			<p class="lead">21.01., Montag, 19:00</p>
-          </div>
-        </div>
+      <div class="container">
 		
-		<div class="row featurette" style="margin-top: 1rem">
-		  <div class="col-12 col-md-4">
-			<h2>Sitzplätze</h2>
-			<p class="lead">Reihe 9, Platz 6-10 (Loge)</p>
-			<p class="lead">5x ermäßigt</p>
-			<p class="lead">Gesamt: 40,00 €</p>
+		<div class="row featurette" style="margin-top: 5rem; margin-bottom: 5rem;">
+		  <div class="col-12 col-sm-2 col-md-3 col-lg-4"></div>
+		  <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+			<h2>Registrierung</h2>
+			<div class="form-group">
+			  <label for="username" class="lead">Benutzername</label>
+			  <input type="text" class="form-control" id="username">
+			  <label for="firstName" class="lead">Vorname</label>
+			  <input type="text" class="form-control" id="firstName">
+			  <label for="lastName" class="lead">Nachname</label>
+			  <input type="text" class="form-control" id="lastName">
+			  <label for="email" class="lead">E-Mail-Adresse</label>
+			  <input type="text" class="form-control" id="email">
+			  <label for="password" class="lead">Passwort</label>
+			  <input type="password" class="form-control" id="password">
+			</div>
+			
+			<button id="button-register" class="btn btn-primary" style="width: 100%">Registrieren</button>
 		  </div>
-		  <div class="col-12 col-md-8">
-		    <h2>Bestätigung</h2>
-			<p class="lead">Ihre Buchung war erfolgreich. Sie erhalten in Kürze eine E-Mail mit den Tickets. Außerdem können Sie Ihre Tickets hier im PDF-Format herunterladen.</p>
-			<p class="lead">Drucken Sie die Tickets aus oder zeigen Sie die Tickets einfach mit Ihrem Smartphone am Eingang vor.</p>
-		  </div>
+		  <div class="col-12 col-sm-2 col-md-3 col-lg-4"></div>
         </div>
         
       </div>
