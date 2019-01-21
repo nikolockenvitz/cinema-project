@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -41,7 +42,7 @@ public class Show implements Serializable
     private boolean is3D;
 
     // bi-directional one-to-one association to Ticket
-    @OneToMany(mappedBy = "show", fetch = FetchType.LAZY, targetEntity = Ticket.class)
+    @OneToMany(mappedBy = "show", fetch = FetchType.LAZY, targetEntity = Ticket.class, cascade = CascadeType.ALL)
     private List<Ticket> tickets;
 
     // bi-directional many-to-one association to Movie

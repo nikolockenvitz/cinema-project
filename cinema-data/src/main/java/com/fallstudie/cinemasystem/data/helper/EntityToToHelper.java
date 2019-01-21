@@ -249,7 +249,7 @@ public class EntityToToHelper
         {
             CustomerTo customerTo = new CustomerTo();
             customerTo.setId(entity.getId());
-            customerTo.setBirthday(entity.getDateofbirth());
+            customerTo.setDateofbirth(Utils.convertDateToString(entity.getDateofbirth()));
             customerTo.setEmail(entity.getEmail());
             customerTo.setIsAdmin(entity.getIsadmin());
             customerTo.setFirstname(entity.getFirstname());
@@ -271,6 +271,8 @@ public class EntityToToHelper
             customerTo.setFirstname(entity.getFirstname());
             customerTo.setLastname(entity.getLastname());
             customerTo.setUsername(entity.getUsername());
+            customerTo.setEmail(entity.getEmail());
+            customerTo.setDateofbirth(Utils.convertDateToString(entity.getDateofbirth()));
             return customerTo;
         } else
             return null;

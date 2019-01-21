@@ -1,6 +1,7 @@
 package com.fallstudie.cinemasystem.common.utils;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -65,6 +66,20 @@ public class Utils
                 }
             }
         }
+    }
 
+    public static Date convertStringToDate ( String date )
+    {
+        String s = null;
+        try
+        {
+            Date convertedDate = new SimpleDateFormat("dd.MM.yyyy").parse(date);
+            return convertedDate;
+        } catch (ParseException e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return null;
     }
 }

@@ -15,6 +15,7 @@ import com.fallstudie.cinemasystem.common.transferobject.ReservationTo;
 import com.fallstudie.cinemasystem.common.transferobject.SeatTo;
 import com.fallstudie.cinemasystem.common.transferobject.ShowTo;
 import com.fallstudie.cinemasystem.common.transferobject.TicketTo;
+import com.fallstudie.cinemasystem.common.utils.Utils;
 
 public class ToCreator
 {
@@ -37,9 +38,9 @@ public class ToCreator
         movieTo.setFsk(18);
         movieTo.setDuration(120);
 //        movieTo.setGenres(createGenre(movieTo));
-        movieTo.setName("Test Movie");
-        movieTo.setShows(createShows(movieTo));
-        movieTo.setRatings(createRatings(movieTo));
+        movieTo.setName("Unit Test Movie");
+        movieTo.setShows(null);
+        movieTo.setRatings(null);
         movie = movieTo;
         return movieTo;
     }
@@ -111,7 +112,7 @@ public class ToCreator
         SeatTo seat = new SeatTo();
         seat.setId(1L);
 //        seat.setHall(createHall());
-        seat.setNumber(15);
+        seat.setNumber("15");
 //        seat.setCategory(createCategory());
         return seat;
     }
@@ -139,7 +140,7 @@ public class ToCreator
     {
         SeatTo seatTo = new SeatTo();
         seatTo.setId(1L);
-        seatTo.setNumber(15);
+        seatTo.setNumber("15");
 //        seatTo.setRow(10);
 //        seatTo.setReservation(null);
 //        seatTo.setTicket(ticket1);
@@ -163,7 +164,7 @@ public class ToCreator
         SeatTo seat2 = new SeatTo();
         seat2.setId(2L);
 //        seat2.setHall(createHall());
-        seat2.setNumber(16);
+        seat2.setNumber("16");
 //        seat2.setRow(10);
         TicketTo ticket2 = new TicketTo();
         ticket2.setId(1L);
@@ -184,7 +185,7 @@ public class ToCreator
         SeatTo seat2 = new SeatTo();
         seat2.setId(2L);
 //        seat2.setHall(createHall());
-        seat2.setNumber(16);
+        seat2.setNumber("16");
 //        seat2.setRow(10);
 //        seat2.setTicket(createTicket2());
 //        seat2.setCategory(createCategory());
@@ -243,7 +244,7 @@ public class ToCreator
     {
         CustomerTo user = new CustomerTo();
         user.setId(1L);
-        user.setBirthday(new Date());
+        user.setDateofbirth((Utils.convertDateToString(new Date())));
         user.setEmail("Test@Test.de");
         user.setIsAdmin(0);
         user.setFirstname("TestUser");

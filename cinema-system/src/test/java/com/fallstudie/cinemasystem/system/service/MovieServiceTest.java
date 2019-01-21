@@ -16,6 +16,7 @@ import java.util.Map;
 
 import javax.ws.rs.core.MediaType;
 
+import org.apache.commons.lang3.time.DateUtils;
 import org.junit.jupiter.api.Test;
 
 import com.fallstudie.cinemasystem.common.exception.GeneralException;
@@ -62,13 +63,14 @@ public class MovieServiceTest
         assertNotNull(id);
     }
 
+    @Test
     public void saveMovieTest ( ) throws Exception
     {
         MovieTo movieTo = ToCreator.createMovieTo(100);
         URL url = new URL(URLS.KINOBUCHUNGSSYSTEM_DATA_MOVIE);
         Map<String, String> parameters = new HashMap<>();
         String rqJson = JSONConverter.toJSON(movieTo);
-        parameters.put("trip", rqJson);
+        parameters.put("movie", rqJson);
         String json = urlCallHelper.sendPost(url, parameters, MediaType.APPLICATION_JSON);
         MovieTo savedMovieTo = (MovieTo) JSONConverter.fromJSON(json, MovieTo.class);
         long savedId = savedMovieTo.getId();
@@ -137,6 +139,17 @@ public class MovieServiceTest
 
         String s = Utils.convertDateToTime(calendar.getTime());
         assertEquals("20:15", s);
+    }
+
+    @Test
+    public void convertStringToDate ( )
+    {
+        String date = "21.01.2019";
+        Date convertedDate = Utils.convertStringToDate(date);
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(2019, 0, 21, 0, 0, 0);
+
+        assertEquals(DateUtils.truncate(calendar.getTime(), Calendar.DATE), convertedDate);
     }
 
 }

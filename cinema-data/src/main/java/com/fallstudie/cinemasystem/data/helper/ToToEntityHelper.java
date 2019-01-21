@@ -15,6 +15,7 @@ import com.fallstudie.cinemasystem.common.transferobject.ReservationTo;
 import com.fallstudie.cinemasystem.common.transferobject.SeatTo;
 import com.fallstudie.cinemasystem.common.transferobject.ShowTo;
 import com.fallstudie.cinemasystem.common.transferobject.TicketTo;
+import com.fallstudie.cinemasystem.common.utils.Utils;
 import com.fallstudie.cinemasystem.data.entity.Actor;
 import com.fallstudie.cinemasystem.data.entity.Category;
 import com.fallstudie.cinemasystem.data.entity.Customer;
@@ -46,6 +47,15 @@ public class ToToEntityHelper
         if ( null != transferObject )
         {
             Movie movie = new Movie();
+            movie.setId(transferObject.getId());
+            movie.setActors(createActorEntities(transferObject.getActors()));
+            movie.setDescription(transferObject.getDescription());
+            movie.setFsk(transferObject.getFsk());
+            movie.setDuration(transferObject.getDuration());
+            movie.setName(transferObject.getName());
+            movie.setRatings(createRatingEntities(transferObject.getRatings()));
+            movie.setShows(createShowEntities(transferObject.getShows()));
+            movie.setGenres(createGenreEntities(transferObject.getGenres()));
             return movie;
         }
         return null;
@@ -56,6 +66,10 @@ public class ToToEntityHelper
         if ( null != transferObject )
         {
             Rating rating = new Rating();
+            rating.setId(transferObject.getId());
+            rating.setComment(transferObject.getComment());
+            rating.setUser(createUserEntity(transferObject.getCustomer()));
+            rating.setRating(transferObject.getRating());
             return rating;
         }
         return null;
@@ -66,6 +80,8 @@ public class ToToEntityHelper
         if ( null != transferObject )
         {
             Genre genre = new Genre();
+            genre.setId(transferObject.getId());
+            genre.setGenre(transferObject.getGenre());
             return genre;
         }
         return null;
@@ -76,6 +92,9 @@ public class ToToEntityHelper
         if ( null != transferObject )
         {
             Actor actor = new Actor();
+            actor.setFirstname(transferObject.getFirstname());
+            actor.setLastname(transferObject.getLastname());
+            actor.setBirthdate(Utils.convertStringToDate(transferObject.getBirthdate()));
             return actor;
         }
         return null;
@@ -86,6 +105,11 @@ public class ToToEntityHelper
         if ( null != transferObject )
         {
             Show show = new Show();
+            show.setId(transferObject.getId());
+            show.setHall(createHallEntity(transferObject.getHall()));
+            show.setIs3D(transferObject.is3D());
+            show.setDate(Utils.convertStringToDate(transferObject.getDate()));
+            show.setTime(transferObject.getTime());
             return show;
         }
         return null;
@@ -156,9 +180,12 @@ public class ToToEntityHelper
     public static List<Employee> createEmployeeEntities ( List<EmployeeTo> transferObject )
     {
         List<Employee> list = new ArrayList<>();
-        for ( EmployeeTo element : transferObject )
+        if ( null != transferObject )
         {
-            list.add(createEmployeeEntity(element));
+            for ( EmployeeTo element : transferObject )
+            {
+                list.add(createEmployeeEntity(element));
+            }
         }
         return list;
     }
@@ -166,9 +193,12 @@ public class ToToEntityHelper
     private static List<Actor> createActorEntities ( List<ActorTo> transferObject )
     {
         List<Actor> list = new ArrayList<>();
-        for ( ActorTo element : transferObject )
+        if ( null != transferObject )
         {
-            list.add(createActorEntity(element));
+            for ( ActorTo element : transferObject )
+            {
+                list.add(createActorEntity(element));
+            }
         }
         return list;
     }
@@ -176,9 +206,12 @@ public class ToToEntityHelper
     private static List<Show> createShowEntities ( List<ShowTo> transferObject )
     {
         List<Show> list = new ArrayList<>();
-        for ( ShowTo element : transferObject )
+        if ( null != transferObject )
         {
-            list.add(createShowEntity(element));
+            for ( ShowTo element : transferObject )
+            {
+                list.add(createShowEntity(element));
+            }
         }
         return list;
     }
@@ -186,9 +219,12 @@ public class ToToEntityHelper
     private static List<Reservation> createReservationEntities ( List<ReservationTo> transferObject )
     {
         List<Reservation> list = new ArrayList<>();
-        for ( ReservationTo element : transferObject )
+        if ( null != transferObject )
         {
-            list.add(createReservationEntity(element));
+            for ( ReservationTo element : transferObject )
+            {
+                list.add(createReservationEntity(element));
+            }
         }
         return list;
     }
@@ -196,9 +232,12 @@ public class ToToEntityHelper
     private static List<Ticket> createTicketEntities ( List<TicketTo> transferObject )
     {
         List<Ticket> list = new ArrayList<>();
-        for ( TicketTo element : transferObject )
+        if ( null != transferObject )
         {
-            list.add(createTicketEntity(element));
+            for ( TicketTo element : transferObject )
+            {
+                list.add(createTicketEntity(element));
+            }
         }
         return list;
     }
@@ -206,9 +245,12 @@ public class ToToEntityHelper
     private static List<Seat> createSeatEntities ( List<SeatTo> transferObject )
     {
         List<Seat> list = new ArrayList<>();
-        for ( SeatTo element : transferObject )
+        if ( null != transferObject )
         {
-            list.add(createSeatEntity(element));
+            for ( SeatTo element : transferObject )
+            {
+                list.add(createSeatEntity(element));
+            }
         }
         return list;
     }
@@ -216,9 +258,12 @@ public class ToToEntityHelper
     private static List<Customer> createUserEntities ( List<CustomerTo> transferObject )
     {
         List<Customer> list = new ArrayList<>();
-        for ( CustomerTo element : transferObject )
+        if ( null != transferObject )
         {
-            list.add(createUserEntity(element));
+            for ( CustomerTo element : transferObject )
+            {
+                list.add(createUserEntity(element));
+            }
         }
         return list;
     }
@@ -226,9 +271,12 @@ public class ToToEntityHelper
     public static List<Movie> createMovieEntities ( List<MovieTo> transferObject )
     {
         List<Movie> list = new ArrayList<>();
-        for ( MovieTo element : transferObject )
+        if ( null != transferObject )
         {
-            list.add(createMovieEntity(element));
+            for ( MovieTo element : transferObject )
+            {
+                list.add(createMovieEntity(element));
+            }
         }
         return list;
     }
@@ -236,9 +284,25 @@ public class ToToEntityHelper
     private static List<Rating> createRatingEntities ( List<RatingTo> transferObject )
     {
         List<Rating> list = new ArrayList<>();
-        for ( RatingTo element : transferObject )
+        if ( null != transferObject )
         {
-            list.add(createRatingEntity(element));
+            for ( RatingTo element : transferObject )
+            {
+                list.add(createRatingEntity(element));
+            }
+        }
+        return list;
+    }
+
+    private static List<Genre> createGenreEntities ( List<GenreTo> transferObject )
+    {
+        List<Genre> list = new ArrayList<>();
+        if ( null != transferObject )
+        {
+            for ( GenreTo element : transferObject )
+            {
+                list.add(createGenreEntity((element)));
+            }
         }
         return list;
     }

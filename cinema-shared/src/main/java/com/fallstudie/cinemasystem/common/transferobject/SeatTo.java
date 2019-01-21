@@ -7,7 +7,7 @@ import com.fallstudie.cinemasystem.common.utils.Utils;
 public class SeatTo
 {
     private long       id;
-    private int        number;
+    private String     number;
     private String     row;
     private CategoryTo category;
     private PriceTo    price;
@@ -26,12 +26,12 @@ public class SeatTo
         this.id = id;
     }
 
-    public int getNumber ( )
+    public String getNumber ( )
     {
         return number;
     }
 
-    public void setNumber ( int number )
+    public void setNumber ( String number )
     {
         this.number = number;
     }

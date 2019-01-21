@@ -3,6 +3,7 @@ package com.fallstudie.cinemasystem.data.entity;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -48,21 +49,21 @@ public class Movie implements Serializable
     private String name;
 
     // bi-directional many-to-many association to Actor
-    @ManyToMany(mappedBy = "movies", targetEntity = Actor.class)
+    @ManyToMany(mappedBy = "movies", targetEntity = Actor.class, cascade = CascadeType.ALL)
     @JoinTable(name = "actor_movie", joinColumns = { @JoinColumn(name = "actor_id") }, inverseJoinColumns = { @JoinColumn(name = "movie_id") })
     private List<Actor> actors;
 
     // bi-directional many-to-one association to Genre
-    @ManyToMany(fetch = FetchType.LAZY, targetEntity = Genre.class)
+    @ManyToMany(fetch = FetchType.LAZY, targetEntity = Genre.class, cascade = CascadeType.ALL)
     @JoinTable(name = "movie_genre", joinColumns = { @JoinColumn(name = "movie_id") }, inverseJoinColumns = { @JoinColumn(name = "genre_id") })
     private List<Genre> genres;
 
     // bi-directional many-to-one association to Show
-    @OneToMany(mappedBy = "movie", targetEntity = Show.class)
+    @OneToMany(mappedBy = "movie", targetEntity = Show.class, cascade = CascadeType.ALL)
     private List<Show> shows;
 
     // bi-directional many-to-one association to Show
-    @OneToMany(mappedBy = "movie", targetEntity = Rating.class)
+    @OneToMany(mappedBy = "movie", targetEntity = Rating.class, cascade = CascadeType.ALL)
     private List<Rating> ratings;
 
     public Movie( )

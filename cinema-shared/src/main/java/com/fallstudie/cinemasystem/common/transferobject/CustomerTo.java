@@ -1,7 +1,5 @@
 package com.fallstudie.cinemasystem.common.transferobject;
 
-import java.util.Date;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class CustomerTo
@@ -11,7 +9,7 @@ public class CustomerTo
     private String lastname;
     private String username;
     private String email;
-    private Date   birthday;
+    private String dateofbirth;
     private int    isAdmin;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String sessiontoken;
@@ -38,14 +36,14 @@ public class CustomerTo
         this.email = email;
     }
 
-    public Date getBirthday ( )
+    public String getDateofbirth ( )
     {
-        return birthday;
+        return dateofbirth;
     }
 
-    public void setBirthday ( Date birthday )
+    public void setDateofbirth ( String dateofbirth )
     {
-        this.birthday = birthday;
+        this.dateofbirth = dateofbirth;
     }
 
     public int getIsAdmin ( )

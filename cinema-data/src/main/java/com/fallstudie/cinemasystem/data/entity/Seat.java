@@ -32,7 +32,8 @@ public class Seat implements Serializable
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEAT_ID_GENERATOR")
     private long id;
 
-    private int number;
+    @Column(name = "number")
+    private String number;
 
     @Column(name = "row")
     private String row;
@@ -71,12 +72,12 @@ public class Seat implements Serializable
         this.id = id;
     }
 
-    public int getNumber ( )
+    public String getNumber ( )
     {
-        return this.number;
+        return number;
     }
 
-    public void setNumber ( int number )
+    public void setNumber ( String number )
     {
         this.number = number;
     }
