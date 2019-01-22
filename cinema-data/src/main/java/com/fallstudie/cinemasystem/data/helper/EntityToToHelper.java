@@ -173,7 +173,7 @@ public class EntityToToHelper
             return null;
     }
 
-    private static TicketTo createTicketTo ( Ticket entity, boolean withshow )
+    public static TicketTo createTicketTo ( Ticket entity, boolean withshow )
     {
         if ( null != entity )
         {
@@ -283,9 +283,12 @@ public class EntityToToHelper
     public static List<EmployeeTo> createEmployeeTos ( List<Employee> entity )
     {
         List<EmployeeTo> list = new ArrayList<>();
-        for ( Employee element : entity )
+        if ( null != entity )
         {
-            list.add(createEmployeeTo(element));
+            for ( Employee element : entity )
+            {
+                list.add(createEmployeeTo(element));
+            }
         }
         return list;
     }
@@ -293,9 +296,12 @@ public class EntityToToHelper
     private static List<ActorTo> createActorTos ( List<Actor> entity )
     {
         List<ActorTo> list = new ArrayList<>();
-        for ( Actor element : entity )
+        if ( null != entity )
         {
-            list.add(createActorTo(element));
+            for ( Actor element : entity )
+            {
+                list.add(createActorTo(element));
+            }
         }
         return list;
     }
@@ -303,9 +309,12 @@ public class EntityToToHelper
     private static List<ShowTo> createShowTos ( List<Show> entity, boolean withtickets )
     {
         List<ShowTo> list = new ArrayList<>();
-        for ( Show element : entity )
+        if ( null != entity )
         {
-            list.add(createShowTo(element, withtickets));
+            for ( Show element : entity )
+            {
+                list.add(createShowTo(element, withtickets));
+            }
         }
         return list;
     }
@@ -313,9 +322,12 @@ public class EntityToToHelper
     private static List<ShowTo> createShowTosWithMovie ( List<Show> entity )
     {
         List<ShowTo> list = new ArrayList<>();
-        for ( Show element : entity )
+        if ( null != entity )
         {
-            list.add(createShowToWithMovie(element));
+            for ( Show element : entity )
+            {
+                list.add(createShowToWithMovie(element));
+            }
         }
         return list;
     }
@@ -323,9 +335,12 @@ public class EntityToToHelper
     private static List<ShowTo> createShowTosWithoutMovie ( List<Show> entity )
     {
         List<ShowTo> list = new ArrayList<>();
-        for ( Show element : entity )
+        if ( null != entity )
         {
-            list.add(createShowToWithoutMovie(element));
+            for ( Show element : entity )
+            {
+                list.add(createShowToWithoutMovie(element));
+            }
         }
         return list;
     }
@@ -333,9 +348,12 @@ public class EntityToToHelper
     private static List<ReservationTo> createReservationTos ( List<Reservation> entity )
     {
         List<ReservationTo> list = new ArrayList<>();
-        for ( Reservation element : entity )
+        if ( null != entity )
         {
-            list.add(createReservationTo(element));
+            for ( Reservation element : entity )
+            {
+                list.add(createReservationTo(element));
+            }
         }
         return list;
     }
@@ -343,9 +361,12 @@ public class EntityToToHelper
     public static List<TicketTo> createTicketTos ( List<Ticket> entity, boolean withShow )
     {
         List<TicketTo> list = new ArrayList<>();
-        for ( Ticket element : entity )
+        if ( null != entity )
         {
-            list.add(createTicketTo(element, withShow));
+            for ( Ticket element : entity )
+            {
+                list.add(createTicketTo(element, withShow));
+            }
         }
         return list;
     }
@@ -353,9 +374,12 @@ public class EntityToToHelper
     private static List<SeatTo> createSeatTos ( List<Seat> entity )
     {
         List<SeatTo> list = new ArrayList<>();
-        for ( Seat element : entity )
+        if ( null != entity )
         {
-            list.add(createSeatTo(element));
+            for ( Seat element : entity )
+            {
+                list.add(createSeatTo(element));
+            }
         }
         return list;
     }
@@ -363,9 +387,12 @@ public class EntityToToHelper
     private static List<CustomerTo> createUserTos ( List<Customer> entity )
     {
         List<CustomerTo> list = new ArrayList<>();
-        for ( Customer element : entity )
+        if ( null != entity )
         {
-            list.add(createCustomerTo(element));
+            for ( Customer element : entity )
+            {
+                list.add(createCustomerTo(element));
+            }
         }
         return list;
     }
@@ -373,9 +400,12 @@ public class EntityToToHelper
     public static List<MovieTo> createMovieTos ( List<Movie> entity )
     {
         List<MovieTo> list = new ArrayList<>();
-        for ( Movie element : entity )
+        if ( null != entity )
         {
-            list.add(createMovieTo(element, true));
+            for ( Movie element : entity )
+            {
+                list.add(createMovieTo(element, true));
+            }
         }
         return list;
     }
@@ -383,9 +413,12 @@ public class EntityToToHelper
     private static List<RatingTo> createRatingTos ( List<Rating> entity )
     {
         List<RatingTo> list = new ArrayList<>();
-        for ( Rating element : entity )
+        if ( null != entity )
         {
-            list.add(createRatingTo(element));
+            for ( Rating element : entity )
+            {
+                list.add(createRatingTo(element));
+            }
         }
         return list;
     }
@@ -393,9 +426,12 @@ public class EntityToToHelper
     private static List<GenreTo> createGenreTos ( List<Genre> entity )
     {
         List<GenreTo> list = new ArrayList<>();
-        for ( Genre element : entity )
+        if ( null != entity )
         {
-            list.add(createGenreTo(element));
+            for ( Genre element : entity )
+            {
+                list.add(createGenreTo(element));
+            }
         }
         return list;
     }

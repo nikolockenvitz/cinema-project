@@ -21,6 +21,7 @@ import com.fallstudie.cinemasystem.common.annotation.Propagate;
 import com.fallstudie.cinemasystem.common.json.JSONConverter;
 import com.fallstudie.cinemasystem.common.responsebuilder.ResponseBuilder;
 import com.fallstudie.cinemasystem.common.transferobject.BookingTo;
+import com.fallstudie.cinemasystem.common.transferobject.ReservationTo;
 import com.fallstudie.cinemasystem.common.transferobject.SeatTo;
 import com.fallstudie.cinemasystem.common.transferobject.ShowTo;
 import com.fallstudie.cinemasystem.common.transferobject.TicketTo;
@@ -70,18 +71,22 @@ public class ShowResource
     }
 
     @POST
+    @Path("book")
     @Propagate
     @Description(value = "Method to book seats for a show by its id!")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces({ MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON })
-    public Response postTickets ( @FormParam("booking") String json )
+    public Response postTickets ( @FormParam("book") String json )
     {
         try
         {
             BookingTo bookingTo = (BookingTo) JSONConverter.fromJSON(json, BookingTo.class);
-            String showId = String.valueOf(bookingTo.getShow().getId());
+            String showId = String.valueOf(bookingTo.getShowId());
             ShowTo showTo = showService.getShow(showId);
             List<TicketTo> ticketTos = showService.getAllTicketsForShow(showId);
+            List<TicketTo> bookedTickets = new ArrayList<>();
+
+            List<SeatTo> seatTos = new ArrayList<>();
 
             boolean bookable = true;
             for ( SeatTo seatTo : bookingTo.getSeats() )
@@ -91,6 +96,21 @@ public class ShowResource
                     if ( ticketTo.getSeat().getId() == seatTo.getId() )
                     {
                         bookable = false;
+                        break;
+                    }
+                }
+                if ( !bookable )
+                {
+                    break;
+                }
+                for ( SeatTo to : showTo.getHall().getSeats() )
+                {
+                    long seatIdHall = to.getId();
+                    long test = seatTo.getId();
+                    if ( seatIdHall == test )
+                    {
+                        seatTos.add(to);
+                        break;
                     }
                 }
             }
@@ -99,16 +119,19 @@ public class ShowResource
 
             if ( bookable )
             {
-                for ( SeatTo seatTo : bookingTo.getSeats() )
+                for ( SeatTo seatTo : seatTos )
                 {
                     TicketTo ticketTo = new TicketTo();
                     ticketTo.setSeat(seatTo);
                     ticketTo.setShow(showTo);
                     toBook.add(ticketTo);
                 }
+                bookedTickets = showService.bookShowTickets(toBook);
+                ReservationTo reservationTo = new ReservationTo();
+
             }
 
-            json = JSONConverter.toJSON(bookingTo);
+            json = JSONConverter.toJSON(bookedTickets);
         } catch (Exception e)
         {
             LOGGER.error(e.getMessage());

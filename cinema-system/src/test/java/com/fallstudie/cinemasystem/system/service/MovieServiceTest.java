@@ -61,7 +61,7 @@ public class MovieServiceTest
     @Test
     public void saveMovieTest ( ) throws Exception
     {
-        MovieTo movieTo = ToCreator.createMovieTo(100);
+        MovieTo movieTo = ToCreator.createMovieTo(101);
         URL url = new URL(URLS.KINOBUCHUNGSSYSTEM_DATA_MOVIE);
         Map<String, String> parameters = new HashMap<>();
         String rqJson = JSONConverter.toJSON(movieTo);

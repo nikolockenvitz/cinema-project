@@ -3,6 +3,7 @@ package com.fallstudie.cinemasystem.data.entity;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -45,7 +46,7 @@ public class Hall implements Serializable
     private int length;
 
     // bi-directional many-to-one association to Seat
-    @OneToMany(mappedBy = "hall", targetEntity = Seat.class)
+    @OneToMany(mappedBy = "hall", targetEntity = Seat.class, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Seat> seats;
 
     public Hall( )

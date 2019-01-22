@@ -5,11 +5,11 @@ import java.util.List;
 public class BookingTo
 {
     private long         id;
-    private ShowTo       show;
+    private long         showId;
     private List<SeatTo> seats;
     private CustomerTo   customer;
     private String       paymentoption;
-    private boolean      ispayed;
+    private String       verification;
 
     public long getId ( )
     {
@@ -21,14 +21,14 @@ public class BookingTo
         this.id = id;
     }
 
-    public ShowTo getShow ( )
+    public long getShowId ( )
     {
-        return show;
+        return showId;
     }
 
-    public void setShow ( ShowTo show )
+    public void setShowId ( long showId )
     {
-        this.show = show;
+        this.showId = showId;
     }
 
     public List<SeatTo> getSeats ( )
@@ -61,14 +61,14 @@ public class BookingTo
         this.paymentoption = paymentoption;
     }
 
-    public boolean isIspayed ( )
+    public String getVerification ( )
     {
-        return ispayed;
+        return verification;
     }
 
-    public void setIspayed ( boolean ispayed )
+    public void setVerification ( String verification )
     {
-        this.ispayed = ispayed;
+        this.verification = verification;
     }
 
 }

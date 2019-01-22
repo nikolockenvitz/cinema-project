@@ -120,6 +120,9 @@ public class ToToEntityHelper
         if ( null != transferObject )
         {
             Reservation reservation = new Reservation();
+            reservation.setId(transferObject.getId());
+            reservation.setDateOfReservation(transferObject.getDateOfReservation());
+            reservation.setCustomer(createUserEntity(transferObject.getCustomer()));
             return reservation;
         }
         return null;
@@ -130,6 +133,10 @@ public class ToToEntityHelper
         if ( null != transferObject )
         {
             Ticket ticket = new Ticket();
+            ticket.setId(transferObject.getId());
+            ticket.setSeat(createSeatEntity(transferObject.getSeat()));
+            ticket.setShow(createShowEntity(transferObject.getShow()));
+            ticket.setReservation(createReservationEntity(transferObject.getReservation()));
             return ticket;
         }
         return null;
@@ -140,6 +147,12 @@ public class ToToEntityHelper
         if ( null != transferObject )
         {
             Seat seat = new Seat();
+            seat.setId(transferObject.getId());
+            seat.setNumber(transferObject.getNumber());
+            seat.setCategory(createCategoryEntity(transferObject.getCategory()));
+            seat.setRow(transferObject.getRow());
+            seat.setX(transferObject.getX());
+            seat.setY(transferObject.getY());
             return seat;
         }
         return null;
@@ -229,7 +242,7 @@ public class ToToEntityHelper
         return list;
     }
 
-    private static List<Ticket> createTicketEntities ( List<TicketTo> transferObject )
+    public static List<Ticket> createTicketEntities ( List<TicketTo> transferObject )
     {
         List<Ticket> list = new ArrayList<>();
         if ( null != transferObject )

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -40,7 +41,7 @@ public class Reservation implements Serializable
     private Date dateOfReservation;
 
     // bi-directional many-to-one association to Ticket
-    @OneToMany(mappedBy = "reservation", targetEntity = Ticket.class)
+    @OneToMany(mappedBy = "reservation", targetEntity = Ticket.class, cascade = CascadeType.ALL)
     private List<Ticket> tickets;
 
     // bi-directional one-to-one association to Customer
