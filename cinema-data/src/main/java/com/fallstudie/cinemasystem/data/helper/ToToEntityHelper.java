@@ -110,6 +110,7 @@ public class ToToEntityHelper
             show.setIs3D(transferObject.is3D());
             show.setDate(Utils.convertStringToDate(transferObject.getDate()));
             show.setTime(transferObject.getTime());
+            show.setIs3D(transferObject.is3D());
             return show;
         }
         return null;

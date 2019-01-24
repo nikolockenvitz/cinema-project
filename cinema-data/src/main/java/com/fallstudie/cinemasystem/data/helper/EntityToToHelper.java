@@ -124,6 +124,7 @@ public class EntityToToHelper
             {
 //                showTo.setTickets(createTicketTos(entity.getTickets(), false));
             }
+            showTo.setIs3D(entity.is3D());
             return showTo;
         }
         return null;
