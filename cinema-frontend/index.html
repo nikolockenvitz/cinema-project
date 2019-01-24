@@ -15,7 +15,8 @@
     <link href="carousel.css" rel="stylesheet">
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
+	<script src="./main.js" type="text/javascript"></script>
+	
     <title>Kino Ententeich</title>
   </head>
   
@@ -81,13 +82,13 @@
 
 		  <div class="carousel-inner" height="auto">
 			<div class="carousel-item active" height="auto">
-			  <a href="./film.html">
-				<img src="./img/duck_219.jpg" alt="Das große Wandern der Enten" width="100%" height="auto">
+			  <a href="./film.html?id=1">
+				<img src="./img/1_219.jpg" alt="Das große Wandern der Enten" width="100%" height="auto">
 			  </a>
 			</div>
 			<div class="carousel-item">
-			  <a href="https://en.wikipedia.org/wiki/Flying_Spaghetti_Monster">
-				<img src="./img/monsterghetti_219.jpg" alt="MonsterGhetti" width="100%">
+			  <a href="./film.html?id=2">
+				<img src="./img/2_219.jpg" alt="MonsterGhetti" width="100%">
 			  </a>
 			</div>
 			<div class="carousel-item">
@@ -106,45 +107,13 @@
 
 		</div>
 
-      <div class="container">
-
-        <!-- START THE FEATURETTES -->
+      <div id="movies" class="container">
 
         <hr class="featurette-divider">
-
-        <div class="row featurette">
-		  <div class="col-12 col-sm-4">
-            <a href="./film.html"><img class="featurette-image img-fluid mx-auto" src="./img/duck.jpg" alt="Das große Wandern der Enten" width="100%"></a>
-          </div>
-          <div class="col-12 col-sm-8">
-            <h2 class="featurette-heading"><a class="hidden" href="./film.html">Das große Wandern der Enten</a></h2>
-            <p class="lead">FSK 12, 118 Minuten, Abenteuer</p>
-			
-			<p class="lead">Die kleine Ente Pascal will die Welt erkunden. Gemeinsam mit ihren Freunden macht sie sich auf den Weg und erlebt zahlreiche spannende Abenteuer.</p>
-			<p class="lead"><a href="./vorstellung.html" class="btn btn-outline-primary btn-show">19:00</a><a href="#" class="btn btn-outline-primary btn-show show-3d">20:00</a></p>
-		  </div>
-        </div>
 		
-		<hr class="featurette-divider">
-
-        <div class="row featurette">
-		  <div class="col-12 col-sm-4">
-            <a href="#"><img class="featurette-image img-fluid mx-auto" src="./img/monsterghetti_219.jpg" alt="MonsterGhetti" width="100%"></a>
-          </div>
-          <div class="col-12 col-sm-8">
-		    <h2 class="featurette-heading"><a class="hidden" href="#">MonsterGhetti</a></h2>
-			<p class="lead">FSK 0, 93 Minuten, Dokumentation</p>
-		    
-			<p class="lead">Sehen Sie in dieser oscarreifen Dokumentation wie es dem Unternehmen MonsterGhetti gelang in nur kürzester Zeit den Weltmarkt zu erobern und neue Maßstäbe im menschlichen Denken und Handeln zu setzen.</p>
-			<p class="lead"><a href="#" class="btn btn-outline-primary btn-show show-3d">19:30</a><a href="#" class="btn btn-outline-primary btn-show show-3d">22:00</a></p>
-          </div>
-        </div>
-
-        <hr class="featurette-divider">
-
-        <!-- /END THE FEATURETTES -->
-
-      </div><!-- /.container -->
+		<!-- Movies will be placed here with JavaScript -->
+		
+	  </div>
 
 
       <!-- FOOTER -->
