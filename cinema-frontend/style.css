@@ -46,6 +46,10 @@ p {
   margin-bottom: 1rem;
 }
 
+.rating-0:before {
+  font-size: 2rem;
+  content: "☆☆☆☆☆ ";
+}
 .rating-1:before {
   font-size: 2rem;
   content: "★☆☆☆☆ ";
