@@ -133,6 +133,9 @@ function displayMovieAndShows (movie) {
 	if(movie == null || movie == []) {
 		window.location.href = "./fehler.html";
 	}
+	
+	document.title += " - " + movie.name;
+	
 	var genres = "";
 	for(var j in movie.genres) {
 		genres += ", " + movie.genres[j].genre;
