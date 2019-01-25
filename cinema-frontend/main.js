@@ -2,6 +2,7 @@
 const URL_SERVER = "http://localhost:8080/cinema-data";
 const PATH_ALL_MOVIES = "/movie/getAllMovies";
 const PATH_MOVIE = "/movie/{movieID}";
+const PATH_SHOW = "/show/{showID}";
 
 function getData (path, func) {
 	$.ajax({
@@ -34,6 +35,8 @@ switch(page) {
 	case "film.html":
 		loadMovieAndShows();
 		break;
+	case "vorstellung.html":
+		loadShow();
 }
 
 /* index.html - Movies */
@@ -191,4 +194,55 @@ function displayMovieAndShows (movie) {
 			.replace("{movieShows}", showButtons)
 		);
 	}
+}
+
+
+/* vorstellung.html - Show */
+var templateShow = `
+	<div class="row featurette">
+	  <div class="col-12 col-sm-4">
+        <a href="./film.html?id={movieID}"><img class="featurette-image img-fluid mx-auto" src="./img/{movieID}.jpg" alt="{movieTitle}" width="100%"></a>
+      </div>
+      <div class="col-12 col-sm-8">
+        <h2 class="featurette-heading"><a class="hidden" href="./film.html?id={movieID}">{movieTitle}</a></h2>
+        <p class="lead">FSK {movieFSK}, {movieDuration} Minuten{movieGenres}</p>
+		<p class="lead">{showDate}, {showWeekday}, {showTime}</p>
+      </div>
+    </div>
+`;
+
+function loadShow () {
+	var showID = urlparameters.get("id");
+	if (showID == null) {
+		window.location.href = "./index.html";
+	}
+	else {
+		getData(PATH_SHOW.replace("{showID}", showID), displayShow);
+	}
+}
+
+function displayShow (show) {
+	if(show == null || show == []) {
+		window.location.href = "./fehler.html";
+	}
+	
+	var movie = show.movie;
+	document.title += " - " + movie.name;
+	
+	var genres = "";
+	for(var j in movie.genres) {
+		genres += ", " + movie.genres[j].genre;
+	}
+	$("#show").prepend(templateShow
+		.replace(/\{movieID\}/g, movie.id)
+		.replace(/\{movieTitle\}/g, movie.name)
+		.replace("{movieFSK}", movie.fsk)
+		.replace("{movieDuration}", movie.duration)
+		.replace("{movieGenres}", genres)
+		.replace("{showDate}", show.date.slice(0,-4))
+		.replace("{showWeekday}", show.weekday)
+		.replace("{showTime}", show.time)
+	);
+	
+	drawCinemaHall(show.hall);
 }
