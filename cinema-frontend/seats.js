@@ -1,31 +1,31 @@
 /* TODO's
  * - pass selected seats (reduced/default) to next site
  * - colors, text
- * - get JSON from API
  */
 
 var seats = {};
 var hall = {};
 
-$(document).ready(function () {
-	getData();
+function drawCinemaHall (hallData) {
+	getSeatData(hallData);
 	createCinemaScreen();
 	createSeats();
 	adjustToScreen();
 	makeCinemaHallVisible();
 	updatePriceBox();
-});
+}
 
-function getData () {
-	var width = 15;
+function createLocalHallAndSeats () {
+	var width = 16;
 	var length = 10;
+	var id = 150;
 	for(var y=0; y<length; y++) {
-		for(var x=0; x<width; x++) {
-			seats[y*width+x] = {
+		for(var x=0; x<width-(y<=6 ? y%2 : 3+(1-y%2)); x++) {
+			seats[id++] = {
 			    isOccupied: false,
 				isBlocked: false,
-			    x: 25*x + 10 + (x > 3 ? 10 : 0) + (x > 10 ? 10 : 0),
-				y: 25*y + 70 + (y > 6 ? 10 : 0),
+			    x: (y<=6 ? 25*x + 10 + (y%2 == 1 ? 12.5 : 0) : 30*x + 15 + (y%2 == 0 ? 15 : 0)),
+				y: 25*y + 70 + (y>6 ? 10 : 0) + (y>6 ? (y-6)*5 : 0),
 				category: (y > 6 ? "Loge" : "Parkett"),
 				row: y,
 				number: x,
@@ -33,12 +33,32 @@ function getData () {
 				reducedPrice: (y > 6 ?  8 : 6)};
 		}
 	}
-	[2,3,41,42,43,44,52,53,90,91,94,95,96,107,108,111,112,129,139,148,149].forEach( (s) => {
-		seats[s].isOccupied = true;
-	});
-	
-	hall = { width: width*25+15,
-	         length: length*25+65 };
+		
+	hall = { width: width*25-5,
+	         length: length*25+85 };
+	console.log(hall);
+	for(var id in seats) {
+		var seat = seats[id];
+		console.log(id +","+ seat.row +","+ (seat.category == "Parkett" ? 1 : 2) +","+ "1" +","+ seat.x +","+ seat.y +","+ seat.number );
+	}
+}
+
+function getSeatData (hallData) {
+	hall = { width: hallData.width, length: hallData.length };
+	for(var seatID in hallData.seats) {
+		var seat = hallData.seats[seatID];
+		seats[seatID] = {
+			isOccupied: seat.occupied,
+			isBlocked: seat.blocked,
+			x: seat.x,
+			y: seat.y,
+			category: seat.category.category,
+			row: seat.row,
+			number: seat.number,
+			defaultPrice: seat.price.defaultPrice / 100,
+			reducedPrice: seat.price.reducedPrice / 100
+		};
+	}
 }
 
 function createCinemaScreen () {
