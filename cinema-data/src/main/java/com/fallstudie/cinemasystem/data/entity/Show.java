@@ -7,14 +7,19 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.fallstudie.cinemasystem.data.entity.query.ShowQuery;
 
 /**
  * The persistent class for the show database table.
@@ -22,12 +27,14 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "show")
-@NamedQuery(name = "Show.findAll", query = "SELECT s FROM Show s")
+@NamedQueries({ @NamedQuery(name = "Show.findAll", query = "SELECT s FROM Show s"),
+        @NamedQuery(name = ShowQuery.FIND_SHOWS_BY_MOVIE_ID_QNAME, query = ShowQuery.FIND_SHOWS_BY_MOVIE_ID) })
 public class Show implements Serializable
 {
     private static final long serialVersionUID = 1L;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Temporal(TemporalType.DATE)
@@ -37,7 +44,7 @@ public class Show implements Serializable
     @Column(name = "time", columnDefinition = "VARCHAR(5)")
     private String time;
 
-    @Column(name = "3d")
+    @Column(name = "is3d")
     private boolean is3D;
 
     // bi-directional one-to-one association to Ticket
@@ -86,6 +93,7 @@ public class Show implements Serializable
     public void setMovie ( Movie movie )
     {
         this.movie = movie;
+
     }
 
     public Hall getHall ( )
@@ -126,6 +134,20 @@ public class Show implements Serializable
     public void setTime ( String time )
     {
         this.time = time;
+    }
+
+    public Ticket addTicket ( Ticket ticket )
+    {
+        getTickets().add(ticket);
+        ticket.setShow(this);
+        return ticket;
+    }
+
+    public Ticket removeTicket ( Ticket ticket )
+    {
+        getTickets().remove(ticket);
+        ticket.setShow(null);
+        return ticket;
     }
 
 }

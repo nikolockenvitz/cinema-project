@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -32,8 +31,7 @@ public class Rating implements Serializable
     private static final long serialVersionUID = 1L;
 
     @Id
-    @SequenceGenerator(name = "RATING_ID_GENERATOR")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "RATING_ID_GENERATOR")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long   id;
     @Column(name = "comment", columnDefinition = "TEXT")
     private String comment;

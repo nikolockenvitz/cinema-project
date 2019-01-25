@@ -7,18 +7,17 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.fallstudie.cinemasystem.data.entity.query.ReservationQuery;
 
 /**
  * The persistent class for the reservation database table.
@@ -26,14 +25,14 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "reservation")
-@NamedQuery(name = "Reservation.findAll", query = "SELECT r FROM Reservation r")
+@NamedQueries({ @NamedQuery(name = "Reservation.findAll", query = "SELECT r FROM Reservation r"),
+        @NamedQuery(name = ReservationQuery.FIND_TICKETS_BY_SHOW_ID_QNAME, query = ReservationQuery.FIND_RESERVATIONS_BY_SHOW_ID) })
 public class Reservation implements Serializable
 {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @SequenceGenerator(name = "RESERVATION_ID_GENERATOR")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "RESERVATION_ID_GENERATOR")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Temporal(TemporalType.DATE)
@@ -41,13 +40,12 @@ public class Reservation implements Serializable
     private Date dateOfReservation;
 
     // bi-directional many-to-one association to Ticket
-    @OneToMany(mappedBy = "reservation", targetEntity = Ticket.class, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "reservation", targetEntity = Ticket.class, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Ticket> tickets;
 
-    // bi-directional one-to-one association to Customer
-    @OneToOne(fetch = FetchType.LAZY, targetEntity = Customer.class)
-    @JoinColumn(name = "customer_id")
-    private Customer customer;
+//    // bi-directional one-to-one association to Customer
+//    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Customer.class)
+//    private Customer customer;
 
     public Reservation( )
     {
@@ -83,14 +81,27 @@ public class Reservation implements Serializable
         this.tickets = tickets;
     }
 
-    public Customer getCustomer ( )
+//    public Customer getCustomer ( )
+//    {
+//        return customer;
+//    }
+//
+//    public void setCustomer ( Customer customer )
+//    {
+//        this.customer = customer;
+//    }
+
+    public Ticket addTicket ( Ticket ticket )
     {
-        return customer;
+        getTickets().add(ticket);
+        ticket.setReservation(this);
+        return ticket;
     }
 
-    public void setCustomer ( Customer customer )
+    public Ticket removeTicket ( Ticket ticket )
     {
-        this.customer = customer;
+        getTickets().remove(ticket);
+        ticket.setReservation(null);
+        return ticket;
     }
-
 }

@@ -107,6 +107,20 @@ public class MovieTo
         this.ratings = ratings;
     }
 
+    public ShowTo addShow ( ShowTo showTo )
+    {
+        getShows().add(showTo);
+        showTo.setMovie(this);
+        return showTo;
+    }
+
+    public ShowTo removeShow ( ShowTo showTo )
+    {
+        getShows().remove(showTo);
+        showTo.setMovie(null);
+        return showTo;
+    }
+
     @Override
     public int hashCode ( )
     {
@@ -178,5 +192,4 @@ public class MovieTo
             return false;
         return true;
     }
-
 }
