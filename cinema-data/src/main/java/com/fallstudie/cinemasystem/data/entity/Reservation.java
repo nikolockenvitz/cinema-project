@@ -7,9 +7,12 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -43,9 +46,10 @@ public class Reservation implements Serializable
     @OneToMany(mappedBy = "reservation", targetEntity = Ticket.class, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Ticket> tickets;
 
-//    // bi-directional one-to-one association to Customer
-//    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Customer.class)
-//    private Customer customer;
+    // bi-directional one-to-one association to Customer
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Customer.class)
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 
     public Reservation( )
     {
@@ -81,15 +85,15 @@ public class Reservation implements Serializable
         this.tickets = tickets;
     }
 
-//    public Customer getCustomer ( )
-//    {
-//        return customer;
-//    }
-//
-//    public void setCustomer ( Customer customer )
-//    {
-//        this.customer = customer;
-//    }
+    public Customer getCustomer ( )
+    {
+        return customer;
+    }
+
+    public void setCustomer ( Customer customer )
+    {
+        this.customer = customer;
+    }
 
     public Ticket addTicket ( Ticket ticket )
     {

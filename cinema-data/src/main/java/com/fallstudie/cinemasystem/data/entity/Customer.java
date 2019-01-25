@@ -2,12 +2,15 @@ package com.fallstudie.cinemasystem.data.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -42,8 +45,8 @@ public class Customer implements Serializable
     private int    isadmin;
     private String sessiontoken;
 
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", orphanRemoval = true)
-//    private List<Reservation> reservations;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", orphanRemoval = true)
+    private List<Reservation> reservations;
 
     public long getId ( )
     {
@@ -135,28 +138,14 @@ public class Customer implements Serializable
         this.username = username;
     }
 
-//    public List<Reservation> getReservations ( )
-//    {
-//        return reservations;
-//    }
-//
-//    public void setReservations ( List<Reservation> reservations )
-//    {
-//        this.reservations = reservations;
-//    }
+    public List<Reservation> getReservations ( )
+    {
+        return reservations;
+    }
 
-//    public Reservation addReservation ( Reservation reservation )
-//    {
-//        getReservations().add(reservation);
-//        reservation.setCustomer(this);
-//        return reservation;
-//    }
-//
-//    public Reservation removeReservation ( Reservation reservation )
-//    {
-//        getReservations().remove(reservation);
-//        reservation.setCustomer(null);
-//        return reservation;
-//    }
+    public void setReservations ( List<Reservation> reservations )
+    {
+        this.reservations = reservations;
+    }
 
 }

@@ -1,6 +1,7 @@
 package com.fallstudie.cinemasystem.data.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
@@ -28,8 +31,9 @@ public class Employee implements Serializable
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long   id;
-    @Column(name = "age")
-    private int    age;
+    @Column(name = "dateofbirth")
+    @Temporal(TemporalType.DATE)
+    private Date   dateofbirth;
     @Column(name = "email", columnDefinition = "VARCHAR(60)")
     private String email;
     @Column(name = "firstname", columnDefinition = "VARCHAR(40)")
@@ -51,14 +55,14 @@ public class Employee implements Serializable
         this.id = id;
     }
 
-    public int getAge ( )
+    public Date getDateofbirth ( )
     {
-        return this.age;
+        return dateofbirth;
     }
 
-    public void setAge ( int age )
+    public void setDateofbirth ( Date dateofbirth )
     {
-        this.age = age;
+        this.dateofbirth = dateofbirth;
     }
 
     public String getEmail ( )

@@ -14,10 +14,13 @@ public class Utils
 {
     public static String convertDateToString ( Date date )
     {
-        DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
-        String convertedDate = df.format(date);
-
-        return convertedDate;
+        if ( null != date )
+        {
+            DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+            String convertedDate = df.format(date);
+            return convertedDate;
+        } else
+            return null;
     }
 
     public static String getWeekDay ( Date date )
@@ -70,11 +73,13 @@ public class Utils
 
     public static Date convertStringToDate ( String date )
     {
-        String s = null;
         try
         {
-            Date convertedDate = new SimpleDateFormat("dd.MM.yyyy").parse(date);
-            return convertedDate;
+            if ( null != date )
+            {
+                Date convertedDate = new SimpleDateFormat("dd.MM.yyyy").parse(date);
+                return convertedDate;
+            }
         } catch (ParseException e)
         {
             // TODO Auto-generated catch block

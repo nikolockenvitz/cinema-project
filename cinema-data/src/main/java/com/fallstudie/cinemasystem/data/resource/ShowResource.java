@@ -144,18 +144,19 @@ public class ShowResource
             {
                 for ( SeatTo seatTo : seatTos )
                 {
+                    seatTo.setOccupied(true);
+
                     TicketTo ticketTo = new TicketTo();
                     ticketTo.setSeat(seatTo);
                     ticketTo.setShow(showTo);
                     ticketTo.setReservation(reservationTo);
                     toBook.add(ticketTo);
-                    seatTo.setOccupied(true);
                 }
 //                bookedTickets = showService.bookShowTickets(toBook);
                 reservationTo.setDateOfReservation(new Date());
                 reservationTo.setTickets(toBook);
 
-                createdReservation = showService.reservateAndBookTickets(reservationTo);
+                createdReservation = showService.reservateAndBookTickets(reservationTo, bookingTo.getCustomer().getId());
             }
 
             json = JSONConverter.toJSON(createdReservation);

@@ -6,6 +6,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.fallstudie.cinemasystem.common.transferobject.CustomerTo;
 import com.fallstudie.cinemasystem.common.transferobject.ReservationTo;
 import com.fallstudie.cinemasystem.common.transferobject.ShowTo;
 import com.fallstudie.cinemasystem.common.transferobject.TicketTo;
@@ -23,12 +24,14 @@ public class ShowService
     private ShowDao             showDao;
     private TicketDao           ticketDao;
     private ReservationDao      reservationDao;
+    private CustomerService     customerService;
 
     public ShowService( )
     {
         this.showDao = new ShowDao();
         this.ticketDao = new TicketDao();
         this.reservationDao = new ReservationDao();
+        this.customerService = new CustomerService();
     }
 
     public ShowTo getShow ( String idString )
@@ -55,8 +58,11 @@ public class ShowService
         return bookedShowTickets;
     }
 
-    public ReservationTo reservateAndBookTickets ( ReservationTo reservationTo )
+    public ReservationTo reservateAndBookTickets ( ReservationTo reservationTo, long customerId )
     {
+        CustomerTo customerTo = customerService.getCustomer(String.valueOf(customerId));
+        reservationTo.setCustomer(customerTo);
+
         Reservation reservation = ToToEntityHelper.createReservationEntity(reservationTo);
         return EntityToToHelper.createReservationTo(reservationDao.persist(reservation), true);
     }

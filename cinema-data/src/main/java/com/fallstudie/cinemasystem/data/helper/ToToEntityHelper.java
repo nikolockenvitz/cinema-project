@@ -37,6 +37,11 @@ public class ToToEntityHelper
         if ( null != transferObject )
         {
             Employee employee = new Employee();
+            employee.setId(transferObject.getId());
+            employee.setDateofbirth(Utils.convertStringToDate(transferObject.getDateofbirth()));
+            employee.setEmail(transferObject.getEmail());
+            employee.setFirstname(transferObject.getFirstname());
+            employee.setLastname(transferObject.getLastname());
             return employee;
         }
         return null;
@@ -71,7 +76,7 @@ public class ToToEntityHelper
             Rating rating = new Rating();
             rating.setId(transferObject.getId());
             rating.setComment(transferObject.getComment());
-            rating.setUser(createUserEntity(transferObject.getCustomer()));
+            rating.setUser(createCustomerEntity(transferObject.getCustomer()));
             rating.setRating(transferObject.getRating());
             return rating;
         }
@@ -130,7 +135,7 @@ public class ToToEntityHelper
             Reservation reservation = new Reservation();
             reservation.setId(transferObject.getId());
             reservation.setDateOfReservation(transferObject.getDateOfReservation());
-//            reservation.setCustomer(createUserEntity(transferObject.getCustomer()));
+            reservation.setCustomer(createCustomerEntity(transferObject.getCustomer()));
             reservation.setTickets(createTicketEntitiesForReservation(transferObject.getTickets(), reservation));
             return reservation;
         }
@@ -212,21 +217,21 @@ public class ToToEntityHelper
         return null;
     }
 
-    private static Customer createUserEntity ( CustomerTo transferObject )
+    public static Customer createCustomerEntity ( CustomerTo transferObject )
     {
         if ( null != transferObject )
         {
-            Customer user = new Customer();
-            user.setDateofbirth(Utils.convertStringToDate(transferObject.getDateofbirth()));
-            user.setEmail(transferObject.getEmail());
-            user.setFirstname(transferObject.getFirstname());
-            user.setIsadmin(transferObject.getIsAdmin());
-            user.setLastname(transferObject.getLastname());
-            user.setPwhash(transferObject.getPwhash());
-            user.setSessiontoken(transferObject.getSessiontoken());
-            user.setId(transferObject.getId());
-            user.setUsername(transferObject.getUsername());
-            return user;
+            Customer customer = new Customer();
+            customer.setDateofbirth(Utils.convertStringToDate(transferObject.getDateofbirth()));
+            customer.setEmail(transferObject.getEmail());
+            customer.setFirstname(transferObject.getFirstname());
+            customer.setIsadmin(transferObject.getIsAdmin());
+            customer.setLastname(transferObject.getLastname());
+            customer.setPwhash(transferObject.getPwhash());
+            customer.setSessiontoken(transferObject.getSessiontoken());
+            customer.setId(transferObject.getId());
+            customer.setUsername(transferObject.getUsername());
+            return customer;
         }
         return new Customer();
     }
@@ -311,14 +316,14 @@ public class ToToEntityHelper
         return list;
     }
 
-    private static List<Customer> createUserEntities ( List<CustomerTo> transferObject )
+    private static List<Customer> createCustomerEntities ( List<CustomerTo> transferObject )
     {
         List<Customer> list = new ArrayList<>();
         if ( null != transferObject )
         {
             for ( CustomerTo element : transferObject )
             {
-                list.add(createUserEntity(element));
+                list.add(createCustomerEntity(element));
             }
         }
         return list;

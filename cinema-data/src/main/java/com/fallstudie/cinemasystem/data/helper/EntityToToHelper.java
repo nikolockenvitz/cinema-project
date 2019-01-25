@@ -39,7 +39,7 @@ public class EntityToToHelper
         {
             EmployeeTo employeeTo = new EmployeeTo();
             employeeTo.setId(entity.getId());
-            employeeTo.setAge(entity.getAge());
+            employeeTo.setDateofbirth(Utils.convertDateToString(entity.getDateofbirth()));
             employeeTo.setEmail(entity.getEmail());
             employeeTo.setLastname(entity.getLastname());
             employeeTo.setFirstname(entity.getFirstname());
@@ -169,7 +169,7 @@ public class EntityToToHelper
             ReservationTo reservationTo = new ReservationTo();
             reservationTo.setId(entity.getId());
             reservationTo.setDateOfReservation(entity.getDateOfReservation());
-//            reservationTo.setCustomer(createCustomerTo(entity.getCustomer()));
+            reservationTo.setCustomer(createCustomerTo(entity.getCustomer()));
             if ( withTickets )
             {
                 reservationTo.setTickets(createTicketTosForReservation(entity.getTickets(), reservationTo));

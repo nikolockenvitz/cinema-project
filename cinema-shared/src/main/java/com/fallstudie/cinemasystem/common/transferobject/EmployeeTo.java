@@ -7,7 +7,7 @@ public class EmployeeTo
     {
         final int prime = 31;
         int result = 1;
-        result = prime * result + age;
+        result = prime * result + dateofbirth.hashCode();
         result = prime * result + ((email == null) ? 0 : email.hashCode());
         result = prime * result + ((firstname == null) ? 0 : firstname.hashCode());
         result = prime * result + (int) (id ^ (id >>> 32));
@@ -25,7 +25,7 @@ public class EmployeeTo
         if ( getClass() != obj.getClass() )
             return false;
         EmployeeTo other = (EmployeeTo) obj;
-        if ( age != other.age )
+        if ( dateofbirth != other.dateofbirth )
             return false;
         if ( email == null )
         {
@@ -53,7 +53,7 @@ public class EmployeeTo
     private long   id;
     private String firstname;
     private String lastname;
-    private int    age;
+    private String dateofbirth;
     private String email;
 
     public long getId ( )
@@ -86,14 +86,14 @@ public class EmployeeTo
         this.lastname = lastname;
     }
 
-    public int getAge ( )
+    public String getDateofbirth ( )
     {
-        return age;
+        return dateofbirth;
     }
 
-    public void setAge ( int age )
+    public void setDateofbirth ( String dateofbirth )
     {
-        this.age = age;
+        this.dateofbirth = dateofbirth;
     }
 
     public String getEmail ( )
