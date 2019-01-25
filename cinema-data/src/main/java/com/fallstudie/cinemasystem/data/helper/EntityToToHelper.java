@@ -179,7 +179,7 @@ public class EntityToToHelper
             return null;
     }
 
-    private static TicketTo createTicketToForReservation ( Ticket entity )
+    public static TicketTo createTicketToForReservation ( Ticket entity )
     {
         if ( null != entity )
         {

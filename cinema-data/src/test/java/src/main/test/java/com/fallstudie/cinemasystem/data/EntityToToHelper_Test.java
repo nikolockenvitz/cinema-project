@@ -379,4 +379,34 @@ public class EntityToToHelper_Test
         assertThat(testTicketTo.getShow(), equalTo(EntityToToHelper.createTicketTo(testTicketEntity).getShow()));
 
     }
+
+    @Test
+    public void testCreateTicketToForReservation ( )
+    {
+        assertThat(testTicketTo.getId(), equalTo(EntityToToHelper.createTicketToForReservation(testTicketEntity).getId()));
+        assertThat(testTicketTo.getSeat(), equalTo(EntityToToHelper.createTicketToForReservation(testTicketEntity).getSeat()));
+        assertThat(testTicketTo.getShow(), equalTo(EntityToToHelper.createTicketToForReservation(testTicketEntity).getShow()));
+
+    }
+
+    @Test
+    public void testCreateShowToWithMovie ( )
+    {
+        assertThat(testShowTo.getId(), equalTo(EntityToToHelper.createShowToWithMovie(testShowEntity).getId()));
+        assertThat(testShowTo.getHall(), equalTo(EntityToToHelper.createShowToWithMovie(testShowEntity).getHall()));
+        assertThat(testShowTo.getDate(), equalTo(EntityToToHelper.createShowToWithMovie(testShowEntity).getDate()));
+        assertThat(testShowTo.getMovie(), equalTo(EntityToToHelper.createShowToWithMovie(testShowEntity).getMovie()));
+        assertThat(testShowTo.getTime(), equalTo(EntityToToHelper.createShowToWithMovie(testShowEntity).getTime()));
+        assertThat(testShowTo.getWeekday(), equalTo(EntityToToHelper.createShowToWithMovie(testShowEntity).getWeekday()));
+    }
+
+    @Test
+    public void testCreateShowToWithoutMovie ( )
+    {
+        assertThat(testShowTo.getId(), equalTo(EntityToToHelper.createShowToWithoutMovie(testShowEntity).getId()));
+        assertThat(testShowTo.getHall(), equalTo(EntityToToHelper.createShowToWithoutMovie(testShowEntity).getHall()));
+        assertThat(testShowTo.getDate(), equalTo(EntityToToHelper.createShowToWithoutMovie(testShowEntity).getDate()));
+        assertThat(testShowTo.getTime(), equalTo(EntityToToHelper.createShowToWithoutMovie(testShowEntity).getTime()));
+        assertThat(testShowTo.getWeekday(), equalTo(EntityToToHelper.createShowToWithoutMovie(testShowEntity).getWeekday()));
+    }
 }
