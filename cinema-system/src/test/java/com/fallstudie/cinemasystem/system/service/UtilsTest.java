@@ -1,8 +1,8 @@
 package com.fallstudie.cinemasystem.system.service;
 
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -10,93 +10,97 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.time.DateUtils;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 import com.fallstudie.cinemasystem.common.transferobject.CategoryTo;
 import com.fallstudie.cinemasystem.common.transferobject.SeatTo;
+import com.fallstudie.cinemasystem.common.transferobject.ShowTo;
 import com.fallstudie.cinemasystem.common.transferobject.TicketTo;
 import com.fallstudie.cinemasystem.common.utils.Utils;
 
 public class UtilsTest
 {
 
-    @Test
-    public void convertDateToString ( )
+    Calendar       testCal              = null;
+    Date           testDate             = null;
+    String         testDateString       = null;
+    String         testDateWeekdayProof = null;
+    String         testDateTimeProof    = null;
+    SeatTo         testSeatTo1          = null;
+    SeatTo         testSeatTo2          = null;
+    TicketTo       testTicketTo         = null;
+    List<TicketTo> testTicketToList     = null;
+
+    @Before
+    public void initialize ( )
     {
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.YEAR, 2019);
-        cal.set(Calendar.MONTH, Calendar.JANUARY);
-        cal.set(Calendar.DAY_OF_MONTH, 17);
+        // calendar
+        testCal = Calendar.getInstance();
+        testCal.set(Calendar.YEAR, 2019);
+        testCal.set(Calendar.MONTH, Calendar.JANUARY);
+        testCal.set(Calendar.DAY_OF_MONTH, 17);
+        testCal.set(Calendar.HOUR_OF_DAY, 20);
+        testCal.set(Calendar.MINUTE, 15);
 
-        Date date = cal.getTime();
-        String convertedDate = Utils.convertDateToString(date);
+        // date
+        testDate = testCal.getTime();
+        testDateString = "17.01.2019";
+        testDateWeekdayProof = "Donnerstag";
+        testDateTimeProof = "20:15";
 
-        String toProof = "17.01.2019";
-        assertEquals(convertedDate, toProof);
+        // seat to
+        testSeatTo1 = new SeatTo();
+        testSeatTo2 = new SeatTo();
+        testSeatTo1.setId(1);
+        testSeatTo2.setId(2);
+
+        // ticket to
+        testTicketTo = new TicketTo();
+        testTicketToList = new ArrayList<>();
+        testTicketTo.setId(1);
+        testTicketTo.setSeat(testSeatTo1);
+        testTicketToList.add(testTicketTo);
+
     }
 
     @Test
-    public void getWeekDay ( )
+    public void testConvertDateToString ( )
     {
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.YEAR, 2019);
-        cal.set(Calendar.MONTH, Calendar.JANUARY);
-        cal.set(Calendar.DAY_OF_MONTH, 17);
-
-        Date date = cal.getTime();
-
-        String s = Utils.getWeekDay(date);
-        assertThat(s, containsString("Donnerstag"));
+        assertThat(Utils.convertDateToString(testDate), equalTo(testDateString));
     }
 
     @Test
-    public void getTimeOfDate ( )
+    public void testGetWeekDay ( )
     {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, 20);
-        calendar.set(Calendar.MINUTE, 15);
+        assertThat(Utils.getWeekDay(testDate), containsString(testDateWeekdayProof));
 
-        String s = Utils.convertDateToTime(calendar.getTime());
-        assertEquals("20:15", s);
     }
 
     @Test
-    public void convertStringToDate ( )
+    public void testConvertDateToTime ( )
     {
-        String date = "21.01.2019";
-        Date convertedDate = Utils.convertStringToDate(date);
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(2019, 0, 21, 0, 0, 0);
-
-        assertEquals(DateUtils.truncate(calendar.getTime(), Calendar.DATE), convertedDate);
+        assertThat(testDateTimeProof, equalTo(Utils.convertDateToTime(testDate)));
     }
 
     @Test
-    public void checkIfSeatIsBlocked ( )
+    public void testConvertStringToDate ( )
     {
-        SeatTo seatTo = new SeatTo();
-        seatTo.setRow("A");
-        seatTo.setNumber("10");
-        seatTo.setId(1L);
-        seatTo.setCategory(new CategoryTo());
+        assertThat(DateUtils.truncate(testDate, Calendar.DATE), equalTo(Utils.convertStringToDate(testDateString)));
+    }
 
-        SeatTo seatTo2 = new SeatTo();
-        seatTo2.setRow("A");
-        seatTo2.setNumber("11");
-        seatTo2.setId(2L);
-        seatTo2.setCategory(new CategoryTo());
+    @Test
+    public void testCheckIfSeatIsBlocked ( )
+    {
+        assertThat(true, equalTo(Utils.checkIfSeatIsBlocked(testTicketToList, testSeatTo1.getId())));
+        assertThat(false, equalTo(Utils.checkIfSeatIsBlocked(testTicketToList, testSeatTo2.getId())));
+    }
 
-        List<TicketTo> ticketTos = new ArrayList<>();
-        TicketTo ticketTo = new TicketTo();
-        ticketTo.setId(1L);
-        ticketTo.setReducedPrice(false);
-        ticketTo.setReservation(null);
-        ticketTo.setSeat(seatTo);
-
-        ticketTos.add(ticketTo);
-
-        assertEquals(true, Utils.checkIfSeatIsBlocked(ticketTos, seatTo.getId()));
-        assertEquals(false, Utils.checkIfSeatIsBlocked(ticketTos, seatTo2.getId()));
+    @Test
+    public void testToNull ( )
+    {
+        assertThat(null, equalTo(Utils.convertStringToDate(null)));
+        assertThat(null, equalTo(Utils.convertDateToString(null)));
     }
 
 }
