@@ -70,7 +70,7 @@ public class EntityToToHelper
             return null;
     }
 
-    private static RatingTo createRatingTo ( Rating entity )
+    public static RatingTo createRatingTo ( Rating entity )
     {
         if ( null != entity )
         {
@@ -84,7 +84,7 @@ public class EntityToToHelper
             return null;
     }
 
-    private static GenreTo createGenreTo ( Genre entity )
+    public static GenreTo createGenreTo ( Genre entity )
     {
         if ( null != entity )
         {
@@ -96,7 +96,7 @@ public class EntityToToHelper
             return null;
     }
 
-    private static ActorTo createActorTo ( Actor entity )
+    public static ActorTo createActorTo ( Actor entity )
     {
         if ( null != entity )
         {
@@ -147,7 +147,7 @@ public class EntityToToHelper
         return null;
     }
 
-    private static ShowTo createShowToWithoutMovie ( Show entity )
+    public static ShowTo createShowToWithoutMovie ( Show entity )
     {
         if ( null != entity )
         {
@@ -208,7 +208,7 @@ public class EntityToToHelper
             return null;
     }
 
-    private static SeatTo createSeatTo ( Seat entity )
+    public static SeatTo createSeatTo ( Seat entity )
     {
         if ( null != entity )
         {
@@ -225,7 +225,7 @@ public class EntityToToHelper
             return null;
     }
 
-    private static PriceTo createPriceTo ( )
+    public static PriceTo createPriceTo ( )
     {
         PriceTo priceTo = new PriceTo();
         priceTo.setDefaultPrice(1000);
@@ -233,7 +233,7 @@ public class EntityToToHelper
         return priceTo;
     }
 
-    private static CategoryTo createCategoryTo ( Category entity )
+    public static CategoryTo createCategoryTo ( Category entity )
     {
         if ( null != entity )
         {
@@ -245,7 +245,7 @@ public class EntityToToHelper
             return null;
     }
 
-    private static HallTo createHallTo ( Hall entity )
+    public static HallTo createHallTo ( Hall entity )
     {
         if ( null != entity )
         {
@@ -260,7 +260,7 @@ public class EntityToToHelper
             return null;
     }
 
-    private static CustomerTo createCustomerTo ( Customer entity )
+    public static CustomerTo createCustomerTo ( Customer entity )
     {
         if ( null != entity )
         {
@@ -279,7 +279,7 @@ public class EntityToToHelper
             return null;
     }
 
-    private static CustomerTo createCustomerToForRating ( Customer entity )
+    public static CustomerTo createCustomerToForRating ( Customer entity )
     {
         if ( null != entity )
         {
@@ -310,7 +310,7 @@ public class EntityToToHelper
         return list;
     }
 
-    private static List<ActorTo> createActorTos ( List<Actor> entity )
+    public static List<ActorTo> createActorTos ( List<Actor> entity )
     {
         List<ActorTo> list = new ArrayList<>();
         if ( null != entity )
@@ -323,7 +323,7 @@ public class EntityToToHelper
         return list;
     }
 
-    private static List<ShowTo> createShowTos ( List<Show> entity, boolean withtickets )
+    public static List<ShowTo> createShowTos ( List<Show> entity, boolean withtickets )
     {
         List<ShowTo> list = new ArrayList<>();
         if ( null != entity )
@@ -349,7 +349,7 @@ public class EntityToToHelper
         return list;
     }
 
-    private static List<ShowTo> createShowTosWithoutMovie ( List<Show> entity )
+    public static List<ShowTo> createShowTosWithoutMovie ( List<Show> entity )
     {
         List<ShowTo> list = new ArrayList<>();
         if ( null != entity )
@@ -362,7 +362,7 @@ public class EntityToToHelper
         return list;
     }
 
-    private static List<ReservationTo> createReservationTos ( List<Reservation> entity )
+    public static List<ReservationTo> createReservationTos ( List<Reservation> entity )
     {
         List<ReservationTo> list = new ArrayList<>();
         if ( null != entity )
@@ -388,7 +388,7 @@ public class EntityToToHelper
         return list;
     }
 
-    private static List<SeatTo> createSeatTos ( List<Seat> entity )
+    public static List<SeatTo> createSeatTos ( List<Seat> entity )
     {
         List<SeatTo> list = new ArrayList<>();
         if ( null != entity )
@@ -401,7 +401,7 @@ public class EntityToToHelper
         return list;
     }
 
-    private static List<CustomerTo> createUserTos ( List<Customer> entity )
+    public static List<CustomerTo> createUserTos ( List<Customer> entity )
     {
         List<CustomerTo> list = new ArrayList<>();
         if ( null != entity )
@@ -427,7 +427,7 @@ public class EntityToToHelper
         return list;
     }
 
-    private static List<RatingTo> createRatingTos ( List<Rating> entity )
+    public static List<RatingTo> createRatingTos ( List<Rating> entity )
     {
         List<RatingTo> list = new ArrayList<>();
         if ( null != entity )
@@ -440,7 +440,7 @@ public class EntityToToHelper
         return list;
     }
 
-    private static List<GenreTo> createGenreTos ( List<Genre> entity )
+    public static List<GenreTo> createGenreTos ( List<Genre> entity )
     {
         List<GenreTo> list = new ArrayList<>();
         if ( null != entity )
