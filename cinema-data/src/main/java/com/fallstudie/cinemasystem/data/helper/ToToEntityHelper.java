@@ -42,7 +42,7 @@ public class ToToEntityHelper
         return null;
     }
 
-    public static Movie createMovieEntity ( MovieTo transferObject )
+    public static Movie createMovieEntity ( MovieTo transferObject, boolean withShow )
     {
         if ( null != transferObject )
         {
@@ -54,7 +54,10 @@ public class ToToEntityHelper
             movie.setDuration(transferObject.getDuration());
             movie.setName(transferObject.getName());
             movie.setRatings(createRatingEntities(transferObject.getRatings()));
-            movie.setShows(createShowEntities(transferObject.getShows()));
+            if ( withShow )
+            {
+                movie.setShows(createShowEntities(transferObject.getShows(), false));
+            }
             movie.setGenres(createGenreEntities(transferObject.getGenres()));
             return movie;
         }
@@ -100,7 +103,7 @@ public class ToToEntityHelper
         return null;
     }
 
-    private static Show createShowEntity ( ShowTo transferObject )
+    private static Show createShowEntity ( ShowTo transferObject, boolean withMovie )
     {
         if ( null != transferObject )
         {
@@ -111,22 +114,45 @@ public class ToToEntityHelper
             show.setDate(Utils.convertStringToDate(transferObject.getDate()));
             show.setTime(transferObject.getTime());
             show.setIs3D(transferObject.is3D());
+            if ( withMovie )
+            {
+                show.setMovie(createMovieEntity(transferObject.getMovie(), false));
+            }
             return show;
         }
         return null;
     }
 
-    private static Reservation createReservationEntity ( ReservationTo transferObject )
+    public static Reservation createReservationEntity ( ReservationTo transferObject )
     {
         if ( null != transferObject )
         {
             Reservation reservation = new Reservation();
             reservation.setId(transferObject.getId());
             reservation.setDateOfReservation(transferObject.getDateOfReservation());
-            reservation.setCustomer(createUserEntity(transferObject.getCustomer()));
+//            reservation.setCustomer(createUserEntity(transferObject.getCustomer()));
+            reservation.setTickets(createTicketEntitiesForReservation(transferObject.getTickets(), reservation));
             return reservation;
         }
         return null;
+    }
+
+    private static Ticket createTicketEntityForReservation ( TicketTo transferObject, Reservation reservation )
+    {
+        if ( null != transferObject )
+        {
+            Ticket ticket = new Ticket();
+            ticket.setId(transferObject.getId());
+            ticket.setReducedPrice(transferObject.isReducedPrice());
+            ticket.setSeat(createSeatEntity(transferObject.getSeat()));
+            ticket.setShow(createShowEntity(transferObject.getShow(), true));
+            ticket.setReservation(reservation);
+            return ticket;
+        } else
+        {
+            return null;
+
+        }
     }
 
     private static Ticket createTicketEntity ( TicketTo transferObject )
@@ -136,7 +162,7 @@ public class ToToEntityHelper
             Ticket ticket = new Ticket();
             ticket.setId(transferObject.getId());
             ticket.setSeat(createSeatEntity(transferObject.getSeat()));
-            ticket.setShow(createShowEntity(transferObject.getShow()));
+            ticket.setShow(createShowEntity(transferObject.getShow(), true));
             ticket.setReservation(createReservationEntity(transferObject.getReservation()));
             return ticket;
         }
@@ -164,6 +190,8 @@ public class ToToEntityHelper
         if ( null != transferObject )
         {
             Category category = new Category();
+            category.setId(transferObject.getId());
+            category.setCategory(transferObject.getCategory());
             return category;
         }
         return null;
@@ -174,6 +202,11 @@ public class ToToEntityHelper
         if ( null != transferObject )
         {
             Hall hall = new Hall();
+            hall.setId(transferObject.getId());
+            hall.setLength(transferObject.getLength());
+            hall.setWidth(transferObject.getWidth());
+            hall.setSeats(createSeatEntities(transferObject.getSeats()));
+            hall.setName(transferObject.getName());
             return hall;
         }
         return null;
@@ -184,9 +217,18 @@ public class ToToEntityHelper
         if ( null != transferObject )
         {
             Customer user = new Customer();
+            user.setDateofbirth(Utils.convertStringToDate(transferObject.getDateofbirth()));
+            user.setEmail(transferObject.getEmail());
+            user.setFirstname(transferObject.getFirstname());
+            user.setIsadmin(transferObject.getIsAdmin());
+            user.setLastname(transferObject.getLastname());
+            user.setPwhash(transferObject.getPwhash());
+            user.setSessiontoken(transferObject.getSessiontoken());
+            user.setId(transferObject.getId());
+            user.setUsername(transferObject.getUsername());
             return user;
         }
-        return null;
+        return new Customer();
     }
 
     // LIST
@@ -217,14 +259,14 @@ public class ToToEntityHelper
         return list;
     }
 
-    private static List<Show> createShowEntities ( List<ShowTo> transferObject )
+    private static List<Show> createShowEntities ( List<ShowTo> transferObject, boolean withMovie )
     {
         List<Show> list = new ArrayList<>();
         if ( null != transferObject )
         {
             for ( ShowTo element : transferObject )
             {
-                list.add(createShowEntity(element));
+                list.add(createShowEntity(element, withMovie));
             }
         }
         return list;
@@ -289,7 +331,7 @@ public class ToToEntityHelper
         {
             for ( MovieTo element : transferObject )
             {
-                list.add(createMovieEntity(element));
+                list.add(createMovieEntity(element, true));
             }
         }
         return list;
@@ -316,6 +358,19 @@ public class ToToEntityHelper
             for ( GenreTo element : transferObject )
             {
                 list.add(createGenreEntity((element)));
+            }
+        }
+        return list;
+    }
+
+    private static List<Ticket> createTicketEntitiesForReservation ( List<TicketTo> tickets, Reservation reservation )
+    {
+        List<Ticket> list = new ArrayList<>();
+        if ( null != tickets )
+        {
+            for ( TicketTo ticketTo : tickets )
+            {
+                list.add(createTicketEntityForReservation(ticketTo, reservation));
             }
         }
         return list;

@@ -9,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQuery;
-import javax.persistence.SequenceGenerator;
 
 /**
  * The persistent class for the genre database table.
@@ -22,8 +21,7 @@ public class Genre implements Serializable
     private static final long serialVersionUID = 1L;
 
     @Id
-    @SequenceGenerator(name = "GENRE_ID_GENERATOR")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "GENRE_ID_GENERATOR")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String genre;

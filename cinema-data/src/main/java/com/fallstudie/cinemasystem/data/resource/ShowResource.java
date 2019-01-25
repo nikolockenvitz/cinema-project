@@ -1,6 +1,7 @@
 package com.fallstudie.cinemasystem.data.resource;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -70,6 +71,26 @@ public class ShowResource
         return responseBuilder.buildResponse(jsonMedia, json);
     }
 
+    @GET
+    @Path("getAllShows/{id}")
+    @Propagate
+    @Description(value = "Method to get all shows by movie id!")
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces({ MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON })
+    public Response getAllShowsByMovieID ( @PathParam("id") String id )
+    {
+        String json = null;
+        try
+        {
+            List<ShowTo> showTos = showService.getAllShowsByMovieId(id);
+            json = JSONConverter.toJSON(showTos);
+        } catch (Throwable e)
+        {
+            return responseBuilder.buildResponse(textMedia, e.getMessage(), e);
+        }
+        return responseBuilder.buildResponse(jsonMedia, json);
+    }
+
     @POST
     @Path("book")
     @Propagate
@@ -88,6 +109,7 @@ public class ShowResource
 
             List<SeatTo> seatTos = new ArrayList<>();
 
+            ReservationTo createdReservation = new ReservationTo();
             boolean bookable = true;
             for ( SeatTo seatTo : bookingTo.getSeats() )
             {
@@ -116,6 +138,7 @@ public class ShowResource
             }
 
             List<TicketTo> toBook = new ArrayList<>();
+            ReservationTo reservationTo = new ReservationTo();
 
             if ( bookable )
             {
@@ -124,14 +147,18 @@ public class ShowResource
                     TicketTo ticketTo = new TicketTo();
                     ticketTo.setSeat(seatTo);
                     ticketTo.setShow(showTo);
+                    ticketTo.setReservation(reservationTo);
                     toBook.add(ticketTo);
+                    seatTo.setOccupied(true);
                 }
-                bookedTickets = showService.bookShowTickets(toBook);
-                ReservationTo reservationTo = new ReservationTo();
+//                bookedTickets = showService.bookShowTickets(toBook);
+                reservationTo.setDateOfReservation(new Date());
+                reservationTo.setTickets(toBook);
 
+                createdReservation = showService.reservateAndBookTickets(reservationTo);
             }
 
-            json = JSONConverter.toJSON(bookedTickets);
+            json = JSONConverter.toJSON(createdReservation);
         } catch (Exception e)
         {
             LOGGER.error(e.getMessage());

@@ -8,6 +8,7 @@ import com.fallstudie.cinemasystem.data.entity.Show;
 import com.fallstudie.cinemasystem.data.entity.Ticket;
 import com.fallstudie.cinemasystem.data.entity.query.MovieQuery;
 import com.fallstudie.cinemasystem.data.entity.query.QueryParam;
+import com.fallstudie.cinemasystem.data.entity.query.ShowQuery;
 
 public class ShowDao extends BaseDao<Show>
 {
@@ -32,6 +33,16 @@ public class ShowDao extends BaseDao<Show>
         List<Ticket> resultList = null;
         Query query = getEm().createNamedQuery(MovieQuery.FIND_TICKETS_BY_SHOW_ID);
         query.setParameter(QueryParam.SHOW_ID, showId);
+        resultList = query.getResultList();
+        return resultList;
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<Show> getAllShowsByMovieId ( Long movieId )
+    {
+        List<Show> resultList = null;
+        Query query = getEm().createNamedQuery(ShowQuery.FIND_SHOWS_BY_MOVIE_ID);
+        query.setParameter(QueryParam.MOVIE_ID, movieId);
         resultList = query.getResultList();
         return resultList;
     }

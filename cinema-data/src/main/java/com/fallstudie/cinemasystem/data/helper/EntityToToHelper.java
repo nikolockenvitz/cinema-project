@@ -110,7 +110,7 @@ public class EntityToToHelper
             return null;
     }
 
-    public static ShowTo createShowTo ( Show entity, boolean withtickets )
+    public static ShowTo createShowTo ( Show entity, boolean withMovie )
     {
         if ( null != entity )
         {
@@ -120,11 +120,11 @@ public class EntityToToHelper
             showTo.setDate(Utils.convertDateToString(entity.getDate()));
             showTo.setTime(entity.getTime());
             showTo.setWeekday(Utils.getWeekDay(entity.getDate()));
-            if ( withtickets )
-            {
-//                showTo.setTickets(createTicketTos(entity.getTickets(), false));
-            }
             showTo.setIs3D(entity.is3D());
+            if ( withMovie )
+            {
+                showTo.setMovie(createMovieTo(entity.getMovie(), false));
+            }
             return showTo;
         }
         return null;
@@ -141,6 +141,7 @@ public class EntityToToHelper
             showTo.setDate(Utils.convertDateToString(entity.getDate()));
             showTo.setTime(entity.getTime());
             showTo.setWeekday(Utils.getWeekDay(entity.getDate()));
+            showTo.setIs3D(entity.is3D());
             return showTo;
         }
         return null;
@@ -161,20 +162,24 @@ public class EntityToToHelper
         return null;
     }
 
-    private static ReservationTo createReservationTo ( Reservation entity )
+    public static ReservationTo createReservationTo ( Reservation entity, boolean withTickets )
     {
         if ( null != entity )
         {
             ReservationTo reservationTo = new ReservationTo();
             reservationTo.setId(entity.getId());
             reservationTo.setDateOfReservation(entity.getDateOfReservation());
-            reservationTo.setCustomer(createCustomerTo(entity.getCustomer()));
+//            reservationTo.setCustomer(createCustomerTo(entity.getCustomer()));
+            if ( withTickets )
+            {
+                reservationTo.setTickets(createTicketTosForReservation(entity.getTickets(), reservationTo));
+            }
             return reservationTo;
         } else
             return null;
     }
 
-    public static TicketTo createTicketTo ( Ticket entity, boolean withshow )
+    private static TicketTo createTicketToForReservation ( Ticket entity )
     {
         if ( null != entity )
         {
@@ -182,11 +187,22 @@ public class EntityToToHelper
             ticketTo.setId(entity.getId());
             ticketTo.setReducedPrice(entity.isReducedPrice());
             ticketTo.setSeat(createSeatTo(entity.getSeat()));
-            ticketTo.setReservation(createReservationTo(entity.getReservation()));
-            if ( withshow )
-            {
-                ticketTo.setShow(createShowTo(entity.getShow(), false));
-            }
+            ticketTo.setShow(createShowTo(entity.getShow(), true));
+            return ticketTo;
+        }
+        return null;
+    }
+
+    public static TicketTo createTicketTo ( Ticket entity )
+    {
+        if ( null != entity )
+        {
+            TicketTo ticketTo = new TicketTo();
+            ticketTo.setId(entity.getId());
+            ticketTo.setReducedPrice(entity.isReducedPrice());
+            ticketTo.setSeat(createSeatTo(entity.getSeat()));
+            ticketTo.setReservation(createReservationTo(entity.getReservation(), true));
+            ticketTo.setShow(createShowTo(entity.getShow(), true));
             return ticketTo;
         } else
             return null;
@@ -320,7 +336,7 @@ public class EntityToToHelper
         return list;
     }
 
-    private static List<ShowTo> createShowTosWithMovie ( List<Show> entity )
+    public static List<ShowTo> createShowTosWithMovie ( List<Show> entity )
     {
         List<ShowTo> list = new ArrayList<>();
         if ( null != entity )
@@ -353,20 +369,20 @@ public class EntityToToHelper
         {
             for ( Reservation element : entity )
             {
-                list.add(createReservationTo(element));
+                list.add(createReservationTo(element, true));
             }
         }
         return list;
     }
 
-    public static List<TicketTo> createTicketTos ( List<Ticket> entity, boolean withShow )
+    public static List<TicketTo> createTicketTos ( List<Ticket> entity )
     {
         List<TicketTo> list = new ArrayList<>();
         if ( null != entity )
         {
             for ( Ticket element : entity )
             {
-                list.add(createTicketTo(element, withShow));
+                list.add(createTicketTo(element));
             }
         }
         return list;
@@ -436,4 +452,18 @@ public class EntityToToHelper
         }
         return list;
     }
+
+    private static List<TicketTo> createTicketTosForReservation ( List<Ticket> tickets, ReservationTo reservationTo )
+    {
+        List<TicketTo> list = new ArrayList<>();
+        if ( null != tickets )
+        {
+            for ( Ticket t : tickets )
+            {
+                list.add(createTicketToForReservation(t));
+            }
+        }
+        return list;
+    }
+
 }
