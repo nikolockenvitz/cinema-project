@@ -6,6 +6,7 @@ import static org.junit.Assert.assertThat;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Before;
@@ -44,6 +45,8 @@ public class EntityToToHelper_Test
     ActorTo        testActor1To            = null;
     List<ActorTo>  testActorToList         = null;
     Calendar       testDate                = null;
+    String         testDateString          = null;
+    Date           testDateDate            = null;
     Movie          testMovieEntity         = null;
     MovieTo        testMovieTo             = null;
     Genre          testGenreEntity         = null;
@@ -85,10 +88,13 @@ public class EntityToToHelper_Test
         testDate.set(Calendar.MONTH, Calendar.JANUARY);
         testDate.set(Calendar.DAY_OF_MONTH, 17);
 
+        testDateString = Utils.convertDateToString(testDate.getTime());
+        testDateDate = Utils.convertStringToDate(testDateString);
+
         // actor entity
         testActor1Entity = new Actor();
         testActor1Entity.setId(1);
-        testActor1Entity.setBirthdate(testDate.getTime());
+        testActor1Entity.setBirthdate(testDateDate);
         testActor1Entity.setFirstname("Vorname");
         testActor1Entity.setLastname("Nachname");
 
@@ -98,7 +104,7 @@ public class EntityToToHelper_Test
         // actor to
         testActor1To = new ActorTo();
         testActor1To.setId(1);
-        testActor1To.setBirthdate(Utils.convertDateToString(testDate.getTime()));
+        testActor1To.setBirthdate(testDateString);
         testActor1To.setFirstname("Vorname");
         testActor1To.setLastname("Nachname");
 
@@ -179,7 +185,7 @@ public class EntityToToHelper_Test
 
         // show entity
         testShowEntity = new Show();
-        testShowEntity.setDate(testDate.getTime());
+        testShowEntity.setDate(testDateDate);
         testShowEntity.setHall(testHallEntity);
         testShowEntity.setId(1);
         testShowEntity.setIs3D(false);
@@ -190,19 +196,19 @@ public class EntityToToHelper_Test
 
         // show to
         testShowTo = new ShowTo();
-        testShowTo.setDate(Utils.convertDateToString(testDate.getTime()));
+        testShowTo.setDate(testDateString);
         testShowTo.setHall(testHallTo);
         testShowTo.setId(1);
         testShowTo.setIs3D(false);
         testShowTo.setTime("Time");
-        testShowTo.setWeekday(Utils.getWeekDay(testDate.getTime()));
+        testShowTo.setWeekday(Utils.getWeekDay(testDateDate));
 
         testShowToList = new ArrayList<>();
         testShowToList.add(testShowTo);
 
         // customer entity
         testCustomerEntity = new Customer();
-        testCustomerEntity.setDateofbirth(testDate.getTime());
+        testCustomerEntity.setDateofbirth(testDateDate);
         testCustomerEntity.setEmail("mail");
         testCustomerEntity.setFirstname("firstname");
         testCustomerEntity.setId(1);
@@ -214,7 +220,7 @@ public class EntityToToHelper_Test
 
         // customer to
         testCustomerTo = new CustomerTo();
-        testCustomerTo.setDateofbirth(Utils.convertDateToString(testDate.getTime()));
+        testCustomerTo.setDateofbirth(testDateString);
         testCustomerTo.setEmail("mail");
         testCustomerTo.setFirstname("firstname");
         testCustomerTo.setId(1);
@@ -226,7 +232,7 @@ public class EntityToToHelper_Test
 
         // customer to for rating
         testCustomerToForRating = new CustomerTo();
-        testCustomerToForRating.setDateofbirth(Utils.convertDateToString(testDate.getTime()));
+        testCustomerToForRating.setDateofbirth(testDateString);
         testCustomerToForRating.setEmail("mail");
         testCustomerToForRating.setFirstname("firstname");
         testCustomerToForRating.setId(1);
@@ -284,13 +290,13 @@ public class EntityToToHelper_Test
         testReservationEntity = new Reservation();
         testReservationEntity.setCustomer(testCustomerEntity);
         testReservationEntity.setId(1);
-        testReservationEntity.setDateOfReservation(testDate.getTime());
+        testReservationEntity.setDateOfReservation(testDateDate);
 
         // reservation to
         testReservationTo = new ReservationTo();
         testReservationTo.setCustomer(testCustomerTo);
         testReservationTo.setId(1);
-        testReservationTo.setDateOfReservation(testDate.getTime());
+        testReservationTo.setDateOfReservation(testDateDate);
 
         // ticket entity
         testTicketEntity = new Ticket();
