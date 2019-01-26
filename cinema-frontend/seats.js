@@ -234,8 +234,10 @@ $(function () {
 		urlPrice += "," + numberOfTickets["le"];
 		
 		var url = "./bezahlen.html";
-		url += "?s=" + urlSeats;
+		url += "?id=" + urlparameters.get("id");
+		url += "&s=" + urlSeats;
 		url += "&p=" + urlPrice;
+		url += "&preis=" + $("#price").text();
 		window.location.href = url;
 	});
 });
