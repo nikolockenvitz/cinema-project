@@ -69,7 +69,7 @@ public class ToToEntityHelper
         return null;
     }
 
-    private static Rating createRatingEntity ( RatingTo transferObject )
+    public static Rating createRatingEntity ( RatingTo transferObject )
     {
         if ( null != transferObject )
         {
@@ -83,7 +83,7 @@ public class ToToEntityHelper
         return null;
     }
 
-    private static Genre createGenreEntity ( GenreTo transferObject )
+    public static Genre createGenreEntity ( GenreTo transferObject )
     {
         if ( null != transferObject )
         {
@@ -95,7 +95,7 @@ public class ToToEntityHelper
         return null;
     }
 
-    private static Actor createActorEntity ( ActorTo transferObject )
+    public static Actor createActorEntity ( ActorTo transferObject )
     {
         if ( null != transferObject )
         {
@@ -108,7 +108,7 @@ public class ToToEntityHelper
         return null;
     }
 
-    private static Show createShowEntity ( ShowTo transferObject, boolean withMovie )
+    public static Show createShowEntity ( ShowTo transferObject, boolean withMovie )
     {
         if ( null != transferObject )
         {
@@ -142,7 +142,7 @@ public class ToToEntityHelper
         return null;
     }
 
-    private static Ticket createTicketEntityForReservation ( TicketTo transferObject, Reservation reservation )
+    public static Ticket createTicketEntityForReservation ( TicketTo transferObject, Reservation reservation )
     {
         if ( null != transferObject )
         {
@@ -160,7 +160,7 @@ public class ToToEntityHelper
         }
     }
 
-    private static Ticket createTicketEntity ( TicketTo transferObject )
+    public static Ticket createTicketEntity ( TicketTo transferObject )
     {
         if ( null != transferObject )
         {
@@ -174,7 +174,7 @@ public class ToToEntityHelper
         return null;
     }
 
-    private static Seat createSeatEntity ( SeatTo transferObject )
+    public static Seat createSeatEntity ( SeatTo transferObject )
     {
         if ( null != transferObject )
         {
@@ -190,7 +190,7 @@ public class ToToEntityHelper
         return null;
     }
 
-    private static Category createCategoryEntity ( CategoryTo transferObject )
+    public static Category createCategoryEntity ( CategoryTo transferObject )
     {
         if ( null != transferObject )
         {
@@ -202,7 +202,7 @@ public class ToToEntityHelper
         return null;
     }
 
-    private static Hall createHallEntity ( HallTo transferObject )
+    public static Hall createHallEntity ( HallTo transferObject )
     {
         if ( null != transferObject )
         {
@@ -251,7 +251,7 @@ public class ToToEntityHelper
         return list;
     }
 
-    private static List<Actor> createActorEntities ( List<ActorTo> transferObject )
+    public static List<Actor> createActorEntities ( List<ActorTo> transferObject )
     {
         List<Actor> list = new ArrayList<>();
         if ( null != transferObject )
@@ -264,7 +264,7 @@ public class ToToEntityHelper
         return list;
     }
 
-    private static List<Show> createShowEntities ( List<ShowTo> transferObject, boolean withMovie )
+    public static List<Show> createShowEntities ( List<ShowTo> transferObject, boolean withMovie )
     {
         List<Show> list = new ArrayList<>();
         if ( null != transferObject )
@@ -277,7 +277,7 @@ public class ToToEntityHelper
         return list;
     }
 
-    private static List<Reservation> createReservationEntities ( List<ReservationTo> transferObject )
+    public static List<Reservation> createReservationEntities ( List<ReservationTo> transferObject )
     {
         List<Reservation> list = new ArrayList<>();
         if ( null != transferObject )
@@ -303,7 +303,7 @@ public class ToToEntityHelper
         return list;
     }
 
-    private static List<Seat> createSeatEntities ( List<SeatTo> transferObject )
+    public static List<Seat> createSeatEntities ( List<SeatTo> transferObject )
     {
         List<Seat> list = new ArrayList<>();
         if ( null != transferObject )
@@ -316,7 +316,7 @@ public class ToToEntityHelper
         return list;
     }
 
-    private static List<Customer> createCustomerEntities ( List<CustomerTo> transferObject )
+    public static List<Customer> createCustomerEntities ( List<CustomerTo> transferObject )
     {
         List<Customer> list = new ArrayList<>();
         if ( null != transferObject )
@@ -342,7 +342,7 @@ public class ToToEntityHelper
         return list;
     }
 
-    private static List<Rating> createRatingEntities ( List<RatingTo> transferObject )
+    public static List<Rating> createRatingEntities ( List<RatingTo> transferObject )
     {
         List<Rating> list = new ArrayList<>();
         if ( null != transferObject )
@@ -355,7 +355,7 @@ public class ToToEntityHelper
         return list;
     }
 
-    private static List<Genre> createGenreEntities ( List<GenreTo> transferObject )
+    public static List<Genre> createGenreEntities ( List<GenreTo> transferObject )
     {
         List<Genre> list = new ArrayList<>();
         if ( null != transferObject )
@@ -368,7 +368,7 @@ public class ToToEntityHelper
         return list;
     }
 
-    private static List<Ticket> createTicketEntitiesForReservation ( List<TicketTo> tickets, Reservation reservation )
+    public static List<Ticket> createTicketEntitiesForReservation ( List<TicketTo> tickets, Reservation reservation )
     {
         List<Ticket> list = new ArrayList<>();
         if ( null != tickets )
