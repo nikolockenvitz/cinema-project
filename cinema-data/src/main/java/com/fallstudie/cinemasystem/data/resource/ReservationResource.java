@@ -136,8 +136,9 @@ public class ReservationResource
 //                bookedTickets = showService.bookShowTickets(toBook);
                 reservationTo.setDateOfReservation(Utils.convertDateToString(new Date()));
                 reservationTo.setTickets(toBook);
+                reservationTo.setCustomer(bookingTo.getCustomer());
 
-                createdReservation = showService.reservateAndBookTickets(reservationTo, bookingTo.getCustomer().getId());
+                createdReservation = reservationService.createReservation((reservationTo));
             }
 
             json = JSONConverter.toJSON(createdReservation);

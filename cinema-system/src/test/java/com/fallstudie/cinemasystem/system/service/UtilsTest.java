@@ -13,9 +13,7 @@ import org.apache.commons.lang3.time.DateUtils;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.fallstudie.cinemasystem.common.transferobject.CategoryTo;
 import com.fallstudie.cinemasystem.common.transferobject.SeatTo;
-import com.fallstudie.cinemasystem.common.transferobject.ShowTo;
 import com.fallstudie.cinemasystem.common.transferobject.TicketTo;
 import com.fallstudie.cinemasystem.common.utils.Utils;
 
@@ -103,4 +101,15 @@ public class UtilsTest
         assertThat(null, equalTo(Utils.convertDateToString(null)));
     }
 
+    @Test
+    public void testConvertStringToTime ( )
+    {
+        assertThat(testDateTimeProof, equalTo(Utils.convertDateToTime(testDate)));
+    }
+
+    @Test
+    public void testConvertTimeToString ( )
+    {
+        assertThat(testDate, equalTo(Utils.convertStringToTime(testDateTimeProof)));
+    }
 }

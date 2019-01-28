@@ -118,7 +118,7 @@ public class ToToEntityHelper
             show.setHall(createHallEntity(transferObject.getHall()));
             show.setIs3D(transferObject.is3D());
             show.setDate(Utils.convertStringToDate(transferObject.getDate()));
-            show.setTime(transferObject.getTime());
+            show.setTime(Utils.convertStringToTime(transferObject.getTime()));
             show.setIs3D(transferObject.is3D());
             if ( withMovie )
             {

@@ -31,9 +31,15 @@ public class Utils
 
     public static String convertDateToTime ( Date date )
     {
-        DateFormat df = new SimpleDateFormat("HH:mm");
-        String convertedTime = df.format(date);
-        return convertedTime;
+        if ( null != date )
+        {
+            DateFormat df = new SimpleDateFormat("HH:mm");
+            String convertedTime = df.format(date);
+            return convertedTime;
+        } else
+        {
+            return null;
+        }
     }
 
     public static boolean checkIfSeatIsBlocked ( List<TicketTo> tickets, long seatId )
@@ -78,6 +84,23 @@ public class Utils
             if ( null != date )
             {
                 Date convertedDate = new SimpleDateFormat("dd.MM.yyyy").parse(date);
+                return convertedDate;
+            }
+        } catch (ParseException e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static Date convertStringToTime ( String date )
+    {
+        try
+        {
+            if ( null != date )
+            {
+                Date convertedDate = new SimpleDateFormat("HH:mm").parse(date);
                 return convertedDate;
             }
         } catch (ParseException e)

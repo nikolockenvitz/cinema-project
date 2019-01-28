@@ -44,8 +44,9 @@ public class Show implements Serializable
     @Column(name = "date")
     private Date date;
 
-    @Column(name = "time", columnDefinition = "VARCHAR(5)")
-    private String time;
+    @Column(name = "time")
+    @Temporal(TemporalType.TIME)
+    private Date time;
 
     @Column(name = "is3d")
     private boolean is3D;
@@ -129,12 +130,12 @@ public class Show implements Serializable
         this.date = date;
     }
 
-    public String getTime ( )
+    public Date getTime ( )
     {
         return time;
     }
 
-    public void setTime ( String time )
+    public void setTime ( Date time )
     {
         this.time = time;
     }

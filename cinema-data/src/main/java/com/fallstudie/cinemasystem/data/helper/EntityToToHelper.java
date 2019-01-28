@@ -118,7 +118,7 @@ public class EntityToToHelper
             showTo.setId(entity.getId());
             showTo.setHall(createHallTo(entity.getHall()));
             showTo.setDate(Utils.convertDateToString(entity.getDate()));
-            showTo.setTime(entity.getTime());
+            showTo.setTime(Utils.convertDateToTime(entity.getTime()));
             showTo.setWeekday(Utils.getWeekDay(entity.getDate()));
             showTo.setIs3D(entity.is3D());
             if ( withMovie )
@@ -139,7 +139,7 @@ public class EntityToToHelper
             showTo.setHall(createHallTo(entity.getHall()));
             showTo.setMovie(createMovieTo(entity.getMovie(), false));
             showTo.setDate(Utils.convertDateToString(entity.getDate()));
-            showTo.setTime(entity.getTime());
+            showTo.setTime(Utils.convertDateToTime(entity.getTime()));
             showTo.setWeekday(Utils.getWeekDay(entity.getDate()));
             showTo.setIs3D(entity.is3D());
             return showTo;
@@ -155,7 +155,7 @@ public class EntityToToHelper
             showTo.setId(entity.getId());
             showTo.setHall(createHallTo(entity.getHall()));
             showTo.setDate(Utils.convertDateToString(entity.getDate()));
-            showTo.setTime(entity.getTime());
+            showTo.setTime(Utils.convertDateToTime(entity.getTime()));
             showTo.setWeekday(Utils.getWeekDay(entity.getDate()));
             return showTo;
         }
