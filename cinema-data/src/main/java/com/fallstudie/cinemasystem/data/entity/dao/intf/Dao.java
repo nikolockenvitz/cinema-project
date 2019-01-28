@@ -13,4 +13,6 @@ public interface Dao<T>
 
     T merge ( T object );
 
+    T remove ( T object );
+
 }

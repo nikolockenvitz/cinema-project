@@ -1,6 +1,7 @@
 package com.fallstudie.cinemasystem.common.utils;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -13,10 +14,13 @@ public class Utils
 {
     public static String convertDateToString ( Date date )
     {
-        DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
-        String convertedDate = df.format(date);
-
-        return convertedDate;
+        if ( null != date )
+        {
+            DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+            String convertedDate = df.format(date);
+            return convertedDate;
+        } else
+            return null;
     }
 
     public static String getWeekDay ( Date date )
@@ -65,6 +69,22 @@ public class Utils
                 }
             }
         }
+    }
 
+    public static Date convertStringToDate ( String date )
+    {
+        try
+        {
+            if ( null != date )
+            {
+                Date convertedDate = new SimpleDateFormat("dd.MM.yyyy").parse(date);
+                return convertedDate;
+            }
+        } catch (ParseException e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return null;
     }
 }

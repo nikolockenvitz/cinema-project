@@ -2,6 +2,7 @@ package com.fallstudie.cinemasystem.data.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,7 +14,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.fallstudie.cinemasystem.data.entity.query.MovieQuery;
@@ -36,8 +36,7 @@ public class Ticket implements Serializable
     private static final long serialVersionUID = 1L;
 
     @Id
-    @SequenceGenerator(name = "TICKET_ID_GENERATOR")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TICKET_ID_GENERATOR")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(name = "isreducedprice")
@@ -49,7 +48,7 @@ public class Ticket implements Serializable
     private Show show;
 
     // bi-directional one-to-one association to Seat
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Seat.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Seat.class, cascade = CascadeType.MERGE)
     @JoinColumn(name = "seat_id")
     private Seat seat;
 

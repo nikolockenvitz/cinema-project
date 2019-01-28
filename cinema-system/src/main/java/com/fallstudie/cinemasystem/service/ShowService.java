@@ -34,4 +34,10 @@ public class ShowService
         return showTo;
     }
 
+    public void bookSeats ( ShowTo showTo )
+    {
+        // TODO Auto-generated method stub
+
+    }
+
 }

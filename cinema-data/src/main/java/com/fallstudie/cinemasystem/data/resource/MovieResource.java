@@ -3,7 +3,9 @@ package com.fallstudie.cinemasystem.data.resource;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -135,6 +137,26 @@ public class MovieResource
         {
             ShowTo showTo = movieService.getShow(id);
             json = JSONConverter.toJSON(showTo);
+        } catch (Throwable e)
+        {
+            return responseBuilder.buildResponse(textMedia, e.getMessage(), e);
+        }
+        return responseBuilder.buildResponse(jsonMedia, json);
+    }
+
+    @POST
+    @Propagate
+    @Description(value = "Method to post a movie")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces({ MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON })
+    public Response postMovie ( @FormParam("movie") String movieJson )
+    {
+        String json = null;
+        try
+        {
+            MovieTo movieTo = (MovieTo) JSONConverter.fromJSON(movieJson, MovieTo.class);
+            MovieTo savedMovieTo = movieService.save(movieTo);
+            json = JSONConverter.toJSON(savedMovieTo);
         } catch (Throwable e)
         {
             return responseBuilder.buildResponse(textMedia, e.getMessage(), e);

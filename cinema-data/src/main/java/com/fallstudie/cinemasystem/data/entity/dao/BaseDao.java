@@ -76,8 +76,14 @@ public abstract class BaseDao<T> implements Dao<T>
     {
         EntityTransaction transaction = getEm().getTransaction();
         transaction.begin();
-        getEm().persist(object);
-        transaction.commit();
+        try
+        {
+            getEm().persist(object);
+            transaction.commit();
+        } catch (Exception e)
+        {
+            transaction.rollback();
+        }
         return object;
     }
 
@@ -92,8 +98,31 @@ public abstract class BaseDao<T> implements Dao<T>
     {
         EntityTransaction transaction = getEm().getTransaction();
         transaction.begin();
-        T merge = getEm().merge(object);
-        transaction.commit();
-        return merge;
+        try
+        {
+            T merge = getEm().merge(object);
+            transaction.commit();
+            return merge;
+        } catch (Exception e)
+        {
+            transaction.rollback();
+        }
+        return object;
+    }
+
+    @Override
+    public T remove ( T object )
+    {
+        EntityTransaction transaction = getEm().getTransaction();
+        transaction.begin();
+        try
+        {
+            getEm().remove(object);
+            transaction.commit();
+        } catch (Exception e)
+        {
+            transaction.rollback();
+        }
+        return object;
     }
 }

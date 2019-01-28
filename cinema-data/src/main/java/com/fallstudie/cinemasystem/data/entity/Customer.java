@@ -2,10 +2,15 @@ package com.fallstudie.cinemasystem.data.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -23,6 +28,7 @@ public class Customer implements Serializable
     private static final long serialVersionUID = 1L;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long   id;
     @Column(name = "firstname", columnDefinition = "varchar(40)")
     private String firstname;
@@ -38,6 +44,9 @@ public class Customer implements Serializable
     private String pwhash;
     private int    isadmin;
     private String sessiontoken;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", orphanRemoval = true)
+    private List<Reservation> reservations;
 
     public long getId ( )
     {
@@ -127,6 +136,16 @@ public class Customer implements Serializable
     public void setUsername ( String username )
     {
         this.username = username;
+    }
+
+    public List<Reservation> getReservations ( )
+    {
+        return reservations;
+    }
+
+    public void setReservations ( List<Reservation> reservations )
+    {
+        this.reservations = reservations;
     }
 
 }

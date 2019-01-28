@@ -30,7 +30,7 @@ public class MovieService
 
     public MovieTo save ( MovieTo movieTo )
     {
-        return EntityToToHelper.createMovieTo(movieDao.persist(ToToEntityHelper.createMovieEntity(movieTo)), true);
+        return EntityToToHelper.createMovieTo(movieDao.persist(ToToEntityHelper.createMovieEntity(movieTo, true)), true);
     }
 
     public List<MovieTo> getAllMovies ( )
@@ -40,13 +40,13 @@ public class MovieService
 
     public List<TicketTo> getAllTickets ( )
     {
-        return EntityToToHelper.createTicketTos(movieDao.getAllTickets(), true);
+        return EntityToToHelper.createTicketTos(movieDao.getAllTickets());
     }
 
     public List<TicketTo> getAllTicketsForShow ( String id )
     {
         Long showId = Long.parseLong(id);
-        return EntityToToHelper.createTicketTos(movieDao.getAllTicketsForShow(showId), true);
+        return EntityToToHelper.createTicketTos(movieDao.getAllTicketsForShow(showId));
     }
 
     public ShowTo getShow ( String id )

@@ -14,7 +14,7 @@ public class UserTest
 {
 
     @Test
-    public void CustomerTo ( ) throws Exception
+    public void CustomerToJSON ( ) throws Exception
     {
         CustomerTo customerTo = ToCreator.createCustomer();
         String rqJson = JSONConverter.toJSON(customerTo);
