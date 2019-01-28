@@ -100,6 +100,7 @@ public class ToToEntityHelper
         if ( null != transferObject )
         {
             Actor actor = new Actor();
+            actor.setId(transferObject.getId());
             actor.setFirstname(transferObject.getFirstname());
             actor.setLastname(transferObject.getLastname());
             actor.setBirthdate(Utils.convertStringToDate(transferObject.getBirthdate()));
@@ -233,7 +234,7 @@ public class ToToEntityHelper
             customer.setUsername(transferObject.getUsername());
             return customer;
         }
-        return new Customer();
+        return null;
     }
 
     // LIST
