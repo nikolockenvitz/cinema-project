@@ -45,14 +45,6 @@ public class JSONConverter
         return obj;
     }
 
-    public static Object fromJSON ( String json, TypeReference<?> typeReference ) throws IOException
-    {
-        ObjectMapper om = new ObjectMapper();
-        om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        Object obj = om.readValue(json, typeReference);
-        return obj;
-    }
-
     static class NullKeySerializer extends StdSerializer<Object>
     {
 
