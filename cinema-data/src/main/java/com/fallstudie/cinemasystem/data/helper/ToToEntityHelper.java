@@ -135,7 +135,7 @@ public class ToToEntityHelper
         {
             Reservation reservation = new Reservation();
             reservation.setId(transferObject.getId());
-            reservation.setDateOfReservation(transferObject.getDateOfReservation());
+            reservation.setDateOfReservation(Utils.convertStringToDate(transferObject.getDateOfReservation()));
             reservation.setCustomer(createCustomerEntity(transferObject.getCustomer()));
             reservation.setTickets(createTicketEntitiesForReservation(transferObject.getTickets(), reservation));
             return reservation;

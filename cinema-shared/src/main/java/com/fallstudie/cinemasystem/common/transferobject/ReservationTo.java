@@ -1,12 +1,11 @@
 package com.fallstudie.cinemasystem.common.transferobject;
 
-import java.util.Date;
 import java.util.List;
 
 public class ReservationTo
 {
     private long           id;
-    private Date           dateOfReservation;
+    private String         dateOfReservation;
     private CustomerTo     customer;
     private List<TicketTo> tickets;
 
@@ -58,12 +57,12 @@ public class ReservationTo
         this.id = id;
     }
 
-    public Date getDateOfReservation ( )
+    public String getDateOfReservation ( )
     {
         return dateOfReservation;
     }
 
-    public void setDateOfReservation ( Date dateOfReservation )
+    public void setDateOfReservation ( String dateOfReservation )
     {
         this.dateOfReservation = dateOfReservation;
     }

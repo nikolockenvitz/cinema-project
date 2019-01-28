@@ -80,8 +80,8 @@ public class ToToEntityHelper_Test
     ReservationTo  testReservationTo       = null;
     Ticket         testTicketEntity        = null;
     TicketTo       testTicketTo            = null;
-    Employee	   testEmployeeEntitiy 	   = null;
-    EmployeeTo	   testEmployeeTo          = null;
+    Employee       testEmployeeEntitiy     = null;
+    EmployeeTo     testEmployeeTo          = null;
 
     @Before
     public void initialize ( )
@@ -96,21 +96,20 @@ public class ToToEntityHelper_Test
         testDate.set(Calendar.MINUTE, 0);
         Date testDateFormatted = Utils.convertStringToDate(Utils.convertDateToString(testDate.getTime()));
 
-
         testEmployeeEntitiy = new Employee();
         testEmployeeEntitiy.setDateofbirth(testDateFormatted);
         testEmployeeEntitiy.setEmail("max@mustermann.de");
         testEmployeeEntitiy.setFirstname("Vorname");
         testEmployeeEntitiy.setId(1);
         testEmployeeEntitiy.setLastname("Nachname");
-        
+
         testEmployeeTo = new EmployeeTo();
         testEmployeeTo.setDateofbirth(Utils.convertDateToString(testDateFormatted));
         testEmployeeTo.setEmail("max@mustermann.de");
         testEmployeeTo.setFirstname("Vorname");
         testEmployeeTo.setId(1);
         testEmployeeTo.setLastname("Nachname");
-        
+
         // actor entity
         testActor1Entity = new Actor();
         testActor1Entity.setId(1);
@@ -293,10 +292,10 @@ public class ToToEntityHelper_Test
 
         testMovieEntityList = new ArrayList<>();
         testMovieEntityList.add(testMovieEntity);
-        
+
         testMovieToList = new ArrayList<>();
         testMovieToList.add(testMovieTo);
-        
+
         // movie to
         testMovieTo = new MovieTo();
         testMovieTo.setId(1);
@@ -323,7 +322,7 @@ public class ToToEntityHelper_Test
         testReservationTo = new ReservationTo();
         testReservationTo.setCustomer(testCustomerTo);
         testReservationTo.setId(1);
-        testReservationTo.setDateOfReservation(testDateFormatted);
+        testReservationTo.setDateOfReservation(Utils.convertDateToString(testDateFormatted));
 
         // ticket entity
         testTicketEntity = new Ticket();
@@ -340,14 +339,14 @@ public class ToToEntityHelper_Test
         testTicketTo.setReservation(testReservationTo);
         testTicketTo.setSeat(testSeatTo);
         testTicketTo.setShow(testShowTo);
-        
+
     }
 
     @Test
     public void testToNull ( )
     {
         // test all To with null entity
-    	assertEquals(null, ToToEntityHelper.createActorEntity(null));
+        assertEquals(null, ToToEntityHelper.createActorEntity(null));
         assertEquals(null, ToToEntityHelper.createCategoryEntity(null));
         assertEquals(null, ToToEntityHelper.createEmployeeEntity(null));
         assertEquals(null, ToToEntityHelper.createGenreEntity(null));
@@ -376,46 +375,51 @@ public class ToToEntityHelper_Test
     }
 
     @Test
-    public void testCreateMovieEntitiy() {
-    	
-    	assertThat(testMovieEntity.getId(), 			equalTo(ToToEntityHelper.createMovieEntity(testMovieTo, true).getId()));
-    	assertThat(testMovieEntity.getDescription(), 	equalTo(ToToEntityHelper.createMovieEntity(testMovieTo, true).getDescription()));
-    	assertThat(testMovieEntity.getDuration(), 		equalTo(ToToEntityHelper.createMovieEntity(testMovieTo, true).getDuration()));
-    	assertThat(testMovieEntity.getFsk(), 			equalTo(ToToEntityHelper.createMovieEntity(testMovieTo, true).getFsk()));
-    	assertThat(testMovieEntity.getGenres(), 		equalTo(ToToEntityHelper.createMovieEntity(testMovieTo, true).getGenres()));
-    	assertThat(testMovieEntity.getName(), 			equalTo(ToToEntityHelper.createMovieEntity(testMovieTo, true).getName()));
-     	assertThat(testMovieEntity.getActors(), 		equalTo(ToToEntityHelper.createMovieEntity(testMovieTo, true).getActors()));
-    	assertThat(testMovieEntity.getShows(), 			equalTo(ToToEntityHelper.createMovieEntity(testMovieTo, true).getShows()));
+    public void testCreateMovieEntitiy ( )
+    {
+
+        assertThat(testMovieEntity.getId(), equalTo(ToToEntityHelper.createMovieEntity(testMovieTo, true).getId()));
+        assertThat(testMovieEntity.getDescription(), equalTo(ToToEntityHelper.createMovieEntity(testMovieTo, true).getDescription()));
+        assertThat(testMovieEntity.getDuration(), equalTo(ToToEntityHelper.createMovieEntity(testMovieTo, true).getDuration()));
+        assertThat(testMovieEntity.getFsk(), equalTo(ToToEntityHelper.createMovieEntity(testMovieTo, true).getFsk()));
+        assertThat(testMovieEntity.getGenres(), equalTo(ToToEntityHelper.createMovieEntity(testMovieTo, true).getGenres()));
+        assertThat(testMovieEntity.getName(), equalTo(ToToEntityHelper.createMovieEntity(testMovieTo, true).getName()));
+        assertThat(testMovieEntity.getActors(), equalTo(ToToEntityHelper.createMovieEntity(testMovieTo, true).getActors()));
+        assertThat(testMovieEntity.getShows(), equalTo(ToToEntityHelper.createMovieEntity(testMovieTo, true).getShows()));
     }
 
     @Test
-    public void testCreateReservationEntitiy() {
-    	
-        assertThat(testReservationEntity.getDateOfReservation(), 	equalTo(ToToEntityHelper.createReservationEntity(testReservationTo).getDateOfReservation()));
-        assertThat(testReservationEntity.getId(),					equalTo(ToToEntityHelper.createReservationEntity(testReservationTo).getId()));
-        assertThat(testReservationEntity.getCustomer(), 			equalTo(ToToEntityHelper.createReservationEntity(testReservationTo).getCustomer()));
+    public void testCreateReservationEntitiy ( )
+    {
+
+        assertThat(testReservationEntity.getDateOfReservation(), equalTo(ToToEntityHelper.createReservationEntity(testReservationTo).getDateOfReservation()));
+        assertThat(testReservationEntity.getId(), equalTo(ToToEntityHelper.createReservationEntity(testReservationTo).getId()));
+        assertThat(testReservationEntity.getCustomer(), equalTo(ToToEntityHelper.createReservationEntity(testReservationTo).getCustomer()));
 //        Customer c1 = testReservationEntity.getCustomer();
 //        Customer c2 = ToToEntityHelper.createReservationEntity(testReservationTo).getCustomer();
- //       assertThat(c1.getDateofbirth(), equalTo(c2.getDateofbirth()));
+        // assertThat(c1.getDateofbirth(), equalTo(c2.getDateofbirth()));
     }
-    
+
     @Test
-    public void testCreateTicketEntitiy() {
-    	
-        assertThat(testTicketEntity.getId(), 			equalTo(ToToEntityHelper.createTicketEntity(testTicketTo).getId()));
-        assertThat(testTicketEntity.getReservation(), 	equalTo(ToToEntityHelper.createTicketEntity(testTicketTo).getReservation()));
-        assertThat(testTicketEntity.getSeat(), 			equalTo(ToToEntityHelper.createTicketEntity(testTicketTo).getSeat()));
-        assertThat(testTicketEntity.getShow(), 			equalTo(ToToEntityHelper.createTicketEntity(testTicketTo).getShow()));
+    public void testCreateTicketEntitiy ( )
+    {
+
+        assertThat(testTicketEntity.getId(), equalTo(ToToEntityHelper.createTicketEntity(testTicketTo).getId()));
+        assertThat(testTicketEntity.getReservation(), equalTo(ToToEntityHelper.createTicketEntity(testTicketTo).getReservation()));
+        assertThat(testTicketEntity.getSeat(), equalTo(ToToEntityHelper.createTicketEntity(testTicketTo).getSeat()));
+        assertThat(testTicketEntity.getShow(), equalTo(ToToEntityHelper.createTicketEntity(testTicketTo).getShow()));
 
     }
-    
-    @Test 
-    public void testCreateEmployeeEntity() {
-    	assertThat(testEmployeeEntitiy.getDateofbirth(), equalTo(ToToEntityHelper.createEmployeeEntity(testEmployeeTo).getDateofbirth()));
-    }
-    
+
     @Test
-    public void createTicketEntityForReservation() {
-    	assertThat(testTicketEntity.getId(), equalTo(ToToEntityHelper.createTicketEntityForReservation(testTicketTo, testReservationEntity).getId()));
+    public void testCreateEmployeeEntity ( )
+    {
+        assertThat(testEmployeeEntitiy.getDateofbirth(), equalTo(ToToEntityHelper.createEmployeeEntity(testEmployeeTo).getDateofbirth()));
+    }
+
+    @Test
+    public void createTicketEntityForReservation ( )
+    {
+        assertThat(testTicketEntity.getId(), equalTo(ToToEntityHelper.createTicketEntityForReservation(testTicketTo, testReservationEntity).getId()));
     }
 }

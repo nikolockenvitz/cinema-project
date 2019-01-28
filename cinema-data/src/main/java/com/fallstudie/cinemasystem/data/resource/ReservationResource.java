@@ -27,6 +27,7 @@ import com.fallstudie.cinemasystem.common.transferobject.ReservationTo;
 import com.fallstudie.cinemasystem.common.transferobject.SeatTo;
 import com.fallstudie.cinemasystem.common.transferobject.ShowTo;
 import com.fallstudie.cinemasystem.common.transferobject.TicketTo;
+import com.fallstudie.cinemasystem.common.utils.Utils;
 import com.fallstudie.cinemasystem.data.service.ReservationService;
 import com.fallstudie.cinemasystem.data.service.ShowService;
 
@@ -133,7 +134,7 @@ public class ReservationResource
                     toBook.add(ticketTo);
                 }
 //                bookedTickets = showService.bookShowTickets(toBook);
-                reservationTo.setDateOfReservation(new Date());
+                reservationTo.setDateOfReservation(Utils.convertDateToString(new Date()));
                 reservationTo.setTickets(toBook);
 
                 createdReservation = showService.reservateAndBookTickets(reservationTo, bookingTo.getCustomer().getId());

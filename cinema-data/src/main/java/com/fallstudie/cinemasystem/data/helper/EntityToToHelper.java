@@ -168,7 +168,7 @@ public class EntityToToHelper
         {
             ReservationTo reservationTo = new ReservationTo();
             reservationTo.setId(entity.getId());
-            reservationTo.setDateOfReservation(entity.getDateOfReservation());
+            reservationTo.setDateOfReservation(Utils.convertDateToString(entity.getDateOfReservation()));
             reservationTo.setCustomer(createCustomerTo(entity.getCustomer()));
             if ( withTickets )
             {

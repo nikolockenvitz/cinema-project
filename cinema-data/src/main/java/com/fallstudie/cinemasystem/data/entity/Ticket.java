@@ -118,15 +118,15 @@ public class Ticket implements Serializable
         this.reservation = reservation;
     }
 
-//    public Employee getEmployee ( )
-//    {
-//        return employee;
-//    }
-//
-//    public void setEmployee ( Employee employee )
-//    {
-//        this.employee = employee;
-//    }
+    public Employee getEmployee ( )
+    {
+        return employee;
+    }
+
+    public void setEmployee ( Employee employee )
+    {
+        this.employee = employee;
+    }
 
 //    @Override
 //    @Transient

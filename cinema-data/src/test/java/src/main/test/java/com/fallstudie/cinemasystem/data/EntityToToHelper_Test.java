@@ -296,7 +296,7 @@ public class EntityToToHelper_Test
         testReservationTo = new ReservationTo();
         testReservationTo.setCustomer(testCustomerTo);
         testReservationTo.setId(1);
-        testReservationTo.setDateOfReservation(testDateDate);
+        testReservationTo.setDateOfReservation(Utils.convertDateToString(testDateDate));
 
         // ticket entity
         testTicketEntity = new Ticket();
