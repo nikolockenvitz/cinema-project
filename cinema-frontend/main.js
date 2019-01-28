@@ -189,7 +189,7 @@ function displayMovieAndShows (movie) {
 				.replace("{showButtonDisabled}", (now > showTime ? "disabled" : ""))
 				.replace("{showTime}",show.time);
 		}
-		var date = new Date(todayMidnight.getYear(), todayMidnight.getMonth(), todayMidnight.getDate()+j);
+		var date = new Date(todayMidnight.getFullYear(), todayMidnight.getMonth(), todayMidnight.getDate()+j);
 		var dateDay = date.getDate();
 		var dateMonth = date.getMonth()+1;
 		$("#shows").append(templateShowsPerDay
