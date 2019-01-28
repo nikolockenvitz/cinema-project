@@ -117,6 +117,10 @@ public abstract class BaseDao<T> implements Dao<T>
         transaction.begin();
         try
         {
+            if ( !getEm().contains(object) )
+            {
+                object = getEm().merge(object);
+            }
             getEm().remove(object);
             transaction.commit();
         } catch (Exception e)

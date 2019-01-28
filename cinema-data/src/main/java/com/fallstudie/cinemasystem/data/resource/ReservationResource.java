@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -26,15 +27,14 @@ import com.fallstudie.cinemasystem.common.transferobject.ReservationTo;
 import com.fallstudie.cinemasystem.common.transferobject.SeatTo;
 import com.fallstudie.cinemasystem.common.transferobject.ShowTo;
 import com.fallstudie.cinemasystem.common.transferobject.TicketTo;
-import com.fallstudie.cinemasystem.common.utils.Utils;
 import com.fallstudie.cinemasystem.data.service.ReservationService;
 import com.fallstudie.cinemasystem.data.service.ShowService;
 
-@Path("/show")
-public class ShowResource
+@Path("/reservation")
+public class ReservationResource
 {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ShowResource.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ReservationResource.class);
 
     private static final MediaType textMedia = MediaType.TEXT_PLAIN_TYPE;
 
@@ -45,7 +45,7 @@ public class ShowResource
 
     private ResponseBuilder responseBuilder;
 
-    public ShowResource( )
+    public ReservationResource( )
     {
         this.showService = new ShowService();
         this.reservationService = new ReservationService();
@@ -55,38 +55,16 @@ public class ShowResource
     @GET
     @Path("{id}")
     @Propagate
-    @Description(value = "Method to get a show by id!")
+    @Description(value = "Method to get a reservation by id!")
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces({ MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON })
-    public Response getShowByID ( @PathParam("id") String id )
+    public Response getReservationByID ( @PathParam("id") String id )
     {
         String json = null;
         try
         {
-            ShowTo showTo = showService.getShow(id);
-            List<TicketTo> ticketTos = showService.getAllTicketsForShow(id);
-            Utils.checkIfSeatIsOccupied(showTo, ticketTos);
+            ReservationTo showTo = reservationService.getReservation(id);
             json = JSONConverter.toJSON(showTo);
-        } catch (Throwable e)
-        {
-            return responseBuilder.buildResponse(textMedia, e.getMessage(), e);
-        }
-        return responseBuilder.buildResponse(jsonMedia, json);
-    }
-
-    @GET
-    @Path("getAllShows/{id}")
-    @Propagate
-    @Description(value = "Method to get all shows by movie id!")
-    @Consumes(MediaType.TEXT_PLAIN)
-    @Produces({ MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON })
-    public Response getAllShowsByMovieID ( @PathParam("id") String id )
-    {
-        String json = null;
-        try
-        {
-            List<ShowTo> showTos = showService.getAllShowsByMovieId(id);
-            json = JSONConverter.toJSON(showTos);
         } catch (Throwable e)
         {
             return responseBuilder.buildResponse(textMedia, e.getMessage(), e);
@@ -108,7 +86,6 @@ public class ShowResource
             String showId = String.valueOf(bookingTo.getShowId());
             ShowTo showTo = showService.getShow(showId);
             List<TicketTo> ticketTos = showService.getAllTicketsForShow(showId);
-            List<TicketTo> bookedTickets = new ArrayList<>();
 
             List<SeatTo> seatTos = new ArrayList<>();
 
@@ -158,8 +135,8 @@ public class ShowResource
 //                bookedTickets = showService.bookShowTickets(toBook);
                 reservationTo.setDateOfReservation(new Date());
                 reservationTo.setTickets(toBook);
-                reservationTo.setCustomer(bookingTo.getCustomer());
-                createdReservation = reservationService.createReservation((reservationTo));
+
+                createdReservation = showService.reservateAndBookTickets(reservationTo, bookingTo.getCustomer().getId());
             }
 
             json = JSONConverter.toJSON(createdReservation);
@@ -171,4 +148,25 @@ public class ShowResource
         return responseBuilder.buildResponse(jsonMedia, json);
     }
 
+    @DELETE
+    @Path("delete/{id}")
+    @Propagate
+    @Description(value = "Method to delete a reservation by its id!")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces({ MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON })
+    public Response deleteReservationById ( @PathParam("id") String reservationId )
+    {
+        String json = null;
+        try
+        {
+            ReservationTo deletedReservation = reservationService.deleteReservation(reservationId);
+
+            json = JSONConverter.toJSON(deletedReservation);
+        } catch (Exception e)
+        {
+            LOGGER.error(e.getMessage());
+            return responseBuilder.buildResponse(textMedia, e.getMessage(), e);
+        }
+        return responseBuilder.buildResponse(jsonMedia, json);
+    }
 }

@@ -19,6 +19,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.eclipse.persistence.annotations.CascadeOnDelete;
+
 import com.fallstudie.cinemasystem.data.entity.query.ShowQuery;
 
 /**
@@ -27,6 +29,7 @@ import com.fallstudie.cinemasystem.data.entity.query.ShowQuery;
  */
 @Entity
 @Table(name = "show")
+@CascadeOnDelete
 @NamedQueries({ @NamedQuery(name = "Show.findAll", query = "SELECT s FROM Show s"),
         @NamedQuery(name = ShowQuery.FIND_SHOWS_BY_MOVIE_ID_QNAME, query = ShowQuery.FIND_SHOWS_BY_MOVIE_ID) })
 public class Show implements Serializable
@@ -150,59 +153,66 @@ public class Show implements Serializable
         return ticket;
     }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((date == null) ? 0 : date.hashCode());
-		result = prime * result + ((hall == null) ? 0 : hall.hashCode());
-		result = prime * result + (int) (id ^ (id >>> 32));
-		result = prime * result + (is3D ? 1231 : 1237);
-		result = prime * result + ((movie == null) ? 0 : movie.hashCode());
-		result = prime * result + ((tickets == null) ? 0 : tickets.hashCode());
-		result = prime * result + ((time == null) ? 0 : time.hashCode());
-		return result;
-	}
+    @Override
+    public int hashCode ( )
+    {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((date == null) ? 0 : date.hashCode());
+        result = prime * result + ((hall == null) ? 0 : hall.hashCode());
+        result = prime * result + (int) (id ^ (id >>> 32));
+        result = prime * result + (is3D ? 1231 : 1237);
+        result = prime * result + ((movie == null) ? 0 : movie.hashCode());
+        result = prime * result + ((tickets == null) ? 0 : tickets.hashCode());
+        result = prime * result + ((time == null) ? 0 : time.hashCode());
+        return result;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Show other = (Show) obj;
-		if (date == null) {
-			if (other.date != null)
-				return false;
-		} else if (!date.equals(other.date))
-			return false;
-		if (hall == null) {
-			if (other.hall != null)
-				return false;
-		} else if (!hall.equals(other.hall))
-			return false;
-		if (id != other.id)
-			return false;
-		if (is3D != other.is3D)
-			return false;
-		if (movie == null) {
-			if (other.movie != null)
-				return false;
-		} else if (!movie.equals(other.movie))
-			return false;
-		if (tickets == null) {
-			if (other.tickets != null)
-				return false;
-		} else if (!tickets.equals(other.tickets))
-			return false;
-		if (time == null) {
-			if (other.time != null)
-				return false;
-		} else if (!time.equals(other.time))
-			return false;
-		return true;
-	}
+    @Override
+    public boolean equals ( Object obj )
+    {
+        if ( this == obj )
+            return true;
+        if ( obj == null )
+            return false;
+        if ( getClass() != obj.getClass() )
+            return false;
+        Show other = (Show) obj;
+        if ( date == null )
+        {
+            if ( other.date != null )
+                return false;
+        } else if ( !date.equals(other.date) )
+            return false;
+        if ( hall == null )
+        {
+            if ( other.hall != null )
+                return false;
+        } else if ( !hall.equals(other.hall) )
+            return false;
+        if ( id != other.id )
+            return false;
+        if ( is3D != other.is3D )
+            return false;
+        if ( movie == null )
+        {
+            if ( other.movie != null )
+                return false;
+        } else if ( !movie.equals(other.movie) )
+            return false;
+        if ( tickets == null )
+        {
+            if ( other.tickets != null )
+                return false;
+        } else if ( !tickets.equals(other.tickets) )
+            return false;
+        if ( time == null )
+        {
+            if ( other.time != null )
+                return false;
+        } else if ( !time.equals(other.time) )
+            return false;
+        return true;
+    }
 
 }
