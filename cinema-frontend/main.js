@@ -121,9 +121,20 @@ var templateMovieDetail = `
 `;
 var templateShowsPerDay = `
 	<tr>
-		<td>{showDate}, {showWeekday}</td>
+		<td>{showWeekday} ({showDate})</td>
 		<td>{movieShows}</td>
 	</tr>
+`;
+var templateRatings = `
+	<div class="row featurette">
+	  <div class="col-12" id="ratings">
+		<h2 class="featurette-heading">Bewertungen</h2>
+	    {ratings}
+      </div>
+    </div>
+`;
+var templateRating = `
+	<p class="lead rating-{movieRating}">{ratingUsername}<br>{ratingComment}</p>
 `;
 
 function loadMovieAndShows () {
@@ -172,7 +183,7 @@ function displayMovieAndShows (movie) {
 		var [day, month, year] = show.date.split(".");
 		var showDate = new Date(year, month-1, day);
 		var differenceToToday = (showDate - todayMidnight) / 1000 / 60 / 60 / 24;
-		if(differenceToToday >= 0 && differenceToToday <= numberOfDisplayedDays) {
+		if(differenceToToday >= 0 && differenceToToday < numberOfDisplayedDays) {
 			showsPerDay[differenceToToday].push(show);
 		}
 	}
@@ -193,9 +204,33 @@ function displayMovieAndShows (movie) {
 		var dateDay = date.getDate();
 		var dateMonth = date.getMonth()+1;
 		$("#shows").append(templateShowsPerDay
-			.replace("{showDate}", (dateDay<10 ? "0" : "") + dateDay + "." + (dateMonth<10 ? "0" : "") + dateMonth + ".")
+			.replace("{showDate}", (dateDay<10 ? "0" : "") + dateDay + "." + (dateMonth<10 ? "0" : "") + dateMonth + "." + date.getFullYear())
 			.replace("{showWeekday}", ["Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag"][date.getDay()])
 			.replace("{movieShows}", showButtons)
+		);
+	}
+	
+	if(movie.ratings.length > 0) {
+		var ratings = "";
+		for(var j=0; j<movie.ratings.length; j++) {
+			var rating = movie.ratings[j];
+			var name = "";
+			if(rating.customer != null) {
+				name += (rating.customer.firstname != null ? rating.customer.firstname : "");
+				name += ((rating.customer.firstname == null || rating.customer.firstname == "" || rating.customer.lastname == null || rating.customer.lastname == "") ? "" : " ");
+				name += (rating.customer.lastname != null ? rating.customer.lastname : "");
+			}
+			else {
+				name = "Gast";
+			}
+			ratings += templateRating
+				.replace("{movieRating}", Math.max(0, Math.min(5, Math.round(rating.rating))))
+				.replace("{ratingUsername}", name)
+				.replace("{ratingComment}", (rating.comment != null ? rating.comment : ""))
+			;
+		}
+		$("#movie").append(templateRatings
+			.replace("{ratings}", ratings)
 		);
 	}
 }
