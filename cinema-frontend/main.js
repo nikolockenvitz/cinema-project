@@ -41,6 +41,9 @@ switch(page) {
 	case "bezahlen.html":
 		loadSummaryAndPayment();
 		break;
+	case "bestaetigung.html":
+		loadConfirmation();
+		break;
 }
 
 /* index.html - Movies */
@@ -341,4 +344,61 @@ function displaySummaryAndPayment (show) {
 	$("#summary-price").text(urlparameters.get("preis"));
 	
 	setCurrentShow(show);
+}
+
+
+/* bestaetigung.html - Confirmation */
+function loadConfirmation () {
+	var showID = urlparameters.get("sid");
+	if (showID == null) {
+		window.location.href = "./index.html";
+	}
+	else {
+		getData(PATH_SHOW.replace("{showID}", showID), displayConfirmation);
+	}
+}
+
+function displayConfirmation (show) {
+	if(show == null || show == []) {
+		window.location.href = "./fehler.html";
+	}
+	
+	var movie = show.movie;
+	document.title += " - " + movie.name;
+	
+	var genres = "";
+	for(var j in movie.genres) {
+		genres += ", " + movie.genres[j].genre;
+	}
+	$("#show").prepend(templateShow
+		.replace(/\{movieID\}/g, movie.id)
+		.replace(/\{movieTitle\}/g, movie.name)
+		.replace("{movieFSK}", movie.fsk)
+		.replace("{movieDuration}", movie.duration)
+		.replace("{movieGenres}", genres)
+		.replace("{showDate}", show.date.slice(0,-4))
+		.replace("{showWeekday}", show.weekday)
+		.replace("{showTime}", show.time)
+	);
+	
+	var summary = "";
+	var [pn,pe,ln,le] = urlparameters.get("p").split(",");
+	if(pn > 0 || pe > 0) {
+		summary += '<p class="lead">Parkett: ';
+		if(pe > 0) summary += pe + "x ermäßigt";
+		if(pe > 0 && pn > 0) summary += ", ";
+		if(pn > 0) summary += pn + "x normal";
+		summary += "</p>";
+	}
+	if(ln > 0 || le > 0) {
+		summary += '<p class="lead">Loge: ';
+		if(le > 0) summary += le + "x ermäßigt";
+		if(le > 0 && ln > 0) summary += ", ";
+		if(ln > 0) summary += ln + "x normal";
+		summary += "</p>";
+	}
+	$("#summary-seats").html(summary);
+	$("#summary-price").text(urlparameters.get("preis"));
+	
+	drawQrCode("kinente/kino-ententeich: " + urlparameters.get("rid"));
 }
