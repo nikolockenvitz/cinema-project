@@ -16,15 +16,60 @@ $(function () {
 			return;
 		}
 		
-		var seats = urlparameters.get("s");
-		var [pn,pe,ln,le] = urlparameters.get("p");
+		var showId = urlparameters.get("id");
+		
+		var seatsP = urlparameters.get("sp").split(",");
+		var seatsL = urlparameters.get("sl").split(",");
+		var [pn,pe,ln,le] = urlparameters.get("p").split(",");
 		
 		// prepare data for ajax
+		var book = {paymentoption: "giftcard",
+					verification: token,
+					showId: parseInt(showId),
+					seats: [],
+					customer: {firstname: firstName, lastname: lastName, email: email}};
+		for(var i=0; i<seatsP.length; i++) {
+			if(seatsP[i] != "")
+				book.seats.push({id: parseInt(seatsP[i]), isReducedPrice: (pe-- > 0 ? true : false)});
+		}
+		for(var i=0; i<seatsL.length; i++) {
+			if(seatsL[i] != "")
+				book.seats.push({id: parseInt(seatsL[i]), isReducedPrice: (le-- > 0 ? true : false)});
+		}
+		
 		// send ajax
-		// successful (returned reservation-id) -> show confirmation
-		// error: show error page
+		var data = "book=" + JSON.stringify(book);
+		$.ajax({
+		  type: "POST",
+		  url: "http://localhost:8080/cinema-data/reservation/book",
+		  data: data,
+		  contentType: "application/json; charset=utf-8",
+		  success: (data) => processBookingResult(data),
+		  error: function (xhr,status,error){
+			console.log(xhr, status, error);
+			processBookingResult(null);
+		  }
+		});
 	});
 });
+
+function processBookingResult (data) {
+	if(data != null && data != [] && data != {}) {
+		var reservationId = data.id;
+		if(reservationId != null && reservationId > 0) {
+			// successful
+			var url = "./bestaetigung.html";
+			url += "?rid=" + reservationId;
+			url += "&sid=" + urlparameters.get("id");
+			url += "&p=" + urlparameters.get("p");
+			url += "&preis=" + urlparameters.get("preis")
+			window.location.href = url;
+			return;
+		}
+	}
+	console.log(data);
+	window.location.href = "./fehler.html";
+}
 
 function setCurrentShow (show) {
 	currentShow = show; // necessary to access seat-array for show

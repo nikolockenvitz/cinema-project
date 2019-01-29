@@ -1,7 +1,3 @@
-/* TODO's
- * - pass selected seats (reduced/default) to next site
- * - colors, text
- */
 
 var seats = {};
 var hall = {};
@@ -45,9 +41,9 @@ function createLocalHallAndSeats () {
 
 function getSeatData (hallData) {
 	hall = { width: hallData.width, length: hallData.length };
-	for(var seatID in hallData.seats) {
-		var seat = hallData.seats[seatID];
-		seats[seatID] = {
+	for(var i in hallData.seats) {
+		var seat = hallData.seats[i];
+		seats[seat.id] = {
 			isOccupied: seat.occupied,
 			isBlocked: seat.blocked,
 			x: seat.x,
@@ -222,11 +218,16 @@ $(function () {
 	});
 	
 	$('#button-purchase').on('click', function () {
-		var urlSeats = "";
+		var urlSeatsP = "";
+		var urlSeatsL = "";
 		for(var seatId in selection) {
-			urlSeats += seatId + ",";
+			if(getCategoryOfSeat(seatId) == "p")
+				urlSeatsP += seatId + ",";
+			else
+				urlSeatsL += seatId + ",";
 		}
-		urlSeats = urlSeats.substr(0, urlSeats.length-1);
+		urlSeatsP = urlSeatsP.substr(0, urlSeatsP.length-1);
+		urlSeatsL = urlSeatsL.substr(0, urlSeatsL.length-1);
 		
 		var urlPrice = numberOfTickets["pn"];
 		urlPrice += "," + numberOfTickets["pe"];
@@ -235,7 +236,8 @@ $(function () {
 		
 		var url = "./bezahlen.html";
 		url += "?id=" + urlparameters.get("id");
-		url += "&s=" + urlSeats;
+		url += "&sp=" + urlSeatsP;
+		url += "&sl=" + urlSeatsL;
 		url += "&p=" + urlPrice;
 		url += "&preis=" + $("#price").text();
 		window.location.href = url;

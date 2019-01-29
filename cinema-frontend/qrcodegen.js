@@ -1045,24 +1045,18 @@ var qrcodegen = new function() {
 	
 };
 
-var app = new function() {	
-	
-	function drawQrCode() {
-		// Reset output images
-		var canvas = document.getElementById("qrcode-canvas");
-		var svg = document.getElementById("qrcode-svg");
-		canvas.style.display = "none";
-		svg.style.display = "none";
-				
-		// Get form inputs and compute QR Code
-		var text = "kinente/kino-ententeich: reservierungs-id"
-		var segs = qrcodegen.QrSegment.makeSegments(text);
-		var qr = qrcodegen.QrCode.encodeSegments(segs, qrcodegen.QrCode.Ecc.LOW, 1, 40, -1, true);
-		
-		// Draw image output
-		qr.drawCanvas(8, 4, canvas);
-		canvas.style.removeProperty("display");
-	}	
-	
-	drawQrCode();
+function drawQrCode (qrText) {
+	// Reset output images
+	var canvas = document.getElementById("qrcode-canvas");
+	var svg = document.getElementById("qrcode-svg");
+	canvas.style.display = "none";
+	svg.style.display = "none";
+
+	// Get form inputs and compute QR Code
+	var segs = qrcodegen.QrSegment.makeSegments(qrText);
+	var qr = qrcodegen.QrCode.encodeSegments(segs, qrcodegen.QrCode.Ecc.LOW, 1, 40, -1, true);
+
+	// Draw image output
+	qr.drawCanvas(8, 4, canvas);
+	canvas.style.removeProperty("display");
 }
