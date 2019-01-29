@@ -22,13 +22,17 @@ import com.fallstudie.cinemasystem.common.annotation.Description;
 import com.fallstudie.cinemasystem.common.annotation.Propagate;
 import com.fallstudie.cinemasystem.common.json.JSONConverter;
 import com.fallstudie.cinemasystem.common.responsebuilder.ResponseBuilder;
+import com.fallstudie.cinemasystem.common.transferobject.BlockTo;
 import com.fallstudie.cinemasystem.common.transferobject.BookingTo;
+import com.fallstudie.cinemasystem.common.transferobject.CustomerTo;
 import com.fallstudie.cinemasystem.common.transferobject.ReservationTo;
 import com.fallstudie.cinemasystem.common.transferobject.SeatTo;
 import com.fallstudie.cinemasystem.common.transferobject.ShowTo;
 import com.fallstudie.cinemasystem.common.transferobject.TicketTo;
 import com.fallstudie.cinemasystem.common.utils.Utils;
+import com.fallstudie.cinemasystem.data.service.CustomerService;
 import com.fallstudie.cinemasystem.data.service.ReservationService;
+import com.fallstudie.cinemasystem.data.service.SeatService;
 import com.fallstudie.cinemasystem.data.service.ShowService;
 
 @Path("/reservation")
@@ -43,6 +47,8 @@ public class ReservationResource
 
     private ShowService        showService;
     private ReservationService reservationService;
+    private SeatService        seatService;
+    private CustomerService    customerService;
 
     private ResponseBuilder responseBuilder;
 
@@ -51,6 +57,8 @@ public class ReservationResource
         this.showService = new ShowService();
         this.reservationService = new ReservationService();
         this.responseBuilder = new ResponseBuilder();
+        this.seatService = new SeatService();
+        this.customerService = new CustomerService();
     }
 
     @GET
@@ -86,6 +94,9 @@ public class ReservationResource
             BookingTo bookingTo = (BookingTo) JSONConverter.fromJSON(json, BookingTo.class);
             String showId = String.valueOf(bookingTo.getShowId());
             ShowTo showTo = showService.getShow(showId);
+            // TODO CHECK IF CUSTOMER Exists if not persist
+            CustomerTo customerTo = customerService.getCustomerByEmail(bookingTo.getCustomer().getEmail());
+
             List<TicketTo> ticketTos = showService.getAllTicketsForShow(showId);
 
             List<SeatTo> seatTos = new ArrayList<>();
@@ -136,7 +147,7 @@ public class ReservationResource
 //                bookedTickets = showService.bookShowTickets(toBook);
                 reservationTo.setDateOfReservation(Utils.convertDateToString(new Date()));
                 reservationTo.setTickets(toBook);
-                reservationTo.setCustomer(bookingTo.getCustomer());
+                reservationTo.setCustomer(customerTo);
 
                 createdReservation = reservationService.createReservation((reservationTo));
             }
@@ -164,6 +175,35 @@ public class ReservationResource
             ReservationTo deletedReservation = reservationService.deleteReservation(reservationId);
 
             json = JSONConverter.toJSON(deletedReservation);
+        } catch (Exception e)
+        {
+            LOGGER.error(e.getMessage());
+            return responseBuilder.buildResponse(textMedia, e.getMessage(), e);
+        }
+        return responseBuilder.buildResponse(jsonMedia, json);
+    }
+
+    @POST
+    @Path("block")
+    @Propagate
+    @Description(value = "Method to book seats for a show by its id!")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces({ MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON })
+    public Response blockseat ( @FormParam("block") String json )
+    {
+        try
+        {
+            BlockTo bookingTo = (BlockTo) JSONConverter.fromJSON(json, BlockTo.class);
+            String showId = String.valueOf(bookingTo.getShow().getId());
+            ShowTo showTo = showService.getShow(showId);
+            String seatId = String.valueOf(bookingTo.getSeat().getId());
+            SeatTo seatTo = seatService.getSeat(seatId);
+            bookingTo.setShow(showTo);
+            bookingTo.setSeat(seatTo);
+
+            BlockTo createdBlockTo = reservationService.blockSeat(bookingTo);
+
+            json = JSONConverter.toJSON(createdBlockTo);
         } catch (Exception e)
         {
             LOGGER.error(e.getMessage());

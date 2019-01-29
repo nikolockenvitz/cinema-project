@@ -79,6 +79,7 @@ public class SeatTo
     private boolean    isOccupied;
     private int        x;
     private int        y;
+    private boolean    isReducedPrice;
 
     public long getId ( )
     {
@@ -170,4 +171,13 @@ public class SeatTo
         this.y = y;
     }
 
+    public void setIsreducedPrice ( boolean isReducedPrice )
+    {
+        this.isReducedPrice = isReducedPrice;
+    }
+
+    public boolean isReducedPrice ( )
+    {
+        return this.isReducedPrice;
+    }
 }

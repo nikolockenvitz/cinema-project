@@ -15,6 +15,7 @@
 		<class>com.fallstudie.cinemasystem.data.entity.Reservation</class>
 		<class>com.fallstudie.cinemasystem.data.entity.Seat</class>
 		<class>com.fallstudie.cinemasystem.data.entity.Ticket</class>
+		<class>com.fallstudie.cinemasystem.data.entity.Block</class>
 		<properties>
 			<!--  <property name="javax.persistence.nonJtaDataSource" value="java:comp/env/kinosystemDS"/> -->
 		  	<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/kinosystem"/> 

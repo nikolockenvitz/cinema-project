@@ -25,8 +25,14 @@ public class Utils
 
     public static String getWeekDay ( Date date )
     {
-        SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
-        return sdf.format(date);
+        if ( null != date )
+        {
+            SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
+            return sdf.format(date);
+        } else
+        {
+            return null;
+        }
     }
 
     public static String convertDateToTime ( Date date )

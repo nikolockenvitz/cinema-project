@@ -25,6 +25,11 @@ public class CustomerService
         return EntityToToHelper.createCustomerTo(customerDao.find(id));
     }
 
+    public CustomerTo getCustomerByEmail ( String email )
+    {
+        return EntityToToHelper.createCustomerTo(customerDao.getCustomerByEmail(email));
+    }
+
     public CustomerTo save ( CustomerTo customerTo )
     {
         return EntityToToHelper.createCustomerTo(customerDao.persist(ToToEntityHelper.createCustomerEntity(customerTo)));

@@ -1,9 +1,11 @@
 package com.fallstudie.cinemasystem.data.helper;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.fallstudie.cinemasystem.common.transferobject.ActorTo;
+import com.fallstudie.cinemasystem.common.transferobject.BlockTo;
 import com.fallstudie.cinemasystem.common.transferobject.CategoryTo;
 import com.fallstudie.cinemasystem.common.transferobject.CustomerTo;
 import com.fallstudie.cinemasystem.common.transferobject.EmployeeTo;
@@ -17,6 +19,7 @@ import com.fallstudie.cinemasystem.common.transferobject.ShowTo;
 import com.fallstudie.cinemasystem.common.transferobject.TicketTo;
 import com.fallstudie.cinemasystem.common.utils.Utils;
 import com.fallstudie.cinemasystem.data.entity.Actor;
+import com.fallstudie.cinemasystem.data.entity.Block;
 import com.fallstudie.cinemasystem.data.entity.Category;
 import com.fallstudie.cinemasystem.data.entity.Customer;
 import com.fallstudie.cinemasystem.data.entity.Employee;
@@ -233,6 +236,21 @@ public class ToToEntityHelper
             customer.setId(transferObject.getId());
             customer.setUsername(transferObject.getUsername());
             return customer;
+        }
+        return null;
+    }
+
+    public static Block createBlockEntity ( BlockTo transferObject )
+    {
+        if ( null != transferObject )
+        {
+            Block block = new Block();
+            block.setId(transferObject.getId());
+            block.setSessiontoken(transferObject.getSessiontoken());
+            block.setSeat(createSeatEntity(transferObject.getSeat()));
+            block.setTimeofreservation(new Date());
+            block.setShow(createShowEntity(transferObject.getShow(), true));
+            return block;
         }
         return null;
     }
