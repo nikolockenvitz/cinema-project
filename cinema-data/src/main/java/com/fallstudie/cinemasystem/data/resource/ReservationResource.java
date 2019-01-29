@@ -94,62 +94,67 @@ public class ReservationResource
             BookingTo bookingTo = (BookingTo) JSONConverter.fromJSON(json, BookingTo.class);
             String showId = String.valueOf(bookingTo.getShowId());
             ShowTo showTo = showService.getShow(showId);
-            // TODO CHECK IF CUSTOMER Exists if not persist
-            CustomerTo customerTo = customerService.getCustomerByEmail(bookingTo.getCustomer().getEmail());
-
-            List<TicketTo> ticketTos = showService.getAllTicketsForShow(showId);
-
-            List<SeatTo> seatTos = new ArrayList<>();
-
             ReservationTo createdReservation = new ReservationTo();
-            boolean bookable = true;
-            for ( SeatTo seatTo : bookingTo.getSeats() )
+
+            if ( Utils.checkIfShowIsReservable(showTo) )
             {
-                for ( TicketTo ticketTo : ticketTos )
+                // TODO CHECK IF CUSTOMER Exists if not persist
+                CustomerTo customerTo = customerService.getCustomerByEmail(bookingTo.getCustomer().getEmail());
+
+                List<TicketTo> ticketTos = showService.getAllTicketsForShow(showId);
+
+                List<SeatTo> seatTos = new ArrayList<>();
+
+                boolean bookable = true;
+                for ( SeatTo seatTo : bookingTo.getSeats() )
                 {
-                    if ( ticketTo.getSeat().getId() == seatTo.getId() )
+                    for ( TicketTo ticketTo : ticketTos )
                     {
-                        bookable = false;
+                        if ( ticketTo.getSeat().getId() == seatTo.getId() )
+                        {
+                            bookable = false;
+                            break;
+                        }
+                    }
+                    if ( !bookable )
+                    {
                         break;
                     }
-                }
-                if ( !bookable )
-                {
-                    break;
-                }
-                for ( SeatTo to : showTo.getHall().getSeats() )
-                {
-                    long seatIdHall = to.getId();
-                    long test = seatTo.getId();
-                    if ( seatIdHall == test )
+                    for ( SeatTo to : showTo.getHall().getSeats() )
                     {
-                        seatTos.add(to);
-                        break;
+                        long seatIdHall = to.getId();
+                        long test = seatTo.getId();
+                        if ( seatIdHall == test )
+                        {
+                            seatTos.add(to);
+                            break;
+                        }
                     }
                 }
-            }
 
-            List<TicketTo> toBook = new ArrayList<>();
-            ReservationTo reservationTo = new ReservationTo();
+                List<TicketTo> toBook = new ArrayList<>();
+                ReservationTo reservationTo = new ReservationTo();
 
-            if ( bookable )
-            {
-                for ( SeatTo seatTo : seatTos )
+                if ( bookable )
                 {
-                    seatTo.setOccupied(true);
+                    for ( SeatTo seatTo : seatTos )
+                    {
+                        seatTo.setOccupied(true);
 
-                    TicketTo ticketTo = new TicketTo();
-                    ticketTo.setSeat(seatTo);
-                    ticketTo.setShow(showTo);
-                    ticketTo.setReservation(reservationTo);
-                    toBook.add(ticketTo);
-                }
+                        TicketTo ticketTo = new TicketTo();
+                        ticketTo.setSeat(seatTo);
+                        ticketTo.setShow(showTo);
+                        ticketTo.setReservation(reservationTo);
+                        toBook.add(ticketTo);
+                    }
 //                bookedTickets = showService.bookShowTickets(toBook);
-                reservationTo.setDateOfReservation(Utils.convertDateToString(new Date()));
-                reservationTo.setTickets(toBook);
-                reservationTo.setCustomer(customerTo);
+                    reservationTo.setDateOfReservation(Utils.convertDateToString(new Date()));
+                    reservationTo.setTickets(toBook);
+                    reservationTo.setCustomer(customerTo);
 
-                createdReservation = reservationService.createReservation((reservationTo));
+                    createdReservation = reservationService.createReservation((reservationTo));
+                }
+
             }
 
             json = JSONConverter.toJSON(createdReservation);
