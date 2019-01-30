@@ -8,8 +8,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import com.fallstudie.cinemasystem.common.transferobject.BlockTo;
 import com.fallstudie.cinemasystem.common.transferobject.SeatTo;
-import com.fallstudie.cinemasystem.common.transferobject.ShowTo;
 import com.fallstudie.cinemasystem.common.transferobject.TicketTo;
 
 public class Utils
@@ -50,27 +50,29 @@ public class Utils
         }
     }
 
-    public static boolean checkIfSeatIsBlocked ( List<TicketTo> tickets, long seatId )
+    public static void checkIfSeatIsBlocked ( List<BlockTo> blockedSeats, List<SeatTo> seatTosFromHall )
     {
         long tempSeatId = 0;
-        for ( TicketTo ticketTo : tickets )
+        for ( BlockTo blockTo : blockedSeats )
         {
-            tempSeatId = ticketTo.getSeat().getId();
-            if ( tempSeatId == seatId )
+            tempSeatId = blockTo.getSeat().getId();
+            for ( SeatTo s : seatTosFromHall )
             {
-                return true;
+                if ( tempSeatId == s.getId() )
+                {
+                    s.setBlocked(true);
+                    break;
+                }
             }
         }
-        return false;
     }
 
-    public static void checkIfSeatIsOccupied ( ShowTo showTo, List<TicketTo> ticketTos )
+    public static void checkIfSeatIsOccupied ( List<SeatTo> seatTosFromHall, List<TicketTo> ticketTos )
     {
-        List<SeatTo> seatTos = showTo.getHall().getSeats();
         long actualSeatId;
         long tmpSeatId;
 
-        for ( SeatTo seatTo : seatTos )
+        for ( SeatTo seatTo : seatTosFromHall )
         {
             for ( TicketTo ticketTo : ticketTos )
             {
@@ -157,11 +159,11 @@ public class Utils
         return null;
     }
 
-    public static boolean checkIfShowIsReservable ( ShowTo showTo )
+    public static boolean checkIfShowIsReservable ( String showDate, String showTime )
     {
         Calendar calendarNow = Calendar.getInstance();
-        Calendar c = Utils.convertStringToCalendarTime(showTo.getTime());
-        Calendar calendarShow = Utils.convertStringToCalendarDate(showTo.getDate());
+        Calendar c = Utils.convertStringToCalendarTime(showTime);
+        Calendar calendarShow = Utils.convertStringToCalendarDate(showDate);
         calendarShow.set(Calendar.HOUR_OF_DAY, c.get(Calendar.HOUR_OF_DAY));
         calendarShow.set(Calendar.MINUTE, c.get(Calendar.MINUTE));
         calendarShow.set(Calendar.SECOND, c.get(Calendar.SECOND));

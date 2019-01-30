@@ -35,4 +35,16 @@ public class CustomerService
         return EntityToToHelper.createCustomerTo(customerDao.persist(ToToEntityHelper.createCustomerEntity(customerTo)));
     }
 
+    public CustomerTo checkIfCustomerExistsIfNotPersist ( String email )
+    {
+        CustomerTo customerTo = getCustomerByEmail(email);
+        if ( null != customerTo )
+        {
+            return customerTo;
+        } else
+        {
+            return EntityToToHelper.createCustomerTo(customerDao.persist(ToToEntityHelper.createCustomerEntity(customerTo)));
+        }
+    }
+
 }

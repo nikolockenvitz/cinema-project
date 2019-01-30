@@ -17,6 +17,7 @@ import com.fallstudie.cinemasystem.common.annotation.Description;
 import com.fallstudie.cinemasystem.common.annotation.Propagate;
 import com.fallstudie.cinemasystem.common.json.JSONConverter;
 import com.fallstudie.cinemasystem.common.responsebuilder.ResponseBuilder;
+import com.fallstudie.cinemasystem.common.transferobject.BlockTo;
 import com.fallstudie.cinemasystem.common.transferobject.ShowTo;
 import com.fallstudie.cinemasystem.common.transferobject.TicketTo;
 import com.fallstudie.cinemasystem.common.utils.Utils;
@@ -58,7 +59,9 @@ public class ShowResource
         {
             ShowTo showTo = showService.getShow(id);
             List<TicketTo> ticketTos = showService.getAllTicketsForShow(id);
-            Utils.checkIfSeatIsOccupied(showTo, ticketTos);
+            List<BlockTo> blockedSeats = reservationService.getBlockedSeats(String.valueOf(showTo.getId()));
+            Utils.checkIfSeatIsOccupied(showTo.getHall().getSeats(), ticketTos);
+            Utils.checkIfSeatIsBlocked(blockedSeats, showTo.getHall().getSeats());
             json = JSONConverter.toJSON(showTo);
         } catch (Throwable e)
         {

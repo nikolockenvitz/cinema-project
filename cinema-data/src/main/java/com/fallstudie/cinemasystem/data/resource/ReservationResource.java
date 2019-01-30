@@ -95,61 +95,20 @@ public class ReservationResource
             String showId = String.valueOf(bookingTo.getShowId());
             ShowTo showTo = showService.getShow(showId);
             ReservationTo createdReservation = new ReservationTo();
+            boolean bookable = true;
 
-            if ( Utils.checkIfShowIsReservable(showTo) )
+            if ( Utils.checkIfShowIsReservable(showTo.getDate(), showTo.getTime()) )
             {
-                // TODO CHECK IF CUSTOMER Exists if not persist
-                CustomerTo customerTo = customerService.getCustomerByEmail(bookingTo.getCustomer().getEmail());
+                CustomerTo customerTo = customerService.checkIfCustomerExistsIfNotPersist(bookingTo.getCustomer().getEmail());
 
                 List<TicketTo> ticketTos = showService.getAllTicketsForShow(showId);
+                List<BlockTo> blockTos = reservationService.getBlockedSeats(showId);
 
-                List<SeatTo> seatTos = new ArrayList<>();
-
-                boolean bookable = true;
-                for ( SeatTo seatTo : bookingTo.getSeats() )
-                {
-                    for ( TicketTo ticketTo : ticketTos )
-                    {
-                        if ( ticketTo.getSeat().getId() == seatTo.getId() )
-                        {
-                            bookable = false;
-                            break;
-                        }
-                    }
-                    if ( !bookable )
-                    {
-                        break;
-                    }
-                    for ( SeatTo to : showTo.getHall().getSeats() )
-                    {
-                        long seatIdHall = to.getId();
-                        long test = seatTo.getId();
-                        if ( seatIdHall == test )
-                        {
-                            seatTos.add(to);
-                            break;
-                        }
-                    }
-                }
-
-                List<TicketTo> toBook = new ArrayList<>();
-                ReservationTo reservationTo = new ReservationTo();
+                List<SeatTo> seatTos = checkIfSeatsAreBookable(bookable, bookingTo.getSeats(), ticketTos, blockTos);
 
                 if ( bookable )
                 {
-                    for ( SeatTo seatTo : seatTos )
-                    {
-                        seatTo.setOccupied(true);
-
-                        TicketTo ticketTo = new TicketTo();
-                        ticketTo.setSeat(seatTo);
-                        ticketTo.setShow(showTo);
-                        ticketTo.setReservation(reservationTo);
-                        toBook.add(ticketTo);
-                    }
-//                bookedTickets = showService.bookShowTickets(toBook);
-                    reservationTo.setDateOfReservation(Utils.convertDateToString(new Date()));
-                    reservationTo.setTickets(toBook);
+                    ReservationTo reservationTo = createReservationForSeats(seatTos, showTo);
                     reservationTo.setCustomer(customerTo);
 
                     createdReservation = reservationService.createReservation((reservationTo));
@@ -164,6 +123,63 @@ public class ReservationResource
             return responseBuilder.buildResponse(textMedia, e.getMessage(), e);
         }
         return responseBuilder.buildResponse(jsonMedia, json);
+    }
+
+    private ReservationTo createReservationForSeats ( List<SeatTo> seatTos, ShowTo showTo )
+    {
+        List<TicketTo> toBook = new ArrayList<>();
+        ReservationTo createdReservationTo = new ReservationTo();
+
+        for ( SeatTo seatTo : seatTos )
+        {
+            seatTo.setOccupied(true);
+
+            TicketTo ticketTo = new TicketTo();
+            ticketTo.setSeat(seatTo);
+            ticketTo.setShow(showTo);
+            ticketTo.setReservation(createdReservationTo);
+            if ( seatTo.isReducedPrice() )
+            {
+                ticketTo.setReducedPrice(true);
+            }
+            toBook.add(ticketTo);
+        }
+        createdReservationTo.setDateOfReservation(Utils.convertDateToString(new Date()));
+        createdReservationTo.setTickets(toBook);
+        return createdReservationTo;
+
+    }
+
+    private List<SeatTo> checkIfSeatsAreBookable ( boolean bookable, List<SeatTo> seatsToProof, List<TicketTo> bookedTicketTos, List<BlockTo> blockTos )
+    {
+        List<SeatTo> seatsToBook = new ArrayList<>();
+        for ( SeatTo s : seatsToProof )
+        {
+            for ( TicketTo t : bookedTicketTos )
+            {
+                if ( s.getId() == t.getSeat().getId() )
+                {
+                    bookable = false;
+                    break;
+                } else
+                {
+                    s.setOccupied(true);
+                }
+            }
+            for ( BlockTo b : blockTos )
+            {
+                if ( s.getId() == b.getSeat().getId() )
+                {
+                    bookable = false;
+                    break;
+                } else
+                {
+                    s.setBlocked(true);
+                }
+            }
+            seatsToBook.add(s);
+        }
+        return seatsToBook;
     }
 
     @DELETE

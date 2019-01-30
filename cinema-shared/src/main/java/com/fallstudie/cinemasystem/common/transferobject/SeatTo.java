@@ -1,9 +1,5 @@
 package com.fallstudie.cinemasystem.common.transferobject;
 
-import java.util.List;
-
-import com.fallstudie.cinemasystem.common.utils.Utils;
-
 public class SeatTo
 {
     @Override
@@ -136,9 +132,9 @@ public class SeatTo
         return isBlocked;
     }
 
-    public void setBlocked ( List<TicketTo> tickets, long seatId )
+    public void setBlocked ( boolean isBlocked )
     {
-        this.isBlocked = Utils.checkIfSeatIsBlocked(tickets, seatId);
+        this.isBlocked = isBlocked;
     }
 
     public boolean isOccupied ( )

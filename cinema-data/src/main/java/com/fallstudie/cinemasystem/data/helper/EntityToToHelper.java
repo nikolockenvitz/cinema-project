@@ -483,4 +483,17 @@ public class EntityToToHelper
         return list;
     }
 
+    public static List<BlockTo> createBlockTos ( List<Block> blocks )
+    {
+        List<BlockTo> list = new ArrayList<>();
+        if ( null != blocks )
+        {
+            for ( Block b : blocks )
+            {
+                list.add(createBlockTo(b));
+            }
+        }
+        return list;
+    }
+
 }

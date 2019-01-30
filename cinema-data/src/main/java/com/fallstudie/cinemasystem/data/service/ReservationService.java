@@ -1,5 +1,7 @@
 package com.fallstudie.cinemasystem.data.service;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -65,6 +67,12 @@ public class ReservationService
         block = blockDao.persist(block);
         block = blockDao.find(block.getId());
         return EntityToToHelper.createBlockTo(block);
+    }
+
+    public List<BlockTo> getBlockedSeats ( String showId )
+    {
+        long id = Long.parseLong(showId);
+        return EntityToToHelper.createBlockTos(blockDao.getAllBlockedSeats(id));
     }
 
 }
