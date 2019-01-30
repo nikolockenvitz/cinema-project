@@ -1,5 +1,6 @@
 package com.fallstudie.cinemasystem.data.service;
 
+import java.util.Calendar;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -72,7 +73,9 @@ public class ReservationService
     public List<BlockTo> getBlockedSeats ( String showId )
     {
         long id = Long.parseLong(showId);
-        return EntityToToHelper.createBlockTos(blockDao.getAllBlockedSeats(id));
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.MINUTE, cal.get(Calendar.MINUTE) - 5);
+        return EntityToToHelper.createBlockTos(blockDao.getAllBlockedSeats(id, cal.getTime()));
     }
 
 }
