@@ -29,7 +29,7 @@ public class BlockDao extends BaseDao<Block>
     {
         List<Block> resultList = null;
         Query query = getEm().createNamedQuery(BlockQuery.FIND_BLOCKEDSEATS_BY_SHOW_ID);
-        query.setParameter(QueryParam.MOVIE_ID, id);
+        query.setParameter(QueryParam.SHOW_ID, id);
         resultList = query.getResultList();
         return resultList;
     }
