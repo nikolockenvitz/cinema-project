@@ -1,6 +1,16 @@
 var currentShow = null;
+var cookie = null;
+
+function readCookie () {
+	var cookies = document.cookie;
+	if(cookies != "" && cookies != null) {
+		cookie = cookies.split("=")[1];
+	}
+}
 
 $(function () {
+	readCookie();
+	
 	$('#agb').on('click', function () {
 		$("#button-purchase").prop("disabled", !$(this).is(":checked"));
 	});
@@ -27,7 +37,10 @@ $(function () {
 					verification: token,
 					showId: parseInt(showId),
 					seats: [],
-					customer: {firstname: firstName, lastname: lastName, email: email}};
+					customer: { firstname: firstName,
+								lastname: lastName,
+								email: email,
+								sessiontoken: cookie}};
 		for(var i=0; i<seatsP.length; i++) {
 			if(seatsP[i] != "")
 				book.seats.push({id: parseInt(seatsP[i]), isReducedPrice: (pe-- > 0 ? true : false)});

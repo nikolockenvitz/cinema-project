@@ -1,4 +1,34 @@
 
+var cookie = null;
+var cookieName = "ssid";
+$(function () {
+	readCookie();
+	if(cookie == null) {
+		cookie = generateRandomString();
+		setCookie(cookie);
+	}
+	console.log(cookie);
+});
+
+function readCookie () {
+	var cookies = document.cookie;
+	if(cookies != "" && cookies != null) {
+		cookie = cookies.split("=")[1];
+	}
+}
+
+function generateRandomString () {
+	var randomString = "";
+	for(var i=0; i<5; i++) {
+		randomString += Math.random().toString(36).substr(2);
+	}
+	return randomString;
+}
+
+function setCookie (c) {
+	document.cookie = cookieName + "=" + c + ";";
+}
+
 var seats = {};
 var hall = {};
 
@@ -9,34 +39,6 @@ function drawCinemaHall (hallData) {
 	adjustToScreen();
 	makeCinemaHallVisible();
 	updatePriceBox();
-}
-
-function createLocalHallAndSeats () {
-	var width = 16;
-	var length = 10;
-	var id = 150;
-	for(var y=0; y<length; y++) {
-		for(var x=0; x<width-(y<=6 ? y%2 : 3+(1-y%2)); x++) {
-			seats[id++] = {
-			    isOccupied: false,
-				isBlocked: false,
-			    x: (y<=6 ? 25*x + 10 + (y%2 == 1 ? 12.5 : 0) : 30*x + 15 + (y%2 == 0 ? 15 : 0)),
-				y: 25*y + 70 + (y>6 ? 10 : 0) + (y>6 ? (y-6)*5 : 0),
-				category: (y > 6 ? "Loge" : "Parkett"),
-				row: y,
-				number: x,
-				defaultPrice: (y > 6 ? 10 : 8),
-				reducedPrice: (y > 6 ?  8 : 6)};
-		}
-	}
-		
-	hall = { width: width*25-5,
-	         length: length*25+85 };
-	console.log(hall);
-	for(var id in seats) {
-		var seat = seats[id];
-		console.log(id +","+ seat.row +","+ (seat.category == "Parkett" ? 1 : 2) +","+ "1" +","+ seat.x +","+ seat.y +","+ seat.number );
-	}
 }
 
 function getSeatData (hallData) {
@@ -83,12 +85,10 @@ function createSeats () {
 			if($(this).hasClass("available")) {
 				var seatId = $(this).attr("id");
 				if($(this).hasClass("selected")) {
-					$(this).removeClass("selected");
-					removeSeatFromSelection(seatId);
+					removeSeatFromSelection(seatId, this);
 				}
 				else {
-					$(this).addClass("selected");
-					addSeatToSelection(seatId);
+					addSeatToSelection(seatId, this);
 				}
 			}
 		});
@@ -121,6 +121,10 @@ function adjustToScreen() {
 	$("#cinemaHall").height(divHeight+"px");
 	$(".seat").width(seatSize+"px");
 	$(".seat").height(seatSize+"px");
+	
+	// additional hardcoded settings for some seats
+	$("#351").width(seatSize*2+"px");
+	$("#352").width(seatSize*2+"px");
 }
 
 function makeCinemaHallVisible() {
@@ -136,13 +140,46 @@ $(window).on('resize', () => {
 var selection = {};
 var numberOfTickets = { pn: 0, pe: 0, ln: 0, le: 0,
                         p: 0, l: 0};
-function addSeatToSelection (seatId) {
-	selection[seatId] = true;
-	numberOfTickets[getCategoryOfSeat(seatId)] += 1;
-	updatePriceBox();
+function addSeatToSelection (seatId, seatObj) {
+	// prepare data for ajax
+	var block = {show: {id: urlparameters.get("id")},
+				 seat: {id: seatId},
+				 sessiontoken: cookie};
+	
+	// send ajax
+	var data = "block=" + JSON.stringify(block);
+	$.ajax({
+	  type: "POST",
+	  url: "http://localhost:8080/cinema-data/reservation/block",
+	  data: data,
+	  contentType: "application/json; charset=utf-8",
+	  success: (data) => processBlockingResult(data, seatId, seatObj),
+	  error: function (xhr,status,error){
+		console.log(xhr, status, error);
+		processBlockingResult(null, seatId, seatObj);
+	  }
+	});
 }
 
-function removeSeatFromSelection (seatId) {
+function processBlockingResult (data, seatId, seatObj) {
+	if(data != null) {
+		var seatIdResponse = data.seat.id;
+		$(seatObj).addClass("selected");
+		selection[seatIdResponse] = true;
+		numberOfTickets[getCategoryOfSeat(seatIdResponse)] += 1;
+		updatePriceBox();
+	} else {
+		console.log(seats);
+		console.log(seatId);
+		seats[seatId].isBlocked = true;
+		$(seatObj).removeClass("available hovering");
+		$(seatObj).addClass("occupied");
+	}
+}
+
+function removeSeatFromSelection (seatId, seatObj) {
+	// TODO: inform backend to remove blocking
+	$(seatObj).removeClass("selected");
 	delete selection[seatId];
 	numberOfTickets[getCategoryOfSeat(seatId)] -= 1;
 	updatePriceBox();
