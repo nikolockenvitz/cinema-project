@@ -7,10 +7,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.fallstudie.cinemasystem.data.entity.query.BlockQuery;
 
 /**
  * The persistent class for the actor database table.
@@ -18,7 +21,8 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "block")
-@NamedQuery(name = "Block.findAll", query = "SELECT b FROM Block b")
+@NamedQueries({ @NamedQuery(name = "Block.findAll", query = "SELECT b FROM Block b"),
+        @NamedQuery(name = BlockQuery.FIND_BLOCKEDSEATS_BY_SHOW_ID_QNAME, query = BlockQuery.FIND_BLOCKEDSEATS_BY_SHOW_ID) })
 public class Block implements Serializable
 {
     private static final long serialVersionUID = 1L;
