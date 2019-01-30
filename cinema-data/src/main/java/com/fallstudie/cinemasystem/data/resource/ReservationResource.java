@@ -104,7 +104,7 @@ public class ReservationResource
                 List<TicketTo> ticketTos = showService.getAllTicketsForShow(showId);
                 List<BlockTo> blockTos = reservationService.getBlockedSeats(showId);
 
-                List<SeatTo> seatTos = checkIfSeatsAreBookable(bookable, bookingTo.getSeats(), ticketTos, blockTos);
+                List<SeatTo> seatTos = checkIfSeatsAreBookable(bookable, bookingTo.getSeats(), ticketTos, blockTos, bookingTo.getCustomer().getSessiontoken());
 
                 if ( bookable )
                 {
@@ -150,7 +150,8 @@ public class ReservationResource
 
     }
 
-    private List<SeatTo> checkIfSeatsAreBookable ( boolean bookable, List<SeatTo> seatsToProof, List<TicketTo> bookedTicketTos, List<BlockTo> blockTos )
+    private List<SeatTo> checkIfSeatsAreBookable ( boolean bookable, List<SeatTo> seatsToProof, List<TicketTo> bookedTicketTos, List<BlockTo> blockTos,
+            String sessiontoken )
     {
         List<SeatTo> seatsToBook = new ArrayList<>();
         for ( SeatTo s : seatsToProof )
@@ -168,7 +169,7 @@ public class ReservationResource
             }
             for ( BlockTo b : blockTos )
             {
-                if ( s.getId() == b.getSeat().getId() )
+                if ( s.getId() == b.getSeat().getId() && !(b.getSessiontoken().equals(sessiontoken)) )
                 {
                     bookable = false;
                     break;
