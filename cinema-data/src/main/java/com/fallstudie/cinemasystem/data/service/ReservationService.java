@@ -3,13 +3,15 @@ package com.fallstudie.cinemasystem.data.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.fallstudie.cinemasystem.common.transferobject.BlockTo;
 import com.fallstudie.cinemasystem.common.transferobject.CustomerTo;
 import com.fallstudie.cinemasystem.common.transferobject.ReservationTo;
 import com.fallstudie.cinemasystem.common.transferobject.ShowTo;
 import com.fallstudie.cinemasystem.common.transferobject.TicketTo;
+import com.fallstudie.cinemasystem.data.entity.Block;
 import com.fallstudie.cinemasystem.data.entity.Reservation;
+import com.fallstudie.cinemasystem.data.entity.dao.BlockDao;
 import com.fallstudie.cinemasystem.data.entity.dao.ReservationDao;
-import com.fallstudie.cinemasystem.data.entity.dao.TicketDao;
 import com.fallstudie.cinemasystem.data.helper.EntityToToHelper;
 import com.fallstudie.cinemasystem.data.helper.ToToEntityHelper;
 
@@ -17,14 +19,14 @@ public class ReservationService
 {
     private static final Logger LOGGER = LoggerFactory.getLogger(ReservationService.class);
     private ReservationDao      reservationDao;
-    private TicketDao           ticketDao;
+    private BlockDao            blockDao;
     private ShowService         showService;
     private CustomerService     customerService;
 
     public ReservationService( )
     {
         this.reservationDao = new ReservationDao();
-        this.ticketDao = new TicketDao();
+        this.blockDao = new BlockDao();
         this.showService = new ShowService();
         this.customerService = new CustomerService();
     }
@@ -55,6 +57,14 @@ public class ReservationService
     {
         Reservation r = ToToEntityHelper.createReservationEntity(getReservation(id));
         return EntityToToHelper.createReservationTo(reservationDao.remove(r), true);
+    }
+
+    public BlockTo blockSeat ( BlockTo bookingTo )
+    {
+        Block block = ToToEntityHelper.createBlockEntity(bookingTo);
+        block = blockDao.persist(block);
+        block = blockDao.find(block.getId());
+        return EntityToToHelper.createBlockTo(block);
     }
 
 }

@@ -25,14 +25,13 @@ public class Block implements Serializable
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long     id;
-    private Seat     seat;
-    private Show     show;
-    private Customer customer;
-    private Employee employee;
+    private long   id;
+    private Seat   seat;
+    private Show   show;
+    private String sessiontoken;
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date timestamp;
+    private Date timeofreservation;
 
     public Seat getSeat ( )
     {
@@ -54,24 +53,14 @@ public class Block implements Serializable
         this.show = show;
     }
 
-    public Customer getCustomer ( )
+    public Date getTimeofreservation ( )
     {
-        return customer;
+        return timeofreservation;
     }
 
-    public void setCustomer ( Customer customer )
+    public void setTimeofreservation ( Date timeofreservation )
     {
-        this.customer = customer;
-    }
-
-    public Date getTimestamp ( )
-    {
-        return timestamp;
-    }
-
-    public void setTimestamp ( Date timestamp )
-    {
-        this.timestamp = timestamp;
+        this.timeofreservation = timeofreservation;
     }
 
     public long getId ( )
@@ -84,14 +73,14 @@ public class Block implements Serializable
         this.id = id;
     }
 
-    public Employee getEmployee ( )
+    public String getSessiontoken ( )
     {
-        return employee;
+        return sessiontoken;
     }
 
-    public void setEmployee ( Employee employee )
+    public void setSessiontoken ( String sessiontoken )
     {
-        this.employee = employee;
+        this.sessiontoken = sessiontoken;
     }
 
 }
