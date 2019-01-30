@@ -22,7 +22,8 @@ import com.fallstudie.cinemasystem.data.entity.query.BlockQuery;
 @Entity
 @Table(name = "block")
 @NamedQueries({ @NamedQuery(name = "Block.findAll", query = "SELECT b FROM Block b"),
-        @NamedQuery(name = BlockQuery.FIND_BLOCKEDSEATS_BY_SHOW_ID_QNAME, query = BlockQuery.FIND_BLOCKEDSEATS_BY_SHOW_ID) })
+        @NamedQuery(name = BlockQuery.FIND_BLOCKEDSEATS_BY_SHOW_ID_QNAME, query = BlockQuery.FIND_BLOCKEDSEATS_BY_SHOW_ID),
+        @NamedQuery(name = BlockQuery.FIND_BLOCK_BY_SHOW_ID_SEAT_ID_SESSIONTOKEN_QNAME, query = BlockQuery.FIND_BLOCK_BY_SHOW_ID_SEAT_ID_SESSIONTOKEN) })
 public class Block implements Serializable
 {
     private static final long serialVersionUID = 1L;

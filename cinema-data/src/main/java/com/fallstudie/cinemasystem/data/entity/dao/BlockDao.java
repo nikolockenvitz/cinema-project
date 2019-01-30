@@ -36,4 +36,16 @@ public class BlockDao extends BaseDao<Block>
         resultList = query.getResultList();
         return resultList;
     }
+
+    public Block getBlockedSeatBySeatIdShowIdSessiontoken ( long seatId, long showId, String sessiontoken )
+    {
+        Block result = null;
+        Query query = getEm().createNamedQuery(BlockQuery.FIND_BLOCK_BY_SHOW_ID_SEAT_ID_SESSIONTOKEN);
+        query.setParameter(QueryParam.SHOW_ID, showId);
+        query.setParameter(QueryParam.SEAT_ID, seatId);
+        query.setParameter(QueryParam.SESSIONTOKEN, sessiontoken);
+        result = (Block) query.getSingleResult();
+        return result;
+    }
+
 }

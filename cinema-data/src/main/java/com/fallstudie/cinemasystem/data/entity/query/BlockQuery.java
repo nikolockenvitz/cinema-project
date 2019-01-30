@@ -7,4 +7,8 @@ public interface BlockQuery
 
     public static final String FIND_BLOCKEDSEATS_BY_SHOW_ID_QNAME = BlockQuery.FIND_BLOCKEDSEATS_BY_SHOW_ID;
 
+    public static final String FIND_BLOCK_BY_SHOW_ID_SEAT_ID_SESSIONTOKEN = "SELECT b FROM Block b" + " WHERE b.show.id =:" + QueryParam.SHOW_ID
+            + " AND b.seat.id =:" + QueryParam.SEAT_ID + " AND b.sessiontoken =:" + QueryParam.SESSIONTOKEN;
+
+    public static final String FIND_BLOCK_BY_SHOW_ID_SEAT_ID_SESSIONTOKEN_QNAME = BlockQuery.FIND_BLOCK_BY_SHOW_ID_SEAT_ID_SESSIONTOKEN;
 }

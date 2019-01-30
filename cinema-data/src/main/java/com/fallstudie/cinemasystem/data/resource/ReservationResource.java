@@ -207,7 +207,7 @@ public class ReservationResource
     @POST
     @Path("block")
     @Propagate
-    @Description(value = "Method to book seats for a show by its id!")
+    @Description(value = "Method to block a seat for a show!")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces({ MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON })
     public Response blockseat ( @FormParam("block") String json )
@@ -225,6 +225,30 @@ public class ReservationResource
             BlockTo createdBlockTo = reservationService.blockSeat(bookingTo);
 
             json = JSONConverter.toJSON(createdBlockTo);
+        } catch (Exception e)
+        {
+            LOGGER.error(e.getMessage());
+            return responseBuilder.buildResponse(textMedia, e.getMessage(), e);
+        }
+        return responseBuilder.buildResponse(jsonMedia, json);
+    }
+
+    @DELETE
+    @Path("block")
+    @Propagate
+    @Description(value = "Method to deblock a seat for a show by showId, sessiontoken, seatId!")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces({ MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON })
+    public Response deblockseat ( @FormParam("block") String json )
+    {
+        try
+        {
+            BlockTo bookingTo = (BlockTo) JSONConverter.fromJSON(json, BlockTo.class);
+
+            BlockTo deletedBlockTo = reservationService.deblockSeat(bookingTo.getSeat().getId(), bookingTo.getShow().getId(), bookingTo.getSessiontoken());
+
+            json = JSONConverter.toJSON(deletedBlockTo);
+
         } catch (Exception e)
         {
             LOGGER.error(e.getMessage());

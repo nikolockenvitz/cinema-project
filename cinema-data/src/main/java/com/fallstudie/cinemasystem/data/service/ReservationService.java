@@ -80,4 +80,15 @@ public class ReservationService
         return EntityToToHelper.createBlockTos(blockDao.getAllBlockedSeats(id, cal.getTime()));
     }
 
+    public BlockTo deblockSeat ( long seatId, long showId, String sessiontoken )
+    {
+        Block block = getBlockedSeatBySeatIdShowIdSessiontoken(seatId, showId, sessiontoken);
+        return EntityToToHelper.createBlockTo(blockDao.remove(block));
+    }
+
+    private Block getBlockedSeatBySeatIdShowIdSessiontoken ( long seatId, long showId, String sessiontoken )
+    {
+        return blockDao.getBlockedSeatBySeatIdShowIdSessiontoken(seatId, showId, sessiontoken);
+    }
+
 }
