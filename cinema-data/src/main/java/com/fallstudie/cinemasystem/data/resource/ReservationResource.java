@@ -104,7 +104,7 @@ public class ReservationResource
                 List<TicketTo> ticketTos = showService.getAllTicketsForShow(showId);
                 List<BlockTo> blockTos = reservationService.getBlockedSeats(showId);
 
-                List<SeatTo> seatTos = checkIfSeatsAreBookable(bookable, bookingTo.getSeats(), ticketTos, blockTos, bookingTo.getCustomer().getSessiontoken());
+                List<SeatTo> seatTos = checkIfSeatsAreBookable(bookable, bookingTo.getSeats(), ticketTos, blockTos, bookingTo.getSessiontoken());
 
                 if ( bookable )
                 {
