@@ -221,17 +221,32 @@ public class EntityToToHelper
             seatTo.setCategory(createCategoryTo(entity.getCategory()));
             seatTo.setX(entity.getX());
             seatTo.setY(entity.getY());
-            seatTo.setPrice(createPriceTo());
+            seatTo.setPrice(createPriceTo(seatTo.getCategory()));
             return seatTo;
         } else
             return null;
     }
 
-    public static PriceTo createPriceTo ( )
+    public static PriceTo createPriceTo ( CategoryTo transferobject )
     {
         PriceTo priceTo = new PriceTo();
-        priceTo.setDefaultPrice(1000);
-        priceTo.setReducedPrice(800);
+        final int defaultPrice = 1000;
+        final int reducedPrice = 800;
+        String category = transferobject.getCategory();
+
+        if ( category.equals("Parkett") )
+        {
+            priceTo.setDefaultPrice(defaultPrice);
+            priceTo.setReducedPrice(reducedPrice);
+        } else if ( category.equals("Loge") )
+        {
+            priceTo.setDefaultPrice(defaultPrice + 200);
+            priceTo.setReducedPrice(reducedPrice + 200);
+        } else
+        {
+            priceTo.setDefaultPrice(defaultPrice * 2);
+            priceTo.setReducedPrice(reducedPrice * 2);
+        }
         return priceTo;
     }
 

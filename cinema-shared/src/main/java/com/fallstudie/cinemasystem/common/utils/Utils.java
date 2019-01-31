@@ -177,4 +177,13 @@ public class Utils
             return false;
         }
     }
+
+    public static Date getDateTimeDifference ( int minutes )
+    {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        cal.set(Calendar.MINUTE, cal.get(Calendar.MINUTE) - minutes);
+
+        return cal.getTime();
+    }
 }
