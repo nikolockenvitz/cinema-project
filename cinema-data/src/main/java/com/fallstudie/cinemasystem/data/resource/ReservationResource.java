@@ -223,6 +223,7 @@ public class ReservationResource
             bookingTo.setShow(showTo);
             bookingTo.setSeat(seatTo);
 
+            List<BlockTo> blockTos = reservationService.deleteBlockedElements();
             BlockTo createdBlockTo = reservationService.blockSeat(bookingTo);
 
             json = JSONConverter.toJSON(createdBlockTo);

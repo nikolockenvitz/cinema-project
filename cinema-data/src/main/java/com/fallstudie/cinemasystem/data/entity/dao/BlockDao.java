@@ -48,4 +48,14 @@ public class BlockDao extends BaseDao<Block>
         return result;
     }
 
+    @SuppressWarnings("unchecked")
+    public List<Block> getAllBlockedSeatsInLast5Minutes ( Date datetolookfor )
+    {
+        List<Block> resultList = null;
+        Query query = getEm().createNamedQuery(BlockQuery.FIND_BLOCKEDSEATS_BIGGER_5_MINUTES);
+        query.setParameter(QueryParam.DATETOLOOKFOR, datetolookfor, TemporalType.TIMESTAMP);
+        resultList = query.getResultList();
+        return resultList;
+    }
+
 }

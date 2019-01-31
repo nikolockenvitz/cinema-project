@@ -1,5 +1,6 @@
 package com.fallstudie.cinemasystem.data.service;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -89,6 +90,20 @@ public class ReservationService
     private Block getBlockedSeatBySeatIdShowIdSessiontoken ( long seatId, long showId, String sessiontoken )
     {
         return blockDao.getBlockedSeatBySeatIdShowIdSessiontoken(seatId, showId, sessiontoken);
+    }
+
+    public List<BlockTo> deleteBlockedElements ( )
+    {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        cal.set(Calendar.MINUTE, cal.get(Calendar.MINUTE) - 5);
+        List<Block> blocked = blockDao.getAllBlockedSeatsInLast5Minutes(cal.getTime());
+        List<BlockTo> blockedTo = new ArrayList<>();
+        for ( Block b : blocked )
+        {
+            blockedTo.add(EntityToToHelper.createBlockTo(blockDao.remove(b)));
+        }
+        return blockedTo;
     }
 
 }
