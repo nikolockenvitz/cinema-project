@@ -2,6 +2,8 @@ package com.fallstudie.cinemasystem.common.transferobject;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class BookingTo
 {
     @Override
@@ -65,6 +67,8 @@ public class BookingTo
     private CustomerTo   customer;
     private String       paymentoption;
     private String       verification;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String       sessiontoken;
 
     public long getId ( )
     {
@@ -124,6 +128,16 @@ public class BookingTo
     public void setVerification ( String verification )
     {
         this.verification = verification;
+    }
+
+    public String getSessiontoken ( )
+    {
+        return sessiontoken;
+    }
+
+    public void setSessiontoken ( String sessiontoken )
+    {
+        this.sessiontoken = sessiontoken;
     }
 
 }

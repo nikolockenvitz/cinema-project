@@ -9,6 +9,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import com.fallstudie.cinemasystem.common.transferobject.BlockTo;
+import com.fallstudie.cinemasystem.common.transferobject.PriceTo;
 import com.fallstudie.cinemasystem.common.transferobject.SeatTo;
 import com.fallstudie.cinemasystem.common.transferobject.TicketTo;
 
@@ -176,5 +177,36 @@ public class Utils
         {
             return false;
         }
+    }
+
+    public static Date getDateTimeDifference ( int minutes )
+    {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        cal.set(Calendar.MINUTE, cal.get(Calendar.MINUTE) - minutes);
+
+        return cal.getTime();
+    }
+
+    public static PriceTo getPriceForCategory ( String category )
+    {
+        PriceTo priceTo = new PriceTo();
+        final int defaultPrice = 1000;
+        final int reducedPrice = 800;
+
+        if ( category.equals("Sofa") )
+        {
+            priceTo.setDefaultPrice(defaultPrice * 2);
+            priceTo.setReducedPrice(reducedPrice * 2);
+        } else if ( category.equals("Loge") )
+        {
+            priceTo.setDefaultPrice(defaultPrice + 200);
+            priceTo.setReducedPrice(reducedPrice + 200);
+        } else
+        {
+            priceTo.setDefaultPrice(defaultPrice);
+            priceTo.setReducedPrice(reducedPrice);
+        }
+        return priceTo;
     }
 }

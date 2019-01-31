@@ -3,6 +3,7 @@ package com.fallstudie.cinemasystem.data.entity.dao;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.TemporalType;
 
@@ -36,4 +37,28 @@ public class BlockDao extends BaseDao<Block>
         resultList = query.getResultList();
         return resultList;
     }
+
+    public Block getBlockedSeatBySeatIdShowIdSessiontoken ( long seatId, long showId, String sessiontoken )
+    {
+        Block result = null;
+        Query query = getEm().createNamedQuery(BlockQuery.FIND_BLOCK_BY_SHOW_ID_SEAT_ID_SESSIONTOKEN);
+        query.setParameter(QueryParam.SHOW_ID, showId);
+        query.setParameter(QueryParam.SEAT_ID, seatId);
+        query.setParameter(QueryParam.SESSIONTOKEN, sessiontoken);
+        try {
+        	result = (Block) query.getSingleResult();
+        } catch (NoResultException e) {}
+        return result;
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<Block> getAllBlockedSeatsInLast5Minutes ( Date datetolookfor )
+    {
+        List<Block> resultList = null;
+        Query query = getEm().createNamedQuery(BlockQuery.FIND_BLOCKEDSEATS_BIGGER_5_MINUTES);
+        query.setParameter(QueryParam.DATETOLOOKFOR, datetolookfor, TemporalType.TIMESTAMP);
+        resultList = query.getResultList();
+        return resultList;
+    }
+
 }

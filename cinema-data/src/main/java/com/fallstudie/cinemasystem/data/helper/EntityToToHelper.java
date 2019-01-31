@@ -221,18 +221,15 @@ public class EntityToToHelper
             seatTo.setCategory(createCategoryTo(entity.getCategory()));
             seatTo.setX(entity.getX());
             seatTo.setY(entity.getY());
-            seatTo.setPrice(createPriceTo());
+            seatTo.setPrice(createPriceTo(seatTo.getCategory()));
             return seatTo;
         } else
             return null;
     }
 
-    public static PriceTo createPriceTo ( )
+    public static PriceTo createPriceTo ( CategoryTo transferobject )
     {
-        PriceTo priceTo = new PriceTo();
-        priceTo.setDefaultPrice(1000);
-        priceTo.setReducedPrice(800);
-        return priceTo;
+        return Utils.getPriceForCategory(transferobject.getCategory());
     }
 
     public static CategoryTo createCategoryTo ( Category entity )

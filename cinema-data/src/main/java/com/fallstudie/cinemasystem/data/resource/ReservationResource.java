@@ -99,12 +99,12 @@ public class ReservationResource
 
             if ( Utils.checkIfShowIsReservable(showTo.getDate(), showTo.getTime()) )
             {
-                CustomerTo customerTo = customerService.checkIfCustomerExistsIfNotPersist(bookingTo.getCustomer().getEmail());
+                CustomerTo customerTo = customerService.checkIfCustomerExistsIfNotPersist(bookingTo.getCustomer());
 
                 List<TicketTo> ticketTos = showService.getAllTicketsForShow(showId);
                 List<BlockTo> blockTos = reservationService.getBlockedSeats(showId);
 
-                List<SeatTo> seatTos = checkIfSeatsAreBookable(bookable, bookingTo.getSeats(), ticketTos, blockTos);
+                List<SeatTo> seatTos = checkIfSeatsAreBookable(bookable, bookingTo.getSeats(), ticketTos, blockTos, bookingTo.getSessiontoken());
 
                 if ( bookable )
                 {
@@ -150,7 +150,8 @@ public class ReservationResource
 
     }
 
-    private List<SeatTo> checkIfSeatsAreBookable ( boolean bookable, List<SeatTo> seatsToProof, List<TicketTo> bookedTicketTos, List<BlockTo> blockTos )
+    private List<SeatTo> checkIfSeatsAreBookable ( boolean bookable, List<SeatTo> seatsToProof, List<TicketTo> bookedTicketTos, List<BlockTo> blockTos,
+            String sessiontoken )
     {
         List<SeatTo> seatsToBook = new ArrayList<>();
         for ( SeatTo s : seatsToProof )
@@ -168,7 +169,7 @@ public class ReservationResource
             }
             for ( BlockTo b : blockTos )
             {
-                if ( s.getId() == b.getSeat().getId() )
+                if ( s.getId() == b.getSeat().getId() && !(b.getSessiontoken().equals(sessiontoken)) )
                 {
                     bookable = false;
                     break;
@@ -207,7 +208,7 @@ public class ReservationResource
     @POST
     @Path("block")
     @Propagate
-    @Description(value = "Method to book seats for a show by its id!")
+    @Description(value = "Method to block a seat for a show!")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces({ MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON })
     public Response blockseat ( @FormParam("block") String json )
@@ -221,10 +222,48 @@ public class ReservationResource
             SeatTo seatTo = seatService.getSeat(seatId);
             bookingTo.setShow(showTo);
             bookingTo.setSeat(seatTo);
+            
+            List<TicketTo> ticketTos = showService.getAllTicketsForShow(showId);
+            for(TicketTo t: ticketTos) {
+            	if(t.getSeat().getId() == seatTo.getId()) {
+            		throw new Exception();
+            	}
+            }
 
+            // delete elements older than 5 minutes
+            List<BlockTo> blockTos = reservationService.deleteBlockedElements();
+
+            // deblock seat
+            BlockTo deblockedSeat = reservationService.deblockSeatIfExists(seatTo.getId(), showTo.getId(), bookingTo.getSessiontoken());
+
+            // block seat
             BlockTo createdBlockTo = reservationService.blockSeat(bookingTo);
 
             json = JSONConverter.toJSON(createdBlockTo);
+        } catch (Exception e)
+        {
+            LOGGER.error(e.getMessage());
+            return responseBuilder.buildResponse(textMedia, e.getMessage(), e);
+        }
+        return responseBuilder.buildResponse(jsonMedia, json);
+    }
+
+    @DELETE
+    @Path("block")
+    @Propagate
+    @Description(value = "Method to deblock a seat for a show by showId, sessiontoken, seatId!")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces({ MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON })
+    public Response deblockseat ( @FormParam("block") String json )
+    {
+        try
+        {
+            BlockTo bookingTo = (BlockTo) JSONConverter.fromJSON(json, BlockTo.class);
+
+            BlockTo deletedBlockTo = reservationService.deblockSeat(bookingTo.getSeat().getId(), bookingTo.getShow().getId(), bookingTo.getSessiontoken());
+
+            json = JSONConverter.toJSON(deletedBlockTo);
+
         } catch (Exception e)
         {
             LOGGER.error(e.getMessage());

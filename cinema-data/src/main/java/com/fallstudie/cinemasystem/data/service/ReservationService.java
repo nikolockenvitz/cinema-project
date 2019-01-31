@@ -1,6 +1,6 @@
 package com.fallstudie.cinemasystem.data.service;
 
-import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,6 +12,7 @@ import com.fallstudie.cinemasystem.common.transferobject.CustomerTo;
 import com.fallstudie.cinemasystem.common.transferobject.ReservationTo;
 import com.fallstudie.cinemasystem.common.transferobject.ShowTo;
 import com.fallstudie.cinemasystem.common.transferobject.TicketTo;
+import com.fallstudie.cinemasystem.common.utils.Utils;
 import com.fallstudie.cinemasystem.data.entity.Block;
 import com.fallstudie.cinemasystem.data.entity.Reservation;
 import com.fallstudie.cinemasystem.data.entity.dao.BlockDao;
@@ -74,10 +75,42 @@ public class ReservationService
     public List<BlockTo> getBlockedSeats ( String showId )
     {
         long id = Long.parseLong(showId);
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(new Date());
-        cal.set(Calendar.MINUTE, cal.get(Calendar.MINUTE) - 5);
-        return EntityToToHelper.createBlockTos(blockDao.getAllBlockedSeats(id, cal.getTime()));
+        Date date = Utils.getDateTimeDifference(5);
+        return EntityToToHelper.createBlockTos(blockDao.getAllBlockedSeats(id, date));
+    }
+
+    public BlockTo deblockSeat ( long seatId, long showId, String sessiontoken )
+    {
+        Block block = getBlockedSeatBySeatIdShowIdSessiontoken(seatId, showId, sessiontoken);
+        return EntityToToHelper.createBlockTo(blockDao.remove(block));
+    }
+
+    private Block getBlockedSeatBySeatIdShowIdSessiontoken ( long seatId, long showId, String sessiontoken )
+    {
+        return blockDao.getBlockedSeatBySeatIdShowIdSessiontoken(seatId, showId, sessiontoken);
+    }
+
+    public List<BlockTo> deleteBlockedElements ( )
+    {
+        Date date = Utils.getDateTimeDifference(5);
+        List<Block> blocked = blockDao.getAllBlockedSeatsInLast5Minutes(date);
+        List<BlockTo> blockedTo = new ArrayList<>();
+        for ( Block b : blocked )
+        {
+            blockedTo.add(EntityToToHelper.createBlockTo(blockDao.remove(b)));
+        }
+        return blockedTo;
+    }
+
+    public BlockTo deblockSeatIfExists ( long seatId, long showId, String sessiontoken )
+    {
+        Block block = getBlockedSeatBySeatIdShowIdSessiontoken(seatId, showId, sessiontoken);
+
+        if ( null != block )
+        {
+            deblockSeat(seatId, showId, sessiontoken);
+        }
+        return EntityToToHelper.createBlockTo(block);
     }
 
 }
