@@ -82,14 +82,12 @@ function createSeats () {
 	
 	$(function () {
 		$('.seat').on('click', function () {
-			if($(this).hasClass("available")) {
-				var seatId = $(this).attr("id");
-				if($(this).hasClass("selected")) {
-					removeSeatFromSelection(seatId, this);
-				}
-				else {
-					addSeatToSelection(seatId, this);
-				}
+			var seatId = $(this).attr("id");
+			if($(this).hasClass("selected")) {
+				removeSeatFromSelection(seatId, this);
+			}
+			else {
+				addSeatToSelection(seatId, this);
 			}
 		});
 		
@@ -138,8 +136,8 @@ $(window).on('resize', () => {
 
 /* Selection + price calculation */
 var selection = {};
-var numberOfTickets = { pn: 0, pe: 0, ln: 0, le: 0,
-                        p: 0, l: 0};
+var numberOfTickets = { pn: 0, pe: 0, ln: 0, le: 0, sn: 0, se: 0,
+                        p: 0, l: 0, s: 0};
 function addSeatToSelection (seatId, seatObj) {
 	// prepare data for ajax
 	var block = {show: {id: urlparameters.get("id")},
@@ -164,13 +162,12 @@ function addSeatToSelection (seatId, seatObj) {
 function processBlockingResult (data, seatId, seatObj) {
 	if(data != null) {
 		var seatIdResponse = data.seat.id;
-		$(seatObj).addClass("selected");
+		$(seatObj).addClass("selected available");
+		$(seatObj).removeClass("occupied");
 		selection[seatIdResponse] = true;
 		numberOfTickets[getCategoryOfSeat(seatIdResponse)] += 1;
 		updatePriceBox();
 	} else {
-		console.log(seats);
-		console.log(seatId);
 		seats[seatId].isBlocked = true;
 		$(seatObj).removeClass("available hovering");
 		$(seatObj).addClass("occupied");
@@ -178,7 +175,23 @@ function processBlockingResult (data, seatId, seatObj) {
 }
 
 function removeSeatFromSelection (seatId, seatObj) {
-	// TODO: inform backend to remove blocking
+	// prepare data for ajax
+	var block = {show: {id: urlparameters.get("id")},
+				 seat: {id: seatId},
+				 sessiontoken: cookie};
+	
+	// send ajax
+	var data = "block=" + JSON.stringify(block);
+	$.ajax({
+	  type: "DELETE",
+	  url: "http://localhost:8080/cinema-data/reservation/block",
+	  data: data,
+	  contentType: "application/json; charset=utf-8",
+	  success: (data) => console.log(data),
+	  error: function (xhr,status,error){
+		console.log(xhr, status, error);
+	  }
+	});
 	$(seatObj).removeClass("selected");
 	delete selection[seatId];
 	numberOfTickets[getCategoryOfSeat(seatId)] -= 1;
@@ -191,18 +204,21 @@ function getCategoryOfSeat (seatId) {
 			return "p";
 		case "Loge":
 			return "l";
+		case "Sofa":
+			return "s";
 	}
 }
 
 function updatePriceBox () {
 	// checks and calculations
-	var categories = ["pn","pe","ln","le"];
+	var categories = ["pn","pe","ln","le","sn","se"];
 	for(var i=0;i<categories.length;i++) {
 		c = categories[i];
 		numberOfTickets[c] = Math.max(0, Math.min(numberOfTickets[c], numberOfTickets[c.charAt(0)]));
 	}
 	numberOfTickets["pn"] = numberOfTickets["p"] - numberOfTickets["pe"];
 	numberOfTickets["ln"] = numberOfTickets["l"] - numberOfTickets["le"];
+	numberOfTickets["sn"] = numberOfTickets["s"] - numberOfTickets["se"];
 	
 	var price = 0;
 	var temp = jQuery.extend(true, {}, numberOfTickets);
@@ -221,6 +237,8 @@ function updatePriceBox () {
 	$("#pe").text(numberOfTickets["pe"]);
 	$("#ln").text(numberOfTickets["ln"]);
 	$("#le").text(numberOfTickets["le"]);
+	$("#sn").text(numberOfTickets["sn"]);
+	$("#se").text(numberOfTickets["se"]);
 	
 	$("#box-default").css("display","block");
 	$("#box-price").css("display","none");
@@ -235,6 +253,13 @@ function updatePriceBox () {
 		$("#box-loge").css("display","none");
 	} else {
 		$("#box-loge").css("display","block");
+		$("#box-default").css("display","none");
+		$("#box-price").css("display","block");
+	}
+	if(numberOfTickets["s"] == 0) {
+		$("#box-sofa").css("display","none");
+	} else {
+		$("#box-sofa").css("display","block");
 		$("#box-default").css("display","none");
 		$("#box-price").css("display","block");
 	}
@@ -257,24 +282,31 @@ $(function () {
 	$('#button-purchase').on('click', function () {
 		var urlSeatsP = "";
 		var urlSeatsL = "";
+		var urlSeatsS = "";
 		for(var seatId in selection) {
 			if(getCategoryOfSeat(seatId) == "p")
 				urlSeatsP += seatId + ",";
-			else
+			else if(getCategoryOfSeat(seatId) == "l")
 				urlSeatsL += seatId + ",";
+			else if(getCategoryOfSeat(seatId) == "s")
+				urlSeatsS += seatId + ",";
 		}
 		urlSeatsP = urlSeatsP.substr(0, urlSeatsP.length-1);
 		urlSeatsL = urlSeatsL.substr(0, urlSeatsL.length-1);
+		urlSeatsS = urlSeatsS.substr(0, urlSeatsS.length-1);
 		
 		var urlPrice = numberOfTickets["pn"];
 		urlPrice += "," + numberOfTickets["pe"];
 		urlPrice += "," + numberOfTickets["ln"];
 		urlPrice += "," + numberOfTickets["le"];
+		urlPrice += "," + numberOfTickets["sn"];
+		urlPrice += "," + numberOfTickets["se"];
 		
 		var url = "./bezahlen.html";
 		url += "?id=" + urlparameters.get("id");
 		url += "&sp=" + urlSeatsP;
 		url += "&sl=" + urlSeatsL;
+		url += "&ss=" + urlSeatsS;
 		url += "&p=" + urlPrice;
 		url += "&preis=" + $("#price").text();
 		window.location.href = url;
@@ -284,4 +316,4 @@ $(function () {
 /* Tooltips */
 $(function () {
 	$('[data-toggle="tooltip"]').tooltip()
-})
+});

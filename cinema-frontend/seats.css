@@ -31,8 +31,8 @@
     content: '';
     background: #600;
     display: block;
-    width: 100%;
-    height: 2px;
+    width: 2px;
+    height: 100%;
     -webkit-transform: rotate(-45deg);
     transform: rotate(-45deg);
     /*center the X vertically and horizontally:*/

@@ -63,7 +63,7 @@
 				Bitte wählen Sie zunächst einen Sitzplatz aus.
 			</div>
 			<div id="box-parkett">
-				<p class="lead">Parkett</p>
+				<p class="lead"><b>Parkett</b></p>
 				<div class="col-12" style="clear: both; margin-bottom: 3rem;">
 					<div class="lead" style="float: left;">Normal</div>
 					<div style="float: right;">
@@ -86,7 +86,7 @@
 				</div>
 			</div>
 			<div id="box-loge">
-				<p class="lead">Loge</p>
+				<p class="lead"><b>Loge</b></p>
 				<div class="col-12" style="clear: both; margin-bottom: 3rem;">
 					<div style="float: left;">
 						<span class="lead">Normal</span>
@@ -112,9 +112,36 @@
 					</div>
 				</div>
 			</div>
+			<div id="box-sofa">
+				<p class="lead"><b>Sofa</b></p>
+				<div class="col-12" style="clear: both; margin-bottom: 3rem;">
+					<div style="float: left;">
+						<span class="lead">Normal</span>
+					</div>
+					<div style="float: right;">
+						<div class="btn-group" role="group">
+							<button id="sn-" class="btn btn-outline-primary btn-seat-select">-</button>
+							<button id="sn" class="btn btn-outline-primary btn-seat-select-number" disabled>0</button>
+							<button id="sn+" class="btn btn-outline-primary btn-seat-select">+</button>
+						</div>
+					</div>
+				</div>
+				<div class="col-12" style="clear: both; margin-bottom: 3rem;">
+					<div style="float: left;">
+						<span class="lead">Ermäßigt</span>
+					</div>
+					<div style="float: right;">
+						<div class="btn-group" role="group">
+							<button id="se-" class="btn btn-outline-primary btn-seat-select">-</button>
+							<button id="se" class="btn btn-outline-primary btn-seat-select-number" disabled>0</button>
+							<button id="se+" class="btn btn-outline-primary btn-seat-select">+</button>
+						</div>
+					</div>
+				</div>
+			</div>
 			
 			<div id="box-price" style="clear: both; margin-right: 15px; margin-top: 6rem;">
-				<div style="float: left;" class="lead">Gesamt: <span id="price">22,00</span> €</div>
+				<div style="float: left;" class="lead">Gesamt: <span id="price"></span> €</div>
 				<div style="float: right;">
 					<button id="button-purchase" class="btn btn-primary">Kaufen</button>
 				</div>

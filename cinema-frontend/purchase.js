@@ -30,7 +30,8 @@ $(function () {
 		
 		var seatsP = urlparameters.get("sp").split(",");
 		var seatsL = urlparameters.get("sl").split(",");
-		var [pn,pe,ln,le] = urlparameters.get("p").split(",");
+		var seatsS = urlparameters.get("ss").split(",");
+		var [pn,pe,ln,le,sn,se] = urlparameters.get("p").split(",");
 		
 		// prepare data for ajax
 		var book = {paymentoption: "giftcard",
@@ -48,6 +49,10 @@ $(function () {
 		for(var i=0; i<seatsL.length; i++) {
 			if(seatsL[i] != "")
 				book.seats.push({id: parseInt(seatsL[i]), isReducedPrice: (le-- > 0 ? true : false)});
+		}
+		for(var i=0; i<seatsS.length; i++) {
+			if(seatsS[i] != "")
+				book.seats.push({id: parseInt(seatsS[i]), isReducedPrice: (se-- > 0 ? true : false)});
 		}
 		
 		// send ajax

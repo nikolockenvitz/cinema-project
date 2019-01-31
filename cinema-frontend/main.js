@@ -325,7 +325,7 @@ function displaySummaryAndPayment (show) {
 	);
 	
 	var summary = "";
-	var [pn,pe,ln,le] = urlparameters.get("p").split(",");
+	var [pn,pe,ln,le,sn,se] = urlparameters.get("p").split(",");
 	if(pn > 0 || pe > 0) {
 		summary += '<p class="lead">Parkett: ';
 		if(pe > 0) summary += pe + "x ermäßigt";
@@ -338,6 +338,13 @@ function displaySummaryAndPayment (show) {
 		if(le > 0) summary += le + "x ermäßigt";
 		if(le > 0 && ln > 0) summary += ", ";
 		if(ln > 0) summary += ln + "x normal";
+		summary += "</p>";
+	}
+	if(sn > 0 || se > 0) {
+		summary += '<p class="lead">Sofa: ';
+		if(se > 0) summary += se + "x ermäßigt";
+		if(se > 0 && sn > 0) summary += ", ";
+		if(sn > 0) summary += sn + "x normal";
 		summary += "</p>";
 	}
 	$("#summary-seats").html(summary);
@@ -382,7 +389,7 @@ function displayConfirmation (show) {
 	);
 	
 	var summary = "";
-	var [pn,pe,ln,le] = urlparameters.get("p").split(",");
+	var [pn,pe,ln,le,sn,se] = urlparameters.get("p").split(",");
 	if(pn > 0 || pe > 0) {
 		summary += '<p class="lead">Parkett: ';
 		if(pe > 0) summary += pe + "x ermäßigt";
@@ -395,6 +402,13 @@ function displayConfirmation (show) {
 		if(le > 0) summary += le + "x ermäßigt";
 		if(le > 0 && ln > 0) summary += ", ";
 		if(ln > 0) summary += ln + "x normal";
+		summary += "</p>";
+	}
+	if(sn > 0 || se > 0) {
+		summary += '<p class="lead">Sofa: ';
+		if(se > 0) summary += se + "x ermäßigt";
+		if(se > 0 && sn > 0) summary += ", ";
+		if(sn > 0) summary += sn + "x normal";
 		summary += "</p>";
 	}
 	$("#summary-seats").html(summary);
