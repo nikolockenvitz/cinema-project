@@ -229,25 +229,7 @@ public class EntityToToHelper
 
     public static PriceTo createPriceTo ( CategoryTo transferobject )
     {
-        PriceTo priceTo = new PriceTo();
-        final int defaultPrice = 1000;
-        final int reducedPrice = 800;
-        String category = transferobject.getCategory();
-
-        if ( category.equals("Parkett") )
-        {
-            priceTo.setDefaultPrice(defaultPrice);
-            priceTo.setReducedPrice(reducedPrice);
-        } else if ( category.equals("Loge") )
-        {
-            priceTo.setDefaultPrice(defaultPrice + 200);
-            priceTo.setReducedPrice(reducedPrice + 200);
-        } else
-        {
-            priceTo.setDefaultPrice(defaultPrice * 2);
-            priceTo.setReducedPrice(reducedPrice * 2);
-        }
-        return priceTo;
+        return Utils.getPriceForCategory(transferobject.getCategory());
     }
 
     public static CategoryTo createCategoryTo ( Category entity )
