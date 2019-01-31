@@ -99,7 +99,7 @@ public class ReservationResource
 
             if ( Utils.checkIfShowIsReservable(showTo.getDate(), showTo.getTime()) )
             {
-                CustomerTo customerTo = customerService.checkIfCustomerExistsIfNotPersist(bookingTo.getCustomer().getEmail());
+                CustomerTo customerTo = customerService.checkIfCustomerExistsIfNotPersist(bookingTo.getCustomer());
 
                 List<TicketTo> ticketTos = showService.getAllTicketsForShow(showId);
                 List<BlockTo> blockTos = reservationService.getBlockedSeats(showId);
