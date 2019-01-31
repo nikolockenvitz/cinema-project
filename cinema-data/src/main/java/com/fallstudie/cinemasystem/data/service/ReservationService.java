@@ -106,4 +106,15 @@ public class ReservationService
         return blockedTo;
     }
 
+    public BlockTo deblockSeatIfExists ( long seatId, long showId, String sessiontoken )
+    {
+        Block block = getBlockedSeatBySeatIdShowIdSessiontoken(seatId, showId, sessiontoken);
+
+        if ( null != block )
+        {
+            deblockSeat(seatId, showId, sessiontoken);
+        }
+        return EntityToToHelper.createBlockTo(block);
+    }
+
 }

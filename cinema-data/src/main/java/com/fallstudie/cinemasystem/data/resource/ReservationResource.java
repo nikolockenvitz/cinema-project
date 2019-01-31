@@ -227,7 +227,7 @@ public class ReservationResource
             List<BlockTo> blockTos = reservationService.deleteBlockedElements();
 
             // deblock seat
-            BlockTo deblockedSeat = reservationService.deblockSeat(seatTo.getId(), showTo.getId(), bookingTo.getSessiontoken());
+            BlockTo deblockedSeat = reservationService.deblockSeatIfExists(seatTo.getId(), showTo.getId(), bookingTo.getSessiontoken());
 
             // block seat
             BlockTo createdBlockTo = reservationService.blockSeat(bookingTo);
