@@ -229,7 +229,13 @@ public class EntityToToHelper
 
     public static PriceTo createPriceTo ( CategoryTo transferobject )
     {
-        return Utils.getPriceForCategory(transferobject.getCategory());
+        if ( null != transferobject )
+        {
+            return Utils.getPriceForCategory(transferobject.getCategory());
+        } else
+        {
+            return null;
+        }
     }
 
     public static CategoryTo createCategoryTo ( Category entity )
