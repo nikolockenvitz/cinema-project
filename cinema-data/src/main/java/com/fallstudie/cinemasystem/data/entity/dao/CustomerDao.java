@@ -1,5 +1,6 @@
 package com.fallstudie.cinemasystem.data.entity.dao;
 
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import com.fallstudie.cinemasystem.data.entity.Customer;
@@ -27,7 +28,9 @@ public class CustomerDao extends BaseDao<Customer>
         Customer result = null;
         Query query = getEm().createNamedQuery(CustomerQuery.FIND_CUSTOMER_BY_EMAIL);
         query.setParameter(QueryParam.EMAIL, email);
-        result = (Customer) query.getSingleResult();
+        try {
+        	result = (Customer) query.getSingleResult();
+        } catch (NoResultException e) {}
         return result;
     }
 

@@ -3,6 +3,7 @@ package com.fallstudie.cinemasystem.data.entity.dao;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.TemporalType;
 
@@ -44,7 +45,9 @@ public class BlockDao extends BaseDao<Block>
         query.setParameter(QueryParam.SHOW_ID, showId);
         query.setParameter(QueryParam.SEAT_ID, seatId);
         query.setParameter(QueryParam.SESSIONTOKEN, sessiontoken);
-        result = (Block) query.getSingleResult();
+        try {
+        	result = (Block) query.getSingleResult();
+        } catch (NoResultException e) {}
         return result;
     }
 
