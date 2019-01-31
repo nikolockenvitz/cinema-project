@@ -223,7 +223,13 @@ public class ReservationResource
             bookingTo.setShow(showTo);
             bookingTo.setSeat(seatTo);
 
+            // delete elements older than 5 minutes
             List<BlockTo> blockTos = reservationService.deleteBlockedElements();
+
+            // deblock seat
+            BlockTo deblockedSeat = reservationService.deblockSeat(seatTo.getId(), showTo.getId(), bookingTo.getSessiontoken());
+
+            // block seat
             BlockTo createdBlockTo = reservationService.blockSeat(bookingTo);
 
             json = JSONConverter.toJSON(createdBlockTo);
