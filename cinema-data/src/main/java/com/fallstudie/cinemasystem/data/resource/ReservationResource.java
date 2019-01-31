@@ -222,6 +222,13 @@ public class ReservationResource
             SeatTo seatTo = seatService.getSeat(seatId);
             bookingTo.setShow(showTo);
             bookingTo.setSeat(seatTo);
+            
+            List<TicketTo> ticketTos = showService.getAllTicketsForShow(showId);
+            for(TicketTo t: ticketTos) {
+            	if(t.getSeat().getId() == seatTo.getId()) {
+            		throw new Exception();
+            	}
+            }
 
             // delete elements older than 5 minutes
             List<BlockTo> blockTos = reservationService.deleteBlockedElements();
