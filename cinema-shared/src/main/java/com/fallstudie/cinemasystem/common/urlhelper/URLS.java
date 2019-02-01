@@ -25,4 +25,8 @@ public interface URLS
 
     public final String BLOCK = "block/";
 
+    public final String CINEMASYSTEM_DATA_EMPLOYEE = SERVER + APPNAME + "employee/";
+
+    public final String GETALLEMPLOYEES = "getAllEmployees/";
+
 }
