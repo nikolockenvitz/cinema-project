@@ -99,7 +99,9 @@ public class ReservationResource
             ReservationTo createdReservation = new ReservationTo();
             boolean bookable = true;
 
-            if ( Utils.checkIfShowIsReservable(showTo.getDate(), showTo.getTime()) )
+            if ((bookingTo.getPaymentoption().equals("giftcard") &&
+            	 bookingTo.getVerification().length() == bookingTo.getSeats().size() + 3) &&
+            	Utils.checkIfShowIsReservable(showTo.getDate(), showTo.getTime()) )
             {
                 CustomerTo customerTo = customerService.checkIfCustomerExistsIfNotPersist(bookingTo.getCustomer());
 

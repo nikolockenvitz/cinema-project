@@ -2,12 +2,13 @@ package com.fallstudie.cinemasystem.common.transferobject;
 
 public class EmployeeTo
 {
+
     @Override
     public int hashCode ( )
     {
         final int prime = 31;
         int result = 1;
-        result = prime * result + dateofbirth.hashCode();
+        result = prime * result + ((dateofbirth == null) ? 0 : dateofbirth.hashCode());
         result = prime * result + ((email == null) ? 0 : email.hashCode());
         result = prime * result + ((firstname == null) ? 0 : firstname.hashCode());
         result = prime * result + (int) (id ^ (id >>> 32));
@@ -25,7 +26,11 @@ public class EmployeeTo
         if ( getClass() != obj.getClass() )
             return false;
         EmployeeTo other = (EmployeeTo) obj;
-        if ( dateofbirth != other.dateofbirth )
+        if ( dateofbirth == null )
+        {
+            if ( other.dateofbirth != null )
+                return false;
+        } else if ( !dateofbirth.equals(other.dateofbirth) )
             return false;
         if ( email == null )
         {
