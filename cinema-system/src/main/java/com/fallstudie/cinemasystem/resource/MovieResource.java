@@ -3,7 +3,9 @@ package com.fallstudie.cinemasystem.resource;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -18,7 +20,6 @@ import com.fallstudie.cinemasystem.common.annotation.Propagate;
 import com.fallstudie.cinemasystem.common.json.JSONConverter;
 import com.fallstudie.cinemasystem.common.responsebuilder.ResponseBuilder;
 import com.fallstudie.cinemasystem.common.transferobject.MovieTo;
-import com.fallstudie.cinemasystem.common.transferobject.ShowTo;
 import com.fallstudie.cinemasystem.service.MovieService;
 
 @Path("/movie")
@@ -82,23 +83,24 @@ public class MovieResource
         return responseBuilder.buildResponse(media, json);
     }
 
-    @GET
-    @Path("getShow/{id}")
+    @POST
     @Propagate
-    @Description(value = "Method to get a show to a specific movie by id!")
-    @Consumes(MediaType.TEXT_PLAIN)
+    @Description(value = "Method to post a movie")
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces({ MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON })
-    public Response getShowByID ( @PathParam("id") String id )
+    public Response postMovie ( @FormParam("movie") String movieJson )
     {
         String json = null;
         try
         {
-            ShowTo showTo = movieService.getShow(id);
-            json = JSONConverter.toJSON(showTo);
+            MovieTo movieTo = (MovieTo) JSONConverter.fromJSON(movieJson, MovieTo.class);
+            MovieTo savedMovieTo = movieService.save(movieTo);
+            json = JSONConverter.toJSON(savedMovieTo);
         } catch (Throwable e)
         {
             return responseBuilder.buildResponse(errorMedia, e.getMessage(), e);
         }
         return responseBuilder.buildResponse(media, json);
     }
+
 }
