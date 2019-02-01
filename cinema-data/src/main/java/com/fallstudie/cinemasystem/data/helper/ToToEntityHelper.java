@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.fallstudie.cinemasystem.common.transferobject.ActorTo;
-import com.fallstudie.cinemasystem.common.transferobject.BlockTo;
+import com.fallstudie.cinemasystem.common.transferobject.BlockToWithSessiontoken;
 import com.fallstudie.cinemasystem.common.transferobject.CategoryTo;
 import com.fallstudie.cinemasystem.common.transferobject.CustomerTo;
 import com.fallstudie.cinemasystem.common.transferobject.EmployeeTo;
@@ -240,7 +240,7 @@ public class ToToEntityHelper
         return null;
     }
 
-    public static Block createBlockEntity ( BlockTo transferObject )
+    public static Block createBlockEntity ( BlockToWithSessiontoken transferObject )
     {
         if ( null != transferObject )
         {

@@ -7,10 +7,22 @@ public interface URLS
 
     public final String APPNAME = "cinema-data/";
 
-    public final String KINOBUCHUNGSSYSTEM_DATA_MOVIE = SERVER + APPNAME + "movie/";
+    public final String CINEMASYSTEM_DATA_MOVIE = SERVER + APPNAME + "movie/";
 
     public final String GETALLMOVIES = "getAllMovies/";
 
-    public final String KINOBUCHUNGSSYSTEM_DATA_SHOW = SERVER + APPNAME + "show/";
+    public final String CINEMASYSTEM_DATA_SHOW = SERVER + APPNAME + "show/";
+
+    public final String GETSHOW = "getShow/";
+
+    public final String GETALLSHOWS = "getAllShows/";
+
+    public final String CINEMASYSTEM_DATA_RESERVATION = SERVER + APPNAME + "reservation/";
+
+    public final String BOOK = "book/";
+
+    public final String DELETE = "delete/";
+
+    public final String BLOCK = "block/";
 
 }

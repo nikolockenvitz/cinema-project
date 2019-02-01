@@ -156,6 +156,32 @@ public class UrlCallHelper
 
     }
 
+    public String sendDelete ( URL url, Map<String, String> parameters, String mediaType ) throws IOException, GeneralException
+    {
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+
+        // add request header
+        addRequestHeader(con, "DELETE", mediaType);
+
+        String urlParameters = createParameters(parameters);
+
+        // Send post request
+        sendDeleteRequest(con, urlParameters);
+
+        int responseCode = con.getResponseCode();
+        if ( LOGGER.isDebugEnabled() )
+        {
+            LOGGER.debug("\nSending 'DELETE' request to URL : " + url);
+            LOGGER.debug("PUT parameters : " + urlParameters);
+            LOGGER.debug("Response Code : " + responseCode);
+        }
+
+        StringBuilder response = readResponse(con);
+
+        return response.toString();
+
+    }
+
     private StringBuilder readResponse ( HttpURLConnection con ) throws IOException, GeneralException
     {
 
@@ -200,6 +226,17 @@ public class UrlCallHelper
     }
 
     private void sendPutRequest ( HttpURLConnection con, String urlParameters ) throws IOException
+    {
+        con.setDoOutput(true);
+//        DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+//        wr.writeBytes(urlParameters);
+        Writer wr = new BufferedWriter(new OutputStreamWriter(con.getOutputStream(), "UTF-8"));
+        wr.write(urlParameters);
+        wr.flush();
+        wr.close();
+    }
+
+    private void sendDeleteRequest ( HttpURLConnection con, String urlParameters ) throws IOException
     {
         con.setDoOutput(true);
 //        DataOutputStream wr = new DataOutputStream(con.getOutputStream());

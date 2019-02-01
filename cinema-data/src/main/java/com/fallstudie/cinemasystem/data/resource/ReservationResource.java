@@ -20,9 +20,11 @@ import org.slf4j.LoggerFactory;
 
 import com.fallstudie.cinemasystem.common.annotation.Description;
 import com.fallstudie.cinemasystem.common.annotation.Propagate;
+import com.fallstudie.cinemasystem.common.exception.TicketForSeatExistsExeption;
 import com.fallstudie.cinemasystem.common.json.JSONConverter;
 import com.fallstudie.cinemasystem.common.responsebuilder.ResponseBuilder;
 import com.fallstudie.cinemasystem.common.transferobject.BlockTo;
+import com.fallstudie.cinemasystem.common.transferobject.BlockToWithSessiontoken;
 import com.fallstudie.cinemasystem.common.transferobject.BookingTo;
 import com.fallstudie.cinemasystem.common.transferobject.CustomerTo;
 import com.fallstudie.cinemasystem.common.transferobject.ReservationTo;
@@ -187,7 +189,7 @@ public class ReservationResource
     @Path("delete/{id}")
     @Propagate
     @Description(value = "Method to delete a reservation by its id!")
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.TEXT_PLAIN)
     @Produces({ MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON })
     public Response deleteReservationById ( @PathParam("id") String reservationId )
     {
@@ -215,29 +217,31 @@ public class ReservationResource
     {
         try
         {
-            BlockTo bookingTo = (BlockTo) JSONConverter.fromJSON(json, BlockTo.class);
-            String showId = String.valueOf(bookingTo.getShow().getId());
+            BlockToWithSessiontoken blockToWithSessiontoken = (BlockToWithSessiontoken) JSONConverter.fromJSON(json, BlockToWithSessiontoken.class);
+            String showId = String.valueOf(blockToWithSessiontoken.getShow().getId());
             ShowTo showTo = showService.getShow(showId);
-            String seatId = String.valueOf(bookingTo.getSeat().getId());
+            String seatId = String.valueOf(blockToWithSessiontoken.getSeat().getId());
             SeatTo seatTo = seatService.getSeat(seatId);
-            bookingTo.setShow(showTo);
-            bookingTo.setSeat(seatTo);
-            
+            blockToWithSessiontoken.setShow(showTo);
+            blockToWithSessiontoken.setSeat(seatTo);
+
             List<TicketTo> ticketTos = showService.getAllTicketsForShow(showId);
-            for(TicketTo t: ticketTos) {
-            	if(t.getSeat().getId() == seatTo.getId()) {
-            		throw new Exception();
-            	}
+            for ( TicketTo t : ticketTos )
+            {
+                if ( t.getSeat().getId() == seatTo.getId() )
+                {
+                    throw new TicketForSeatExistsExeption(t, seatTo.getId());
+                }
             }
 
             // delete elements older than 5 minutes
             List<BlockTo> blockTos = reservationService.deleteBlockedElements();
 
             // deblock seat
-            BlockTo deblockedSeat = reservationService.deblockSeatIfExists(seatTo.getId(), showTo.getId(), bookingTo.getSessiontoken());
+            BlockTo deblockedSeat = reservationService.deblockSeatIfExists(seatTo.getId(), showTo.getId(), blockToWithSessiontoken.getSessiontoken());
 
             // block seat
-            BlockTo createdBlockTo = reservationService.blockSeat(bookingTo);
+            BlockTo createdBlockTo = reservationService.blockSeat(blockToWithSessiontoken);
 
             json = JSONConverter.toJSON(createdBlockTo);
         } catch (Exception e)
@@ -258,9 +262,10 @@ public class ReservationResource
     {
         try
         {
-            BlockTo bookingTo = (BlockTo) JSONConverter.fromJSON(json, BlockTo.class);
+            BlockToWithSessiontoken blockToWithSessiontoken = (BlockToWithSessiontoken) JSONConverter.fromJSON(json, BlockToWithSessiontoken.class);
 
-            BlockTo deletedBlockTo = reservationService.deblockSeat(bookingTo.getSeat().getId(), bookingTo.getShow().getId(), bookingTo.getSessiontoken());
+            BlockTo deletedBlockTo = reservationService.deblockSeat(blockToWithSessiontoken.getSeat().getId(), blockToWithSessiontoken.getShow().getId(),
+                    blockToWithSessiontoken.getSessiontoken());
 
             json = JSONConverter.toJSON(deletedBlockTo);
 

@@ -1,5 +1,7 @@
 package com.fallstudie.cinemasystem.resource;
 
+import java.util.List;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
@@ -76,6 +78,26 @@ public class ShowResource
         } catch (Exception e)
         {
             LOGGER.error(e.getMessage());
+            return responseBuilder.buildResponse(errorMedia, e.getMessage(), e);
+        }
+        return responseBuilder.buildResponse(media, json);
+    }
+
+    @GET
+    @Path("getAllShows/{id}")
+    @Propagate
+    @Description(value = "Method to get all shows by movie id!")
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces({ MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON })
+    public Response getAllShowsByMovieID ( @PathParam("id") String id )
+    {
+        String json = null;
+        try
+        {
+            List<ShowTo> showTos = showService.getAllShowsByMovieId(id);
+            json = JSONConverter.toJSON(showTos);
+        } catch (Throwable e)
+        {
             return responseBuilder.buildResponse(errorMedia, e.getMessage(), e);
         }
         return responseBuilder.buildResponse(media, json);
