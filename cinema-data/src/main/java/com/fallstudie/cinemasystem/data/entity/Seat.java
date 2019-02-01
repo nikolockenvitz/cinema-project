@@ -143,83 +143,83 @@ public class Seat implements Serializable
         this.x = x;
     }
 
-    public Ticket addTicket ( Ticket ticket )
-    {
-        getTickets().add(ticket);
-        ticket.setSeat(this);
-        return ticket;
-    }
-
-    public Ticket removeTicket ( Ticket ticket )
-    {
-        getTickets().remove(ticket);
-        ticket.setSeat(null);
-        return ticket;
-    }
-
-    @Override
-    public int hashCode ( )
-    {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((category == null) ? 0 : category.hashCode());
-        result = prime * result + ((hall == null) ? 0 : hall.hashCode());
-        result = prime * result + (int) (id ^ (id >>> 32));
-        result = prime * result + ((number == null) ? 0 : number.hashCode());
-        result = prime * result + ((row == null) ? 0 : row.hashCode());
-        result = prime * result + ((tickets == null) ? 0 : tickets.hashCode());
-        result = prime * result + x;
-        result = prime * result + y;
-        return result;
-    }
-
-    @Override
-    public boolean equals ( Object obj )
-    {
-        if ( this == obj )
-            return true;
-        if ( obj == null )
-            return false;
-        if ( getClass() != obj.getClass() )
-            return false;
-        Seat other = (Seat) obj;
-        if ( category == null )
-        {
-            if ( other.category != null )
-                return false;
-        } else if ( !category.equals(other.category) )
-            return false;
-        if ( hall == null )
-        {
-            if ( other.hall != null )
-                return false;
-        } else if ( !hall.equals(other.hall) )
-            return false;
-        if ( id != other.id )
-            return false;
-        if ( number == null )
-        {
-            if ( other.number != null )
-                return false;
-        } else if ( !number.equals(other.number) )
-            return false;
-        if ( row == null )
-        {
-            if ( other.row != null )
-                return false;
-        } else if ( !row.equals(other.row) )
-            return false;
-        if ( tickets == null )
-        {
-            if ( other.tickets != null )
-                return false;
-        } else if ( !tickets.equals(other.tickets) )
-            return false;
-        if ( x != other.x )
-            return false;
-        if ( y != other.y )
-            return false;
-        return true;
-    }
+//    public Ticket addTicket ( Ticket ticket )
+//    {
+//        getTickets().add(ticket);
+//        ticket.setSeat(this);
+//        return ticket;
+//    }
+//
+//    public Ticket removeTicket ( Ticket ticket )
+//    {
+//        getTickets().remove(ticket);
+//        ticket.setSeat(null);
+//        return ticket;
+//    }
+//
+//    @Override
+//    public int hashCode ( )
+//    {
+//        final int prime = 31;
+//        int result = 1;
+//        result = prime * result + ((category == null) ? 0 : category.hashCode());
+//        result = prime * result + ((hall == null) ? 0 : hall.hashCode());
+//        result = prime * result + (int) (id ^ (id >>> 32));
+//        result = prime * result + ((number == null) ? 0 : number.hashCode());
+//        result = prime * result + ((row == null) ? 0 : row.hashCode());
+//        result = prime * result + ((tickets == null) ? 0 : tickets.hashCode());
+//        result = prime * result + x;
+//        result = prime * result + y;
+//        return result;
+//    }
+//
+//    @Override
+//    public boolean equals ( Object obj )
+//    {
+//        if ( this == obj )
+//            return true;
+//        if ( obj == null )
+//            return false;
+//        if ( getClass() != obj.getClass() )
+//            return false;
+//        Seat other = (Seat) obj;
+//        if ( category == null )
+//        {
+//            if ( other.category != null )
+//                return false;
+//        } else if ( !category.equals(other.category) )
+//            return false;
+//        if ( hall == null )
+//        {
+//            if ( other.hall != null )
+//                return false;
+//        } else if ( !hall.equals(other.hall) )
+//            return false;
+//        if ( id != other.id )
+//            return false;
+//        if ( number == null )
+//        {
+//            if ( other.number != null )
+//                return false;
+//        } else if ( !number.equals(other.number) )
+//            return false;
+//        if ( row == null )
+//        {
+//            if ( other.row != null )
+//                return false;
+//        } else if ( !row.equals(other.row) )
+//            return false;
+//        if ( tickets == null )
+//        {
+//            if ( other.tickets != null )
+//                return false;
+//        } else if ( !tickets.equals(other.tickets) )
+//            return false;
+//        if ( x != other.x )
+//            return false;
+//        if ( y != other.y )
+//            return false;
+//        return true;
+//    }
 
 }

@@ -158,68 +158,68 @@ public class Movie implements Serializable
         this.ratings = ratings;
     }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((actors == null) ? 0 : actors.hashCode());
-		result = prime * result + ((description == null) ? 0 : description.hashCode());
-		result = prime * result + duration;
-		result = prime * result + fsk;
-		result = prime * result + ((genres == null) ? 0 : genres.hashCode());
-		result = prime * result + (int) (id ^ (id >>> 32));
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((ratings == null) ? 0 : ratings.hashCode());
-		result = prime * result + ((shows == null) ? 0 : shows.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Movie other = (Movie) obj;
-		if (actors == null) {
-			if (other.actors != null)
-				return false;
-		} else if (!actors.equals(other.actors))
-			return false;
-		if (description == null) {
-			if (other.description != null)
-				return false;
-		} else if (!description.equals(other.description))
-			return false;
-		if (duration != other.duration)
-			return false;
-		if (fsk != other.fsk)
-			return false;
-		if (genres == null) {
-			if (other.genres != null)
-				return false;
-		} else if (!genres.equals(other.genres))
-			return false;
-		if (id != other.id)
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		if (ratings == null) {
-			if (other.ratings != null)
-				return false;
-		} else if (!ratings.equals(other.ratings))
-			return false;
-		if (shows == null) {
-			if (other.shows != null)
-				return false;
-		} else if (!shows.equals(other.shows))
-			return false;
-		return true;
-	}
+//	@Override
+//	public int hashCode() {
+//		final int prime = 31;
+//		int result = 1;
+//		result = prime * result + ((actors == null) ? 0 : actors.hashCode());
+//		result = prime * result + ((description == null) ? 0 : description.hashCode());
+//		result = prime * result + duration;
+//		result = prime * result + fsk;
+//		result = prime * result + ((genres == null) ? 0 : genres.hashCode());
+//		result = prime * result + (int) (id ^ (id >>> 32));
+//		result = prime * result + ((name == null) ? 0 : name.hashCode());
+//		result = prime * result + ((ratings == null) ? 0 : ratings.hashCode());
+//		result = prime * result + ((shows == null) ? 0 : shows.hashCode());
+//		return result;
+//	}
+//
+//	@Override
+//	public boolean equals(Object obj) {
+//		if (this == obj)
+//			return true;
+//		if (obj == null)
+//			return false;
+//		if (getClass() != obj.getClass())
+//			return false;
+//		Movie other = (Movie) obj;
+//		if (actors == null) {
+//			if (other.actors != null)
+//				return false;
+//		} else if (!actors.equals(other.actors))
+//			return false;
+//		if (description == null) {
+//			if (other.description != null)
+//				return false;
+//		} else if (!description.equals(other.description))
+//			return false;
+//		if (duration != other.duration)
+//			return false;
+//		if (fsk != other.fsk)
+//			return false;
+//		if (genres == null) {
+//			if (other.genres != null)
+//				return false;
+//		} else if (!genres.equals(other.genres))
+//			return false;
+//		if (id != other.id)
+//			return false;
+//		if (name == null) {
+//			if (other.name != null)
+//				return false;
+//		} else if (!name.equals(other.name))
+//			return false;
+//		if (ratings == null) {
+//			if (other.ratings != null)
+//				return false;
+//		} else if (!ratings.equals(other.ratings))
+//			return false;
+//		if (shows == null) {
+//			if (other.shows != null)
+//				return false;
+//		} else if (!shows.equals(other.shows))
+//			return false;
+//		return true;
+//	}
 
 }

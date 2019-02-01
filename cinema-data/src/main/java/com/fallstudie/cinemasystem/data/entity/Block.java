@@ -4,14 +4,19 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 
 import com.fallstudie.cinemasystem.data.entity.query.BlockQuery;
 
@@ -20,7 +25,7 @@ import com.fallstudie.cinemasystem.data.entity.query.BlockQuery;
  * 
  */
 @Entity
-@Table(name = "block")
+@Table(name = "block", uniqueConstraints = { @UniqueConstraint(columnNames = { "seat_id", "show_id" }) })
 @NamedQueries({ @NamedQuery(name = "Block.findAll", query = "SELECT b FROM Block b"),
         @NamedQuery(name = BlockQuery.FIND_BLOCKEDSEATS_BY_SHOW_ID_QNAME, query = BlockQuery.FIND_BLOCKEDSEATS_BY_SHOW_ID),
         @NamedQuery(name = BlockQuery.FIND_BLOCK_BY_SHOW_ID_SEAT_ID_SESSIONTOKEN_QNAME, query = BlockQuery.FIND_BLOCK_BY_SHOW_ID_SEAT_ID_SESSIONTOKEN),
@@ -31,8 +36,14 @@ public class Block implements Serializable
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long   id;
-    private Seat   seat;
+    private long id;
+
+    @OneToOne
+    @JoinColumn(name = "seat_id")
+    private Seat seat;
+
+    @JoinColumn(name = "show_id")
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Show.class)
     private Show   show;
     private String sessiontoken;
 
