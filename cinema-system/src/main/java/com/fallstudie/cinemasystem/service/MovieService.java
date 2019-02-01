@@ -1,6 +1,7 @@
 package com.fallstudie.cinemasystem.service;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,6 +52,17 @@ public class MovieService
         String json = urlCallHelper.sendGet(URLS.CINEMASYSTEM_DATA_MOVIE + URLS.GETSHOW + id, parameters, MediaType.TEXT_PLAIN);
         ShowTo showTo = (ShowTo) JSONConverter.fromJSON(json, ShowTo.class);
         return showTo;
+    }
+
+    public MovieTo save ( MovieTo movieTo ) throws IOException, GeneralException
+    {
+        URL url = new URL(URLS.CINEMASYSTEM_DATA_MOVIE);
+        Map<String, String> parameters = new HashMap<>();
+        String rqJson = JSONConverter.toJSON(movieTo);
+        parameters.put("movie", rqJson);
+        String json = urlCallHelper.sendPost(url, parameters, MediaType.APPLICATION_JSON);
+        MovieTo savedMovieTo = (MovieTo) JSONConverter.fromJSON(json, MovieTo.class);
+        return savedMovieTo;
     }
 
 }
