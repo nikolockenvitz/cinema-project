@@ -28,6 +28,7 @@
 			<property name="eclipselink.target-database" value="org.eclipse.persistence.platform.database.PostgreSQLPlatform"/>
 		    <property name="eclipselink.cache.shared.default" value="false"/>
 			<property name="eclipselink.ddl-generation" value="create-or-extend-tables" />
+			<property name="eclipselink.allow-zero-id" value="true"/>
 		</properties>
 	</persistence-unit>
 </persistence>

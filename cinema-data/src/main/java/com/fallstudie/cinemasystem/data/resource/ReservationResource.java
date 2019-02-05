@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
 
 import com.fallstudie.cinemasystem.common.annotation.Description;
 import com.fallstudie.cinemasystem.common.annotation.Propagate;
+import com.fallstudie.cinemasystem.common.exception.SeatAlreadyBlockedException;
 import com.fallstudie.cinemasystem.common.exception.TicketForSeatExistsExeption;
 import com.fallstudie.cinemasystem.common.json.JSONConverter;
 import com.fallstudie.cinemasystem.common.responsebuilder.ResponseBuilder;
@@ -99,9 +100,8 @@ public class ReservationResource
             ReservationTo createdReservation = new ReservationTo();
             boolean bookable = true;
 
-            if ((bookingTo.getPaymentoption().equals("giftcard") &&
-            	 bookingTo.getVerification().length() == bookingTo.getSeats().size() + 3) &&
-            	Utils.checkIfShowIsReservable(showTo.getDate(), showTo.getTime()) )
+            if ( (bookingTo.getPaymentoption().equals("giftcard") && bookingTo.getVerification().length() == bookingTo.getSeats().size() + 3)
+                    && Utils.checkIfShowIsReservable(showTo.getDate(), showTo.getTime()) )
             {
                 CustomerTo customerTo = customerService.checkIfCustomerExistsIfNotPersist(bookingTo.getCustomer());
 
@@ -226,7 +226,7 @@ public class ReservationResource
             SeatTo seatTo = seatService.getSeat(seatId);
             blockToWithSessiontoken.setShow(showTo);
             blockToWithSessiontoken.setSeat(seatTo);
-
+            BlockTo createdBlockTo = new BlockTo();
             List<TicketTo> ticketTos = showService.getAllTicketsForShow(showId);
             for ( TicketTo t : ticketTos )
             {
@@ -237,15 +237,24 @@ public class ReservationResource
             }
 
             // delete elements older than 5 minutes
-            List<BlockTo> blockTos = reservationService.deleteBlockedElements();
+            List<BlockTo> deletedblockTos = reservationService.deleteBlockedElements();
 
             // deblock seat
-            BlockTo deblockedSeat = reservationService.deblockSeatIfExists(seatTo.getId(), showTo.getId(), blockToWithSessiontoken.getSessiontoken());
+            BlockTo deblockedSeatTo = reservationService.deblockSeatIfExists(seatTo.getId(), showTo.getId(), blockToWithSessiontoken.getSessiontoken());
 
+            List<BlockTo> blockedSeatTos = reservationService.getBlockedSeats(showId);
+            for ( BlockTo bTo : blockedSeatTos )
+            {
+                if ( bTo.getSeat().getId() == blockToWithSessiontoken.getSeat().getId() && bTo.getShow().getId() == blockToWithSessiontoken.getShow().getId()
+                        && !(bTo.getSessiontoken().equals(blockToWithSessiontoken.getSessiontoken())) )
+                {
+                    throw new SeatAlreadyBlockedException(bTo.getSeat().getId(), bTo.getShow().getId());
+                }
+            }
             // block seat
-            BlockTo createdBlockTo = reservationService.blockSeat(blockToWithSessiontoken);
-
+            createdBlockTo = reservationService.blockSeat(blockToWithSessiontoken);
             json = JSONConverter.toJSON(createdBlockTo);
+
         } catch (Exception e)
         {
             LOGGER.error(e.getMessage());

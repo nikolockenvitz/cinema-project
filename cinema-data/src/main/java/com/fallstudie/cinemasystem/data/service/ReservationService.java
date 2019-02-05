@@ -109,7 +109,7 @@ public class ReservationService
 
         if ( null != block )
         {
-            deblockSeat(seatId, showId, sessiontoken);
+            return deblockSeat(seatId, showId, sessiontoken);
         }
         return EntityToToHelper.createBlockTo(block);
     }
