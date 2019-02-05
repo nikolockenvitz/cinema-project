@@ -39,6 +39,7 @@ function drawCinemaHall (hallData) {
 	adjustToScreen();
 	makeCinemaHallVisible();
 	updatePriceBox();
+	enableTooltips();
 }
 
 function getSeatData (hallData) {
@@ -314,6 +315,6 @@ $(function () {
 });
 
 /* Tooltips */
-$(function () {
-	$('[data-toggle="tooltip"]').tooltip()
-});
+function enableTooltips () {
+	$('[data-toggle="tooltip"]').tooltip();
+}

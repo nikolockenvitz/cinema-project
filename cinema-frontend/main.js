@@ -223,7 +223,7 @@ function displayMovieAndShows (movie) {
 				name += ((rating.customer.firstname == null || rating.customer.firstname == "" || rating.customer.lastname == null || rating.customer.lastname == "") ? "" : " ");
 				name += (rating.customer.lastname != null ? rating.customer.lastname : "");
 			}
-			else {
+			if(name == "") {
 				name = "Gast";
 			}
 			ratings += templateRating
