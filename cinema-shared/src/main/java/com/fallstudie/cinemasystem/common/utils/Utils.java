@@ -105,7 +105,7 @@ public class Utils
         return null;
     }
 
-    private static Calendar convertStringToCalendarDate ( String date )
+    public static Calendar convertStringToCalendarDate ( String date )
     {
         try
         {
@@ -141,7 +141,7 @@ public class Utils
         return null;
     }
 
-    private static Calendar convertStringToCalendarTime ( String date )
+    public static Calendar convertStringToCalendarTime ( String date )
     {
         try
         {

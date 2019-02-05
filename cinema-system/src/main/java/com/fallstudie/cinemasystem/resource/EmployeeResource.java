@@ -1,4 +1,4 @@
-package com.fallstudie.cinemasystem.data.resource;
+package com.fallstudie.cinemasystem.resource;
 
 import java.util.List;
 
@@ -20,17 +20,16 @@ import com.fallstudie.cinemasystem.common.annotation.Propagate;
 import com.fallstudie.cinemasystem.common.json.JSONConverter;
 import com.fallstudie.cinemasystem.common.responsebuilder.ResponseBuilder;
 import com.fallstudie.cinemasystem.common.transferobject.EmployeeTo;
-import com.fallstudie.cinemasystem.data.service.EmployeeService;
+import com.fallstudie.cinemasystem.service.EmployeeService;
 
 @Path("/employee")
 public class EmployeeResource
 {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeResource.class);
 
-    private static final MediaType textMedia = MediaType.TEXT_PLAIN_TYPE;
+    private static final MediaType errorMedia = MediaType.TEXT_PLAIN_TYPE;
 
-    private static final MediaType jsonMedia = MediaType.APPLICATION_JSON_TYPE;
+    private static final MediaType media = MediaType.APPLICATION_JSON_TYPE;
 
     private EmployeeService employeeService;
 
@@ -44,46 +43,48 @@ public class EmployeeResource
 
     @GET
     @Path("{id}")
-    @Propagate()
-    @Description(value = "Method to get an employee via id!")
+    @Propagate
+    @Description(value = "Method to get an employee by id!")
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces({ MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON })
-    public Response getEmployeeByID ( @PathParam("id") String id )
+    public Response getEmployeeById ( @PathParam("id") String id )
     {
-        String json = null;
+        String json = "";
         try
         {
-            EmployeeTo employeeTo = employeeService.getEmployee(id);
+            EmployeeTo employeeTo = employeeService.getEmployeeById(id);
             json = JSONConverter.toJSON(employeeTo);
-        } catch (Throwable e)
+        } catch (Exception e)
         {
-            return responseBuilder.buildResponse(textMedia, e.getMessage(), e);
+            LOGGER.error(e.getMessage());
+            return responseBuilder.buildResponse(errorMedia, e.getMessage(), e);
         }
-        return responseBuilder.buildResponse(jsonMedia, json);
+        return responseBuilder.buildResponse(media, json);
     }
 
     @GET
     @Path("getAllEmployees")
-    @Propagate()
+    @Propagate
     @Description(value = "Method to get all employees!")
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces({ MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON })
     public Response getAllEmployees ( )
     {
-        String json = null;
+        String json = "";
         try
         {
             List<EmployeeTo> employeeTos = employeeService.getAllEmployees();
             json = JSONConverter.toJSON(employeeTos);
-        } catch (Throwable e)
+        } catch (Exception e)
         {
-            return responseBuilder.buildResponse(textMedia, e.getMessage(), e);
+            LOGGER.error(e.getMessage());
+            return responseBuilder.buildResponse(errorMedia, e.getMessage(), e);
         }
-        return responseBuilder.buildResponse(jsonMedia, json);
+        return responseBuilder.buildResponse(media, json);
     }
 
     @POST
-    @Propagate()
+    @Propagate
     @Description(value = "Method to save an employee!")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces({ MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON })
@@ -93,12 +94,12 @@ public class EmployeeResource
         try
         {
             EmployeeTo employeeToToSave = (EmployeeTo) JSONConverter.fromJSON(employeeJson, EmployeeTo.class);
-            EmployeeTo savedEmployeeTo = employeeService.save(employeeToToSave);
-            json = JSONConverter.toJSON(savedEmployeeTo);
+            EmployeeTo savedEmployee = employeeService.save(employeeToToSave);
+            json = JSONConverter.toJSON(savedEmployee);
         } catch (Throwable e)
         {
-            return responseBuilder.buildResponse(textMedia, e.getMessage(), e);
+            return responseBuilder.buildResponse(errorMedia, e.getMessage(), e);
         }
-        return responseBuilder.buildResponse(jsonMedia, json);
+        return responseBuilder.buildResponse(media, json);
     }
 }

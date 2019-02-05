@@ -473,7 +473,7 @@ public class EntityToToHelper
         return list;
     }
 
-    private static List<TicketTo> createTicketTosForReservation ( List<Ticket> tickets, ReservationTo reservationTo )
+    public static List<TicketTo> createTicketTosForReservation ( List<Ticket> tickets, ReservationTo reservationTo )
     {
         List<TicketTo> list = new ArrayList<>();
         if ( null != tickets )

@@ -59,7 +59,7 @@ public class Ticket implements Serializable
     @JoinColumn(name = "reservation_id")
     private Reservation reservation;
 
-    // bi-directional one-to-one association to Seat
+    // bi-directional one-to-one association to Employee
     @OneToOne(fetch = FetchType.LAZY, targetEntity = Employee.class)
     @JoinColumn(name = "employee_id")
     private Employee employee;

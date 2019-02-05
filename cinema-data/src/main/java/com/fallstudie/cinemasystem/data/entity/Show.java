@@ -51,7 +51,7 @@ public class Show implements Serializable
     @Column(name = "is3d")
     private boolean is3D;
 
-    // bi-directional one-to-one association to Ticket
+    // bi-directional one-to-many association to Ticket
     @OneToMany(mappedBy = "show", fetch = FetchType.LAZY, targetEntity = Ticket.class)
     private List<Ticket> tickets;
 
@@ -64,6 +64,10 @@ public class Show implements Serializable
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Hall.class)
     @JoinColumn(name = "hall_id")
     private Hall hall;
+
+    // bi-directional one-to-many association to Block
+    @OneToMany(mappedBy = "show", fetch = FetchType.LAZY, targetEntity = Block.class)
+    private List<Block> blocks;
 
     public Show( )
     {
@@ -153,67 +157,67 @@ public class Show implements Serializable
         ticket.setShow(null);
         return ticket;
     }
-
-    @Override
-    public int hashCode ( )
-    {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((date == null) ? 0 : date.hashCode());
-        result = prime * result + ((hall == null) ? 0 : hall.hashCode());
-        result = prime * result + (int) (id ^ (id >>> 32));
-        result = prime * result + (is3D ? 1231 : 1237);
-        result = prime * result + ((movie == null) ? 0 : movie.hashCode());
-        result = prime * result + ((tickets == null) ? 0 : tickets.hashCode());
-        result = prime * result + ((time == null) ? 0 : time.hashCode());
-        return result;
-    }
-
-    @Override
-    public boolean equals ( Object obj )
-    {
-        if ( this == obj )
-            return true;
-        if ( obj == null )
-            return false;
-        if ( getClass() != obj.getClass() )
-            return false;
-        Show other = (Show) obj;
-        if ( date == null )
-        {
-            if ( other.date != null )
-                return false;
-        } else if ( !date.equals(other.date) )
-            return false;
-        if ( hall == null )
-        {
-            if ( other.hall != null )
-                return false;
-        } else if ( !hall.equals(other.hall) )
-            return false;
-        if ( id != other.id )
-            return false;
-        if ( is3D != other.is3D )
-            return false;
-        if ( movie == null )
-        {
-            if ( other.movie != null )
-                return false;
-        } else if ( !movie.equals(other.movie) )
-            return false;
-        if ( tickets == null )
-        {
-            if ( other.tickets != null )
-                return false;
-        } else if ( !tickets.equals(other.tickets) )
-            return false;
-        if ( time == null )
-        {
-            if ( other.time != null )
-                return false;
-        } else if ( !time.equals(other.time) )
-            return false;
-        return true;
-    }
+//
+//    @Override
+//    public int hashCode ( )
+//    {
+//        final int prime = 31;
+//        int result = 1;
+//        result = prime * result + ((date == null) ? 0 : date.hashCode());
+//        result = prime * result + ((hall == null) ? 0 : hall.hashCode());
+//        result = prime * result + (int) (id ^ (id >>> 32));
+//        result = prime * result + (is3D ? 1231 : 1237);
+//        result = prime * result + ((movie == null) ? 0 : movie.hashCode());
+//        result = prime * result + ((tickets == null) ? 0 : tickets.hashCode());
+//        result = prime * result + ((time == null) ? 0 : time.hashCode());
+//        return result;
+//    }
+//
+//    @Override
+//    public boolean equals ( Object obj )
+//    {
+//        if ( this == obj )
+//            return true;
+//        if ( obj == null )
+//            return false;
+//        if ( getClass() != obj.getClass() )
+//            return false;
+//        Show other = (Show) obj;
+//        if ( date == null )
+//        {
+//            if ( other.date != null )
+//                return false;
+//        } else if ( !date.equals(other.date) )
+//            return false;
+//        if ( hall == null )
+//        {
+//            if ( other.hall != null )
+//                return false;
+//        } else if ( !hall.equals(other.hall) )
+//            return false;
+//        if ( id != other.id )
+//            return false;
+//        if ( is3D != other.is3D )
+//            return false;
+//        if ( movie == null )
+//        {
+//            if ( other.movie != null )
+//                return false;
+//        } else if ( !movie.equals(other.movie) )
+//            return false;
+//        if ( tickets == null )
+//        {
+//            if ( other.tickets != null )
+//                return false;
+//        } else if ( !tickets.equals(other.tickets) )
+//            return false;
+//        if ( time == null )
+//        {
+//            if ( other.time != null )
+//                return false;
+//        } else if ( !time.equals(other.time) )
+//            return false;
+//        return true;
+//    }
 
 }

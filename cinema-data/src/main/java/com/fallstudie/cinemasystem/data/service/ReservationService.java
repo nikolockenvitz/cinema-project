@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.fallstudie.cinemasystem.common.transferobject.BlockTo;
+import com.fallstudie.cinemasystem.common.transferobject.BlockToWithSessiontoken;
 import com.fallstudie.cinemasystem.common.transferobject.CustomerTo;
 import com.fallstudie.cinemasystem.common.transferobject.ReservationTo;
 import com.fallstudie.cinemasystem.common.transferobject.ShowTo;
@@ -64,9 +65,9 @@ public class ReservationService
         return EntityToToHelper.createReservationTo(reservationDao.remove(r), true);
     }
 
-    public BlockTo blockSeat ( BlockTo bookingTo )
+    public BlockTo blockSeat ( BlockToWithSessiontoken blockToWithSessiontoken )
     {
-        Block block = ToToEntityHelper.createBlockEntity(bookingTo);
+        Block block = ToToEntityHelper.createBlockEntity(blockToWithSessiontoken);
         block = blockDao.persist(block);
         block = blockDao.find(block.getId());
         return EntityToToHelper.createBlockTo(block);
