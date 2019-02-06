@@ -67,8 +67,6 @@ public class UtilsTest
         testCalendarTime.set(testCalendarTime.MILLISECOND, 0);
 
         testMinuteDifference = 5;
-        testCalendarXMinAgo = Calendar.getInstance();
-        testCalendarXMinAgo.set(Calendar.MINUTE, testCalendarXMinAgo.get(Calendar.MINUTE) - testMinuteDifference);
 
         // date
         testDate = testCalendar.getTime();
@@ -169,6 +167,9 @@ public class UtilsTest
     @Test
     public void testGetDateTimeDifference ( )
     {
+        testCalendarXMinAgo = Calendar.getInstance();
+        testCalendarXMinAgo.set(Calendar.MINUTE, testCalendarXMinAgo.get(Calendar.MINUTE) - testMinuteDifference);
+
         assertThat(testCalendarXMinAgo.getTime(), equalTo(Utils.getDateTimeDifference(testMinuteDifference)));
     }
 
