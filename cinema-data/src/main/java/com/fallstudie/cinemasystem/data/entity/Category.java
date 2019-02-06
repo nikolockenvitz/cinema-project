@@ -20,7 +20,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "category")
 @NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category c")
-public class Category implements Serializable
+public class Category implements Serializable, Comparable
 {
     private static final long serialVersionUID = 1L;
 
@@ -68,6 +68,18 @@ public class Category implements Serializable
     {
         this.seats = seats;
     }
+
+	@Override
+	public int compareTo(Object o) {
+		if(this.getClass() == o.getClass()) {
+			Category compareCategory = (Category) o;
+			if(this.getId() == compareCategory.getId() &&
+			   this.getCategory().equals(compareCategory.getCategory())) {
+				return 0;
+			}
+		}
+		return 1;
+	}
 
 //	@Override
 //	public int hashCode() {

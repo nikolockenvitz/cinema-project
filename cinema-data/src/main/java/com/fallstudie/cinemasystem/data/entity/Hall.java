@@ -26,7 +26,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @Entity
 @Table(name = "hall")
 @NamedQuery(name = "Hall.findAll", query = "SELECT h FROM Hall h")
-public class Hall implements Serializable
+public class Hall implements Serializable, Comparable
 {
     private static final long serialVersionUID = 1L;
 
@@ -100,6 +100,20 @@ public class Hall implements Serializable
     {
         this.length = length;
     }
+    
+	@Override
+	public int compareTo(Object o) {
+		if(this.getClass() == o.getClass()) {
+			Hall compareHall = (Hall) o;
+			if(this.getId() == compareHall.getId() &&
+			   this.getLength() == compareHall.getId() &&
+			   this.getName().equals(compareHall.getName()) &&
+			   this.getWidth() == compareHall.getWidth()) {
+				return 0;
+			}
+		}
+		return 1;
+	}
 //
 //	@Override
 //	public int hashCode() {

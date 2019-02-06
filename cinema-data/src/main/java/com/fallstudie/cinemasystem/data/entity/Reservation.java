@@ -33,7 +33,7 @@ import com.fallstudie.cinemasystem.data.entity.query.ReservationQuery;
 @CascadeOnDelete
 @NamedQueries({ @NamedQuery(name = "Reservation.findAll", query = "SELECT r FROM Reservation r"),
         @NamedQuery(name = ReservationQuery.FIND_TICKETS_BY_SHOW_ID_QNAME, query = ReservationQuery.FIND_RESERVATIONS_BY_SHOW_ID) })
-public class Reservation implements Serializable
+public class Reservation implements Serializable, Comparable
 {
     private static final long serialVersionUID = 1L;
 
@@ -97,6 +97,23 @@ public class Reservation implements Serializable
     {
         this.customer = customer;
     }
+
+	@Override
+	public int compareTo(Object compareObject) {
+		if(this.getClass()==compareObject.getClass()) {
+			Reservation compareReservation = (Reservation) compareObject;
+			if(this.getId()==compareReservation.getId()) {
+				if(this.getCustomer().compareTo(compareReservation.getCustomer()) == 0) {
+					if(this.getDateOfReservation().compareTo(compareReservation.getDateOfReservation()) == 0) {
+//						if(this.getTickets().equals(compareReservation.getTickets())) {
+							return 0;
+//						}
+					}
+				}
+			}
+		}
+		return 1;
+	}
 
 //    public Ticket addTicket ( Ticket ticket )
 //    {

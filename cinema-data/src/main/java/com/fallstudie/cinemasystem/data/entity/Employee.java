@@ -24,7 +24,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @JsonIdentityReference(alwaysAsId = false)
 @Entity
 @NamedQuery(name = "Employee.findAll", query = "SELECT e FROM Employee e")
-public class Employee implements Serializable
+public class Employee implements Serializable, Comparable
 {
     private static final long serialVersionUID = 1L;
 
@@ -94,6 +94,25 @@ public class Employee implements Serializable
     {
         this.lastname = lastname;
     }
+
+	@Override
+	public int compareTo(Object compareObject) {
+		if(this.getClass() == compareObject.getClass()) {
+			Employee compareEmployee = (Employee) compareObject;
+			if(this.getId()==compareEmployee.getId()) {
+				if(this.getDateofbirth()==compareEmployee.getDateofbirth()) {
+					if(this.getEmail().equals(compareEmployee)) {
+						if(this.getFirstname().equals(compareEmployee.getFirstname())) {
+							if(this.getLastname().equals(compareEmployee.getLastname())) {
+								return 0;
+							}
+						}
+					}
+				}
+			}
+		}
+		return 1;
+	}
 
 //	@Override
 //	public int hashCode() {

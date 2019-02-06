@@ -28,7 +28,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @Table(name = "customer")
 @NamedQueries({ @NamedQuery(name = "Customer.findAll", query = "SELECT c FROM Customer c"),
         @NamedQuery(name = CustomerQuery.FIND_CUSTOMER_BY_EMAIL_QNAME, query = CustomerQuery.FIND_CUSTOMER_BY_EMAIL) })
-public class Customer implements Serializable
+public class Customer implements Serializable, Comparable
 {
     private static final long serialVersionUID = 1L;
 
@@ -152,6 +152,32 @@ public class Customer implements Serializable
     {
         this.reservations = reservations;
     }
+
+	@Override
+	public int compareTo(Object compareObject) {
+		if(this.getClass() == compareObject.getClass()) {
+			Customer compareCustomer = (Customer) compareObject;
+			if(this.getEmail().equals(compareCustomer.getEmail())) {
+				if(this.getId() == compareCustomer.getId()) {
+					if(this.getIsadmin() == compareCustomer.getIsadmin()) {
+						if(this.getFirstname().equals(compareCustomer.getFirstname())) {
+							if(this.getLastname().equals(compareCustomer.getLastname())) {
+								if(this.getPwhash().equals(compareCustomer.getPwhash())) {
+									if(this.getSessiontoken().equals(compareCustomer.getSessiontoken())) {
+										if(this.getUsername().equals(compareCustomer.getUsername())) {
+												return 0;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		return 1;
+	}
+
 
 //    @Override
 //    public int hashCode ( )

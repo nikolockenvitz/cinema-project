@@ -32,7 +32,7 @@ import com.fallstudie.cinemasystem.data.entity.query.ShowQuery;
 @CascadeOnDelete
 @NamedQueries({ @NamedQuery(name = "Show.findAll", query = "SELECT s FROM Show s"),
         @NamedQuery(name = ShowQuery.FIND_SHOWS_BY_MOVIE_ID_QNAME, query = ShowQuery.FIND_SHOWS_BY_MOVIE_ID) })
-public class Show implements Serializable
+public class Show implements Serializable, Comparable
 {
     private static final long serialVersionUID = 1L;
 
@@ -157,6 +157,25 @@ public class Show implements Serializable
         ticket.setShow(null);
         return ticket;
     }
+    
+	@Override
+	public int compareTo(Object compareObject) {
+		if(this.getClass() == compareObject.getClass()) {
+			Show compareShow = (Show) compareObject;
+			if(this.getId() == compareShow.getId()) {
+				if(this.getDate().equals(compareShow.getDate())) {
+					if(this.getTime().equals(compareShow.getTime())) {
+						if(this.getHall().equals(compareShow.getHall())) {
+							if(this.getMovie().equals(compareShow.getMovie())) {
+								return 0;
+							}
+						}
+					}
+				}
+			}
+		}
+		return 1;
+	}
 //
 //    @Override
 //    public int hashCode ( )

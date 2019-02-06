@@ -25,7 +25,7 @@ import org.eclipse.persistence.annotations.CascadeOnDelete;
 @Table(name = "seat")
 @CascadeOnDelete
 @NamedQuery(name = "Seat.findAll", query = "SELECT s FROM Seat s")
-public class Seat implements Serializable
+public class Seat implements Serializable, Comparable
 {
     private static final long serialVersionUID = 1L;
 
@@ -142,6 +142,23 @@ public class Seat implements Serializable
     {
         this.x = x;
     }
+
+	@Override
+	public int compareTo(Object o) {
+		if(this.getClass() == o.getClass()) {
+			Seat compareSeat = (Seat) o;
+			if(this.getId()==compareSeat.getId() &&
+			   this.getX()==compareSeat.getX() &&
+			   this.getY()==compareSeat.getY() &&
+			   this.getNumber() != null && this.getNumber().equals(compareSeat.getNumber()) &&
+			   this.getRow() != null && this.getRow().equals(compareSeat.getRow()) &&
+			   (this.getHall() != null && this.getHall().compareTo(compareSeat.getHall()) == 0) &
+			   this.getCategory() != null && this.getCategory().compareTo(compareSeat.getCategory()) == 0) {
+				return 0;
+			}
+		}
+		return 1;
+	}
 
 //    public Ticket addTicket ( Ticket ticket )
 //    {

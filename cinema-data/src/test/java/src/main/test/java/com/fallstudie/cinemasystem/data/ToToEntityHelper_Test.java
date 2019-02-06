@@ -13,6 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.fallstudie.cinemasystem.common.transferobject.ActorTo;
+import com.fallstudie.cinemasystem.common.transferobject.BlockTo;
 import com.fallstudie.cinemasystem.common.transferobject.CategoryTo;
 import com.fallstudie.cinemasystem.common.transferobject.CustomerTo;
 import com.fallstudie.cinemasystem.common.transferobject.EmployeeTo;
@@ -27,6 +28,7 @@ import com.fallstudie.cinemasystem.common.transferobject.ShowTo;
 import com.fallstudie.cinemasystem.common.transferobject.TicketTo;
 import com.fallstudie.cinemasystem.common.utils.Utils;
 import com.fallstudie.cinemasystem.data.entity.Actor;
+import com.fallstudie.cinemasystem.data.entity.Block;
 import com.fallstudie.cinemasystem.data.entity.Category;
 import com.fallstudie.cinemasystem.data.entity.Customer;
 import com.fallstudie.cinemasystem.data.entity.Employee;
@@ -38,50 +40,65 @@ import com.fallstudie.cinemasystem.data.entity.Reservation;
 import com.fallstudie.cinemasystem.data.entity.Seat;
 import com.fallstudie.cinemasystem.data.entity.Show;
 import com.fallstudie.cinemasystem.data.entity.Ticket;
+import com.fallstudie.cinemasystem.data.helper.EntityToToHelper;
 import com.fallstudie.cinemasystem.data.helper.ToToEntityHelper;
 
 public class ToToEntityHelper_Test
 {
-    Actor          testActor1Entity        = null;
-    List<Actor>    testActorEntityList     = null;
-    ActorTo        testActor1To            = null;
-    List<ActorTo>  testActorToList         = null;
-    Calendar       testDate                = null;
-    Movie          testMovieEntity         = null;
-    MovieTo        testMovieTo             = null;
-    List<Movie>    testMovieEntityList     = null;
-    List<MovieTo>  testMovieToList         = null;
-    Genre          testGenreEntity         = null;
-    List<Genre>    testGenreEntityList     = null;
-    GenreTo        testGenreTo             = null;
-    List<GenreTo>  testGenreToList         = null;
-    ArrayList      emptyList               = null;
-    Show           testShowEntity          = null;
-    List<Show>     testShowEntityList      = null;
-    ShowTo         testShowTo              = null;
-    List<ShowTo>   testShowToList          = null;
-    Hall           testHallEntity          = null;
-    HallTo         testHallTo              = null;
-    Seat           testSeatEntity          = null;
-    List<Seat>     testSeatEntityList      = null;
-    SeatTo         testSeatTo              = null;
-    List<SeatTo>   testSeatToList          = null;
-    PriceTo        testPriceTo             = null;
-    Category       testCategoryEntity      = null;
-    CategoryTo     testCategoryTo          = null;
-    Rating         testRatingEntity        = null;
-    List<Rating>   testRatingEntityList    = null;
-    RatingTo       testRatingTo            = null;
-    List<RatingTo> testRatingToList        = null;
-    Customer       testCustomerEntity      = null;
-    CustomerTo     testCustomerTo          = null;
-    CustomerTo     testCustomerToForRating = null;
-    Reservation    testReservationEntity   = null;
-    ReservationTo  testReservationTo       = null;
-    Ticket         testTicketEntity        = null;
-    TicketTo       testTicketTo            = null;
-    Employee       testEmployeeEntitiy     = null;
-    EmployeeTo     testEmployeeTo          = null;
+    Actor               testActor1Entity          = null;
+    List<Actor>         testActorEntityList       = null;
+    ActorTo             testActor1To              = null;
+    List<ActorTo>       testActorToList           = null;
+    Calendar            testDate                  = null;
+    String              testDateString            = null;
+    Date                testDateDate              = null;
+    Movie               testMovieEntity           = null;
+    List<Movie>         testMovieEntityList       = null;
+    MovieTo             testMovieTo               = null;
+    List<MovieTo>       testMovieToList           = null;
+    Genre               testGenreEntity           = null;
+    List<Genre>         testGenreEntityList       = null;
+    GenreTo             testGenreTo               = null;
+    List<GenreTo>       testGenreToList           = null;
+    ArrayList           emptyList                 = null;
+    Show                testShowEntity            = null;
+    List<Show>          testShowEntityList        = null;
+    ShowTo              testShowTo                = null;
+    List<ShowTo>        testShowToList            = null;
+    Hall                testHallEntity            = null;
+    HallTo              testHallTo                = null;
+    Seat                testSeatEntity            = null;
+    List<Seat>          testSeatEntityList        = null;
+    SeatTo              testSeatTo                = null;
+    List<SeatTo>        testSeatToList            = null;
+    PriceTo             testPriceTo               = null;
+    Category            testCategoryEntity        = null;
+    CategoryTo          testCategoryTo            = null;
+    Rating              testRatingEntity          = null;
+    List<Rating>        testRatingEntityList      = null;
+    RatingTo            testRatingTo              = null;
+    List<RatingTo>      testRatingToList          = null;
+    Customer            testCustomerEntity        = null;
+    List<Customer>      testCustomerEntityList    = null;
+    CustomerTo          testCustomerTo            = null;
+    List<CustomerTo>    testCustomerToList        = null;
+    CustomerTo          testCustomerToForRating   = null;
+    Reservation         testReservationEntity     = null;
+    List<Reservation>   testReservationEntityList = null;
+    ReservationTo       testReservationTo         = null;
+    List<ReservationTo> testReservationToList     = null;
+    Ticket              testTicketEntity          = null;
+    List<Ticket>        testTicketEntityList      = null;
+    TicketTo            testTicketTo              = null;
+    List<TicketTo>      testTicketToList          = null;
+    Employee            testEmployeeEntity        = null;
+    List<Employee>      testEmployeeEntityList    = null;
+    EmployeeTo          testEmployeeTo            = null;
+    List<EmployeeTo>    testEmployeeToList        = null;
+    Block               testBlockEntity           = null;
+    List<Block>         testBlockEntityList       = null;
+    BlockTo             testBlockTo               = null;
+    List<BlockTo>       testBlockToList           = null;
 
     @Before
     public void initialize ( )
@@ -91,29 +108,14 @@ public class ToToEntityHelper_Test
         testDate.set(Calendar.YEAR, 2019);
         testDate.set(Calendar.MONTH, Calendar.JANUARY);
         testDate.set(Calendar.DAY_OF_MONTH, 17);
-        testDate.set(Calendar.HOUR_OF_DAY, 0);
-        testDate.set(Calendar.SECOND, 0);
-        testDate.set(Calendar.MINUTE, 0);
-        Date testDateFormatted = Utils.convertStringToDate(Utils.convertDateToString(testDate.getTime()));
 
-        testEmployeeEntitiy = new Employee();
-        testEmployeeEntitiy.setDateofbirth(testDateFormatted);
-        testEmployeeEntitiy.setEmail("max@mustermann.de");
-        testEmployeeEntitiy.setFirstname("Vorname");
-        testEmployeeEntitiy.setId(1);
-        testEmployeeEntitiy.setLastname("Nachname");
-
-        testEmployeeTo = new EmployeeTo();
-        testEmployeeTo.setDateofbirth(Utils.convertDateToString(testDateFormatted));
-        testEmployeeTo.setEmail("max@mustermann.de");
-        testEmployeeTo.setFirstname("Vorname");
-        testEmployeeTo.setId(1);
-        testEmployeeTo.setLastname("Nachname");
+        testDateString = Utils.convertDateToString(testDate.getTime());
+        testDateDate = Utils.convertStringToDate(testDateString);
 
         // actor entity
         testActor1Entity = new Actor();
         testActor1Entity.setId(1);
-        testActor1Entity.setBirthdate(testDateFormatted);
+        testActor1Entity.setBirthdate(testDateDate);
         testActor1Entity.setFirstname("Vorname");
         testActor1Entity.setLastname("Nachname");
 
@@ -123,7 +125,7 @@ public class ToToEntityHelper_Test
         // actor to
         testActor1To = new ActorTo();
         testActor1To.setId(1);
-        testActor1To.setBirthdate(Utils.convertDateToString(testDateFormatted));
+        testActor1To.setBirthdate(testDateString);
         testActor1To.setFirstname("Vorname");
         testActor1To.setLastname("Nachname");
 
@@ -204,30 +206,30 @@ public class ToToEntityHelper_Test
 
         // show entity
         testShowEntity = new Show();
-        testShowEntity.setDate(testDateFormatted);
+        testShowEntity.setDate(testDateDate);
         testShowEntity.setHall(testHallEntity);
         testShowEntity.setId(1);
         testShowEntity.setIs3D(false);
-        testShowEntity.setTime("Time");
+        testShowEntity.setTime(testDateDate);
 
         testShowEntityList = new ArrayList<>();
         testShowEntityList.add(testShowEntity);
 
         // show to
         testShowTo = new ShowTo();
-        testShowTo.setDate(Utils.convertDateToString(testDateFormatted));
+        testShowTo.setDate(testDateString);
         testShowTo.setHall(testHallTo);
         testShowTo.setId(1);
         testShowTo.setIs3D(false);
-        testShowTo.setTime("Time");
-        testShowTo.setWeekday(Utils.getWeekDay(testDateFormatted));
+        testShowTo.setTime(Utils.convertDateToTime(testDateDate));
+        testShowTo.setWeekday(Utils.getWeekDay(testDateDate));
 
         testShowToList = new ArrayList<>();
         testShowToList.add(testShowTo);
 
         // customer entity
         testCustomerEntity = new Customer();
-        testCustomerEntity.setDateofbirth(testDateFormatted);
+        testCustomerEntity.setDateofbirth(testDateDate);
         testCustomerEntity.setEmail("mail");
         testCustomerEntity.setFirstname("firstname");
         testCustomerEntity.setId(1);
@@ -237,9 +239,12 @@ public class ToToEntityHelper_Test
         testCustomerEntity.setSessiontoken("token");
         testCustomerEntity.setUsername("username");
 
+        testCustomerEntityList = new ArrayList<>();
+        testCustomerEntityList.add(testCustomerEntity);
+
         // customer to
         testCustomerTo = new CustomerTo();
-        testCustomerTo.setDateofbirth(Utils.convertDateToString(testDateFormatted));
+        testCustomerTo.setDateofbirth(testDateString);
         testCustomerTo.setEmail("mail");
         testCustomerTo.setFirstname("firstname");
         testCustomerTo.setId(1);
@@ -249,9 +254,12 @@ public class ToToEntityHelper_Test
         testCustomerTo.setSessiontoken("token");
         testCustomerTo.setUsername("username");
 
+        testCustomerToList = new ArrayList<>();
+        testCustomerToList.add(testCustomerTo);
+
         // customer to for rating
         testCustomerToForRating = new CustomerTo();
-        testCustomerToForRating.setDateofbirth(Utils.convertDateToString(testDateFormatted));
+        testCustomerToForRating.setDateofbirth(testDateString);
         testCustomerToForRating.setEmail("mail");
         testCustomerToForRating.setFirstname("firstname");
         testCustomerToForRating.setId(1);
@@ -293,9 +301,6 @@ public class ToToEntityHelper_Test
         testMovieEntityList = new ArrayList<>();
         testMovieEntityList.add(testMovieEntity);
 
-        testMovieToList = new ArrayList<>();
-        testMovieToList.add(testMovieTo);
-
         // movie to
         testMovieTo = new MovieTo();
         testMovieTo.setId(1);
@@ -308,6 +313,9 @@ public class ToToEntityHelper_Test
         testMovieTo.setShows(testShowToList);
         testMovieTo.setRatings(testRatingToList);
 
+        testMovieToList = new ArrayList<>();
+        testMovieToList.add(testMovieTo);
+
         // empty list
         emptyList = new ArrayList<>();
 
@@ -315,14 +323,19 @@ public class ToToEntityHelper_Test
         testReservationEntity = new Reservation();
         testReservationEntity.setCustomer(testCustomerEntity);
         testReservationEntity.setId(1);
-        testReservationEntity.setDateOfReservation(testDateFormatted);
-        testReservationEntity.setTickets(emptyList);
+        testReservationEntity.setDateOfReservation(testDateDate);
+
+        testReservationEntityList = new ArrayList<>();
+        testReservationEntityList.add(testReservationEntity);
 
         // reservation to
         testReservationTo = new ReservationTo();
         testReservationTo.setCustomer(testCustomerTo);
         testReservationTo.setId(1);
-        testReservationTo.setDateOfReservation(Utils.convertDateToString(testDateFormatted));
+        testReservationTo.setDateOfReservation(testDateString);
+
+        testReservationToList = new ArrayList<>();
+        testReservationToList.add(testReservationTo);
 
         // ticket entity
         testTicketEntity = new Ticket();
@@ -332,6 +345,9 @@ public class ToToEntityHelper_Test
         testTicketEntity.setSeat(testSeatEntity);
         testTicketEntity.setShow(testShowEntity);
 
+        testTicketEntityList = new ArrayList<>();
+        testTicketEntityList.add(testTicketEntity);
+
         // ticket to
         testTicketTo = new TicketTo();
         testTicketTo.setId(1);
@@ -339,6 +355,53 @@ public class ToToEntityHelper_Test
         testTicketTo.setReservation(testReservationTo);
         testTicketTo.setSeat(testSeatTo);
         testTicketTo.setShow(testShowTo);
+
+        testTicketToList = new ArrayList<>();
+        testTicketToList.add(testTicketTo);
+
+        // employee entity
+        testEmployeeEntity = new Employee();
+        testEmployeeEntity.setId(1);
+        testEmployeeEntity.setDateofbirth(testDateDate);
+        testEmployeeEntity.setEmail("mail");
+        testEmployeeEntity.setFirstname("firstname");
+        testEmployeeEntity.setLastname("lastname");
+
+        testEmployeeEntityList = new ArrayList<>();
+        testEmployeeEntityList.add(testEmployeeEntity);
+
+        // employee to
+        testEmployeeTo = new EmployeeTo();
+        testEmployeeTo.setId(1);
+        testEmployeeTo.setDateofbirth(testDateString);
+        testEmployeeTo.setEmail("mail");
+        testEmployeeTo.setFirstname("firstname");
+        testEmployeeTo.setLastname("lastname");
+
+        testEmployeeToList = new ArrayList<>();
+        testEmployeeToList.add(testEmployeeTo);
+
+        // block entity
+        testBlockEntity = new Block();
+        testBlockEntity.setId(1);
+        testBlockEntity.setSeat(testSeatEntity);
+        testBlockEntity.setSessiontoken("sessiontoken");
+        testBlockEntity.setShow(testShowEntity);
+        testBlockEntity.setTimeofreservation(testDateDate);
+
+        testBlockEntityList = new ArrayList<>();
+        testBlockEntityList.add(testBlockEntity);
+
+        // block to
+        testBlockTo = new BlockTo();
+        testBlockTo.setId(1);
+        testBlockTo.setSeat(testSeatTo);
+        testBlockTo.setSessiontoken("sessiontoken");
+        testBlockTo.setShow(testShowTo);
+        testBlockTo.setTimestamp(testDateDate);
+
+        testBlockToList = new ArrayList<>();
+        testBlockToList.add(testBlockTo);
 
     }
 
@@ -382,10 +445,6 @@ public class ToToEntityHelper_Test
         assertThat(testMovieEntity.getDescription(), equalTo(ToToEntityHelper.createMovieEntity(testMovieTo, true).getDescription()));
         assertThat(testMovieEntity.getDuration(), equalTo(ToToEntityHelper.createMovieEntity(testMovieTo, true).getDuration()));
         assertThat(testMovieEntity.getFsk(), equalTo(ToToEntityHelper.createMovieEntity(testMovieTo, true).getFsk()));
-        assertThat(testMovieEntity.getGenres(), equalTo(ToToEntityHelper.createMovieEntity(testMovieTo, true).getGenres()));
-        assertThat(testMovieEntity.getName(), equalTo(ToToEntityHelper.createMovieEntity(testMovieTo, true).getName()));
-        assertThat(testMovieEntity.getActors(), equalTo(ToToEntityHelper.createMovieEntity(testMovieTo, true).getActors()));
-        assertThat(testMovieEntity.getShows(), equalTo(ToToEntityHelper.createMovieEntity(testMovieTo, true).getShows()));
     }
 
     @Test
@@ -394,10 +453,7 @@ public class ToToEntityHelper_Test
 
         assertThat(testReservationEntity.getDateOfReservation(), equalTo(ToToEntityHelper.createReservationEntity(testReservationTo).getDateOfReservation()));
         assertThat(testReservationEntity.getId(), equalTo(ToToEntityHelper.createReservationEntity(testReservationTo).getId()));
-        assertThat(testReservationEntity.getCustomer(), equalTo(ToToEntityHelper.createReservationEntity(testReservationTo).getCustomer()));
-//        Customer c1 = testReservationEntity.getCustomer();
-//        Customer c2 = ToToEntityHelper.createReservationEntity(testReservationTo).getCustomer();
-        // assertThat(c1.getDateofbirth(), equalTo(c2.getDateofbirth()));
+        assertThat(0, equalTo(ToToEntityHelper.createReservationEntity(testReservationTo).compareTo(testReservationEntity)));
     }
 
     @Test
@@ -405,16 +461,13 @@ public class ToToEntityHelper_Test
     {
 
         assertThat(testTicketEntity.getId(), equalTo(ToToEntityHelper.createTicketEntity(testTicketTo).getId()));
-        assertThat(testTicketEntity.getReservation(), equalTo(ToToEntityHelper.createTicketEntity(testTicketTo).getReservation()));
-        assertThat(testTicketEntity.getSeat(), equalTo(ToToEntityHelper.createTicketEntity(testTicketTo).getSeat()));
-        assertThat(testTicketEntity.getShow(), equalTo(ToToEntityHelper.createTicketEntity(testTicketTo).getShow()));
 
     }
 
     @Test
     public void testCreateEmployeeEntity ( )
     {
-        assertThat(testEmployeeEntitiy.getDateofbirth(), equalTo(ToToEntityHelper.createEmployeeEntity(testEmployeeTo).getDateofbirth()));
+        assertThat(testEmployeeEntity.getDateofbirth(), equalTo(ToToEntityHelper.createEmployeeEntity(testEmployeeTo).getDateofbirth()));
     }
 
     @Test
