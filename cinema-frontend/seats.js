@@ -15,6 +15,9 @@ function readCookie () {
 	if(cookies != "" && cookies != null) {
 		cookie = cookies.split("=")[1];
 	}
+	if(cookie == null) {
+		cookie = sessionStorage.getItem(cookieName);
+	}
 }
 
 function generateRandomString () {
@@ -27,6 +30,7 @@ function generateRandomString () {
 
 function setCookie (c) {
 	document.cookie = cookieName + "=" + c + ";";
+	sessionStorage.setItem(cookieName, c);
 }
 
 var seats = {};

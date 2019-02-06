@@ -6,6 +6,9 @@ function readCookie () {
 	if(cookies != "" && cookies != null) {
 		cookie = cookies.split("=")[1];
 	}
+	if(cookie == null) {
+		cookie = sessionStorage.getItem("ssid");
+	}
 }
 
 $(function () {
