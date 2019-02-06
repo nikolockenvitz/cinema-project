@@ -18,8 +18,13 @@
 \newcommand{\Firma}[1]{\def\DerNameDerFirma{#1}}
 \newcommand{\Kurs}[1]{\def\DieKursbezeichnung{#1}}
 
+%\usepackage{microtype}% verbesserter Randausgleich
+%\setlength\emergencystretch{1em}
 % correct superscripts 
 \usepackage{fnpct}
+
+\usepackage{footnote}
+\usepackage{rotating} 
 
 % calc 
 \usepackage{calc} % Used for extra space below footsepline
@@ -33,6 +38,71 @@
 \DefineBibliographyStrings{ngerman}{  % change u.a. to et al. (german only!)
 	andothers = {{et\,al\adddot}},
 }
+% Command to output section title headings
+\newcommand{\cvsect}[1]{% The only parameter is the section text
+	\vspace{\baselineskip} % Whitespace before the section title
+	\colorbox{black}{\textcolor{white}{\MakeUppercase{\textbf{#1}}}}\\% Section title
+}
+
+\usepackage{longtable} % Required for tables that span multiple pages
+\setlength{\LTpre}{0pt} % Remove default whitespace before longtable
+\setlength{\LTpost}{0pt} % Remove default whitespace after longtable
+
+\setlength{\tabcolsep}{0pt} % No spacing between table columns
+
+% Environment to hold a new list of entries
+\newenvironment{entrylist}{
+	\begin{longtable}[H]{l l}
+	}{
+	\end{longtable}
+}
+
+\newcommand{\entry}[2]{% First argument for the leftmost date(s) text, second is for the entry heading
+	\vspace{-0.15cm}
+	\parbox[t]{0.33\textwidth}{% 25.0% of the text width of the page
+		#1 % Leftmost entry date(s) text
+	}%
+	&\parbox[t]{0.68\textwidth}{% 75.0% of the text width of the page
+		{#2}% Entry heading text
+	}\\\\}
+
+\newcounter{barcount}
+
+% Environment to hold a new bar chart
+\newenvironment{barchart}[1]{ % The only parameter is the maximum bar width, in cm
+	\newcommand{\barwidth}{0.35}
+	\newcommand{\barsep}{0.55}
+	
+	% Command to add a bar to the bar chart
+	\newcommand{\baritem}[2]{ % The first argument is the bar label and the second is the percentage the current bar should take up of the total width
+		\pgfmathparse{##2}
+		\let\perc\pgfmathresult
+		
+		\pgfmathparse{#1}
+		\let\barsize\pgfmathresult
+		
+		\pgfmathparse{\barsize*##2/5}
+		\let\barone\pgfmathresult
+		
+		\pgfmathparse{(\barwidth*\thebarcount)+(\barsep*\thebarcount)}
+		\let\barx\pgfmathresult
+		
+		\filldraw[fill=none, draw=black!] (0,-\barx) rectangle (5,-\barx-\barwidth);
+		\filldraw[fill=black!90, draw=black!90] (0,-\barx) rectangle (\barone,-\barx-\barwidth);
+		
+		\node [label=180:{\textcolor{black}{##1: ##2/5}}] at (0,-\barx-0.175) {};
+		\addtocounter{barcount}{1}
+	}
+	\begin{tikzpicture}
+	\setcounter{barcount}{0}
+}{
+	\end{tikzpicture}
+	\vspace{0.3cm}
+}
+
+\usepackage{tikz} % Required for creating the plots
+\usetikzlibrary{shapes, backgrounds}
+\tikzset{x=1cm, y=1cm} % Default tikz units
 
 %%% Uncomment the following lines to support hard URL breaks in bibliography 
 %\apptocmd{\UrlBreaks}{\do\f\do\m}{}{}
@@ -62,15 +132,85 @@
 \renewcommand{\lstlistingname}{Quelltext} 
 \renewcommand{\lstlistlistingname}{Quelltextverzeichnis}
 
+\definecolor{javared}{rgb}{0.6,0,0} % for strings
+\definecolor{javagreen}{rgb}{0.25,0.5,0.35} % comments
+\definecolor{javapurple}{rgb}{0.5,0,0.35} % keywords
+\definecolor{javadocblue}{rgb}{0.25,0.35,0.75} % javadoc
+
 \lstset{language=Java,
-		breaklines=true,
-		frame=single, framerule=0pt, framesep=5pt,
-		showstringspaces=false,
-		numbers=left,
-		numberstyle=\tiny,
-		captionpos=b,
-		basicstyle=\ttfamily\footnotesize %\small
+	basicstyle=\ttfamily\footnotesize,
+	keywordstyle=\color{javapurple}\bfseries,
+	stringstyle=\color{javared},
+	commentstyle=\color{javagreen},
+	morecomment=[s][\color{javadocblue}]{/**}{*/},
+	numbers=left,
+	numberstyle=\tiny\color{black},
+	stepnumber=1,
+	numbersep=10pt,
+	tabsize=1,
+	showspaces=false,
+	showstringspaces=false,
+	breaklines=true}
+
+%\lstset{language=Java,
+%		breaklines=true,
+%		frame=single, framerule=0pt, framesep=5pt,
+%		showstringspaces=false,
+%		numbers=left,
+%		numberstyle=\tiny,
+%		captionpos=b,
+%		basicstyle=\ttfamily\footnotesize %\small
+%}
+
+\colorlet{punct}{red!60!black}
+\definecolor{background}{HTML}{EEEEEE}
+\definecolor{delim}{RGB}{20,105,176}
+\colorlet{numb}{magenta!60!black}
+
+\lstdefinelanguage{json}{
+	basicstyle=\normalfont\ttfamily,
+	numbers=left,
+	numberstyle=\scriptsize,
+	stepnumber=1,
+	numbersep=8pt,
+	showstringspaces=false,
+	breaklines=true,
+	frame=lines,
+	backgroundcolor=\color{background},
+	literate=
+	*{0}{{{\color{numb}0}}}{1}
+	{1}{{{\color{numb}1}}}{1}
+	{2}{{{\color{numb}2}}}{1}
+	{3}{{{\color{numb}3}}}{1}
+	{4}{{{\color{numb}4}}}{1}
+	{5}{{{\color{numb}5}}}{1}
+	{6}{{{\color{numb}6}}}{1}
+	{7}{{{\color{numb}7}}}{1}
+	{8}{{{\color{numb}8}}}{1}
+	{9}{{{\color{numb}9}}}{1}
+	{:}{{{\color{punct}{:}}}}{1}
+	{,}{{{\color{punct}{,}}}}{1}
+	{\{}{{{\color{delim}{\{}}}}{1}
+	{\}}{{{\color{delim}{\}}}}}{1}
+	{[}{{{\color{delim}{[}}}}{1}
+	{]}{{{\color{delim}{]}}}}{1},
 }
+
+% xml listing
+\lstdefinelanguage{XML}
+{
+	morestring=[b]",
+	morestring=[s]{>}{<},
+	morecomment=[s]{<?}{?>},
+	stringstyle=\color{black},
+	identifierstyle=\color{darkblue},
+	keywordstyle=\color{cyan},
+	morekeywords={xmlns,version,type}% list your attributes here
+}
+
+\definecolor{gray}{rgb}{0.4,0.4,0.4}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.6}
+\definecolor{cyan}{rgb}{0.0,0.6,0.6}
 
 % extra packages
 \usepackage{graphicx}			% use various graphics formats
