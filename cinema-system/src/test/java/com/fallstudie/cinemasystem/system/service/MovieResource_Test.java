@@ -76,11 +76,8 @@ public class MovieResource_Test
         try
         {
             sendString = JSONConverter.toJSON(testMovieTo);
-            System.out.println(sendString);
-            System.out.println(testMovieJSON);
 
             receivedAfterPost = testMovieResource.postMovie(sendString).getEntity().toString();
-            System.out.println(receivedAfterPost);
 
             receivedMovieToFromPost = (MovieTo) JSONConverter.fromJSON(receivedAfterPost, MovieTo.class);
             long testMovieId = receivedMovieToFromPost.getId();
