@@ -187,7 +187,7 @@ public class UrlCallHelper
 
         StringBuilder response = new StringBuilder();
         InputStream inStream = HttpURLConnection.HTTP_OK == con.getResponseCode() ? con.getInputStream() : con.getErrorStream();
-        try (BufferedReader in = new BufferedReader(new InputStreamReader(inStream)))
+        try (BufferedReader in = new BufferedReader(new InputStreamReader(inStream, "UTF-8")))
         {
             String inputLine;
             while ((inputLine = in.readLine()) != null)
