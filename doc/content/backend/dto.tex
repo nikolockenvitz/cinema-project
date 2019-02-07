@@ -1,0 +1,7 @@
+\section{Data Transfer Object DTO}
+\label{sec:dto}
+\ac{DTO} ist ein Entwurfsmuster aus dem Bereich der Softwareentwicklung. Sie werden genutzt, um mehrere Objekte in einem Programmaufruf zusammenzufassen, weshalb sie Anwendung in verteilten Systemen finden. 
+
+Ein \ac{DTO} entspricht eigentlich dem POJO. Es hat nahezu die selben Attribute, kann aber nach belieben verändert werden. So kann man mittels des \ac{DTO} sich nur einige Attribute anzeigen lassen und die Entität bleibt unberührt. 
+
+Die \ac{DTO} werden in diesem Projekt dazu genutzt, um die Daten aus der Datenhaltungsschicht der drei Schichtenarchitektur in die der Logikschicht zu transferieren. Von dort aus werden sie an die Benutzerschicht weitergeleitet.  

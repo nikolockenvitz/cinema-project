@@ -1,0 +1,24 @@
+\section{JavaScript Object Notation (JSON)}
+\label{sec:json}
+Für den Datenaustausch zwischen Front- und Backend wird mittels der \ac{JSON} realisiert. Grund ist, dass hier rein die Nutzdaten transferiert werden. Ferner gestalte sich das Auslesen und Generieren der \ac{JSON}-Dateien als recht \enquote{einfach}. \\
+Ein Array bzw. Liste wird in \ac{JSON} mit [ ] dargestellt. Objekte werden mit \{ \} dargestellt. Jedes Attribut und jede Zeichenkette wird in \ac{JSON} in Anführungszeichen gesetzt (siehe Quelltext \vref{lst:example_movie}).  
+
+\begin{minipage}{\linewidth}
+\begin{lstlisting}[language=json,firstnumber=1]
+{"movie": {
+	"id": 1,
+	"title": "Kampf der Titanen",
+	"duration": 120,
+	"hall":
+	{
+	"id": 1,
+	"name": "Kino 1,
+	"seats": [{"seat":{"id":1, ...}}]
+	}, 
+	"shows": [{"show":{"id":1, ...}}]
+	}
+}
+\end{lstlisting}
+\captionof{lstlisting}{Beispiel eines Films im JSON-Format}
+\label{lst:example_movie}
+\end{minipage}
