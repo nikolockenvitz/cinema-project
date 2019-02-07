@@ -30,7 +30,7 @@ public class ShowService
     public ShowTo getShowById ( String id ) throws IOException, GeneralException
     {
         Map<String, String> parameters = new HashMap<>();
-        String json = urlCallHelper.sendGet(URLS.CINEMASYSTEM_DATA_MOVIE + id, parameters, MediaType.TEXT_PLAIN);
+        String json = urlCallHelper.sendGet(URLS.CINEMASYSTEM_DATA_SHOW + id, parameters, MediaType.TEXT_PLAIN);
         ShowTo showTo = (ShowTo) JSONConverter.fromJSON(json, ShowTo.class);
         return showTo;
     }

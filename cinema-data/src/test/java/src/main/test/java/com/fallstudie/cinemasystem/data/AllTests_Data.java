@@ -6,6 +6,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({ EntityToToHelper_Test.class, ToToEntityHelper_Test.class })
-public class AllTests {
+public class AllTests_Data
+{
 
 }
