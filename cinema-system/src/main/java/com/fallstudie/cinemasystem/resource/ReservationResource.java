@@ -46,10 +46,10 @@ public class ReservationResource
     @GET
     @Path("{id}")
     @Propagate
-    @Description(value = "Method to get a movie by id!")
+    @Description(value = "Method to get a reservation by id!")
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces({ MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON })
-    public Response getMovieById ( @PathParam("id") String id )
+    public Response getReservationById ( @PathParam("id") String id )
     {
         String json = "";
         try
