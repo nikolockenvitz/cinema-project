@@ -98,7 +98,6 @@ public class ReservationResource
             String showId = String.valueOf(bookingTo.getShowId());
             ShowTo showTo = showService.getShow(showId);
             ReservationTo createdReservation = new ReservationTo();
-            boolean bookable = true;
 
             if ( (bookingTo.getPaymentoption().equals("giftcard") && bookingTo.getVerification().length() == bookingTo.getSeats().size() + 3)
                     && Utils.checkIfShowIsReservable(showTo.getDate(), showTo.getTime()) )
@@ -108,11 +107,11 @@ public class ReservationResource
                 List<TicketTo> ticketTos = showService.getAllTicketsForShow(showId);
                 List<BlockTo> blockTos = reservationService.getBlockedSeats(showId);
 
-                List<SeatTo> seatTos = checkIfSeatsAreBookable(bookable, bookingTo.getSeats(), ticketTos, blockTos, bookingTo.getSessiontoken());
+                boolean bookable = checkIfSeatsAreBookable(bookingTo.getSeats(), ticketTos, blockTos, bookingTo.getSessiontoken());
 
                 if ( bookable )
                 {
-                    ReservationTo reservationTo = createReservationForSeats(seatTos, showTo);
+                    ReservationTo reservationTo = createReservationForSeats(bookingTo.getSeats(), showTo);
                     reservationTo.setCustomer(customerTo);
 
                     createdReservation = reservationService.createReservation((reservationTo));
@@ -154,37 +153,39 @@ public class ReservationResource
 
     }
 
-    private List<SeatTo> checkIfSeatsAreBookable ( boolean bookable, List<SeatTo> seatsToProof, List<TicketTo> bookedTicketTos, List<BlockTo> blockTos,
-            String sessiontoken )
+    private boolean checkIfSeatsAreBookable ( List<SeatTo> seatsToProof, List<TicketTo> bookedTicketTos, List<BlockTo> blockTos, String sessiontoken )
     {
-        List<SeatTo> seatsToBook = new ArrayList<>();
+        boolean bookable = true;
+
         for ( SeatTo s : seatsToProof )
         {
-            for ( TicketTo t : bookedTicketTos )
+            if ( bookable )
             {
-                if ( s.getId() == t.getSeat().getId() )
+                for ( TicketTo t : bookedTicketTos )
                 {
-                    bookable = false;
-                    break;
-                } else
+                    if ( s.getId() == t.getSeat().getId() )
+                    {
+                        bookable = false;
+                        s.setOccupied(true);
+                    } else
+                    {
+                        s.setOccupied(false);
+                    }
+                }
+                for ( BlockTo b : blockTos )
                 {
-                    s.setOccupied(true);
+                    if ( s.getId() == b.getSeat().getId() && !(b.getSessiontoken().equals(sessiontoken)) )
+                    {
+                        bookable = false;
+                        s.setBlocked(true);
+                    } else
+                    {
+                        s.setBlocked(false);
+                    }
                 }
             }
-            for ( BlockTo b : blockTos )
-            {
-                if ( s.getId() == b.getSeat().getId() && !(b.getSessiontoken().equals(sessiontoken)) )
-                {
-                    bookable = false;
-                    break;
-                } else
-                {
-                    s.setBlocked(true);
-                }
-            }
-            seatsToBook.add(s);
         }
-        return seatsToBook;
+        return bookable;
     }
 
     @DELETE
