@@ -14,7 +14,7 @@ import com.fallstudie.cinemasystem.common.exception.GeneralException;
 import com.fallstudie.cinemasystem.common.json.JSONConverter;
 import com.fallstudie.cinemasystem.common.transferobject.BlockTo;
 import com.fallstudie.cinemasystem.common.transferobject.BlockToWithSessiontoken;
-import com.fallstudie.cinemasystem.common.transferobject.BookingTo;
+import com.fallstudie.cinemasystem.common.transferobject.BookingToWithSessiontoken;
 import com.fallstudie.cinemasystem.common.transferobject.ReservationTo;
 import com.fallstudie.cinemasystem.common.urlhelper.URLS;
 import com.fallstudie.cinemasystem.common.urlhelper.UrlCallHelper;
@@ -38,11 +38,11 @@ public class ReservationService
         return reservationTo;
     }
 
-    public ReservationTo createReservation ( BookingTo bookingTo ) throws IOException, GeneralException
+    public ReservationTo createReservation ( BookingToWithSessiontoken bookingToWithSessiontoken ) throws IOException, GeneralException
     {
         URL url = new URL(URLS.CINEMASYSTEM_DATA_RESERVATION + URLS.BOOK);
         Map<String, String> parameters = new HashMap<>();
-        String rqJson = JSONConverter.toJSON(bookingTo);
+        String rqJson = JSONConverter.toJSON(bookingToWithSessiontoken);
         parameters.put("book", rqJson);
         String json = urlCallHelper.sendPost(url, parameters, MediaType.APPLICATION_JSON);
         ReservationTo savedReservationTo = (ReservationTo) JSONConverter.fromJSON(json, ReservationTo.class);

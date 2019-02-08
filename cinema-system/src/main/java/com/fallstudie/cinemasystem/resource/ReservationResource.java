@@ -20,7 +20,7 @@ import com.fallstudie.cinemasystem.common.json.JSONConverter;
 import com.fallstudie.cinemasystem.common.responsebuilder.ResponseBuilder;
 import com.fallstudie.cinemasystem.common.transferobject.BlockTo;
 import com.fallstudie.cinemasystem.common.transferobject.BlockToWithSessiontoken;
-import com.fallstudie.cinemasystem.common.transferobject.BookingTo;
+import com.fallstudie.cinemasystem.common.transferobject.BookingToWithSessiontoken;
 import com.fallstudie.cinemasystem.common.transferobject.ReservationTo;
 import com.fallstudie.cinemasystem.service.ReservationService;
 
@@ -74,8 +74,8 @@ public class ReservationResource
     {
         try
         {
-            BookingTo bookingTo = (BookingTo) JSONConverter.fromJSON(json, BookingTo.class);
-            ReservationTo reservationTo = reservationService.createReservation(bookingTo);
+            BookingToWithSessiontoken bookingToWithSessiontoken = (BookingToWithSessiontoken) JSONConverter.fromJSON(json, BookingToWithSessiontoken.class);
+            ReservationTo reservationTo = reservationService.createReservation(bookingToWithSessiontoken);
             json = JSONConverter.toJSON(reservationTo);
         } catch (Exception e)
         {

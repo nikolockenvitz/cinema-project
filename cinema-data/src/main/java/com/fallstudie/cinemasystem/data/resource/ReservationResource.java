@@ -26,7 +26,7 @@ import com.fallstudie.cinemasystem.common.json.JSONConverter;
 import com.fallstudie.cinemasystem.common.responsebuilder.ResponseBuilder;
 import com.fallstudie.cinemasystem.common.transferobject.BlockTo;
 import com.fallstudie.cinemasystem.common.transferobject.BlockToWithSessiontoken;
-import com.fallstudie.cinemasystem.common.transferobject.BookingTo;
+import com.fallstudie.cinemasystem.common.transferobject.BookingToWithSessiontoken;
 import com.fallstudie.cinemasystem.common.transferobject.CustomerTo;
 import com.fallstudie.cinemasystem.common.transferobject.ReservationTo;
 import com.fallstudie.cinemasystem.common.transferobject.SeatTo;
@@ -94,24 +94,26 @@ public class ReservationResource
     {
         try
         {
-            BookingTo bookingTo = (BookingTo) JSONConverter.fromJSON(json, BookingTo.class);
-            String showId = String.valueOf(bookingTo.getShowId());
+            BookingToWithSessiontoken bookingToWithSessiontoken = (BookingToWithSessiontoken) JSONConverter.fromJSON(json, BookingToWithSessiontoken.class);
+            String showId = String.valueOf(bookingToWithSessiontoken.getShowId());
             ShowTo showTo = showService.getShow(showId);
             ReservationTo createdReservation = new ReservationTo();
 
-            if ( (bookingTo.getPaymentoption().equals("giftcard") && bookingTo.getVerification().length() == bookingTo.getSeats().size() + 3)
+            if ( (bookingToWithSessiontoken.getPaymentoption().equals("giftcard")
+                    && bookingToWithSessiontoken.getVerification().length() == bookingToWithSessiontoken.getSeats().size() + 3)
                     && Utils.checkIfShowIsReservable(showTo.getDate(), showTo.getTime()) )
             {
-                CustomerTo customerTo = customerService.checkIfCustomerExistsIfNotPersist(bookingTo.getCustomer());
+                CustomerTo customerTo = customerService.checkIfCustomerExistsIfNotPersist(bookingToWithSessiontoken.getCustomer());
 
                 List<TicketTo> ticketTos = showService.getAllTicketsForShow(showId);
                 List<BlockTo> blockTos = reservationService.getBlockedSeats(showId);
 
-                boolean bookable = checkIfSeatsAreBookable(bookingTo.getSeats(), ticketTos, blockTos, bookingTo.getSessiontoken());
+                boolean bookable = checkIfSeatsAreBookable(bookingToWithSessiontoken.getSeats(), ticketTos, blockTos,
+                        bookingToWithSessiontoken.getSessiontoken());
 
                 if ( bookable )
                 {
-                    ReservationTo reservationTo = createReservationForSeats(bookingTo.getSeats(), showTo);
+                    ReservationTo reservationTo = createReservationForSeats(bookingToWithSessiontoken.getSeats(), showTo);
                     reservationTo.setCustomer(customerTo);
 
                     createdReservation = reservationService.createReservation((reservationTo));
@@ -167,6 +169,7 @@ public class ReservationResource
                     {
                         bookable = false;
                         s.setOccupied(true);
+                        break;
                     } else
                     {
                         s.setOccupied(false);
@@ -178,6 +181,7 @@ public class ReservationResource
                     {
                         bookable = false;
                         s.setBlocked(true);
+                        break;
                     } else
                     {
                         s.setBlocked(false);
