@@ -1,26 +1,41 @@
 \section{Datenbank}
 \label{sec:datenbank}
-Für die Datenverarbeitung sowie -haltung wird eine Postgres Datenbank\footnote{\url{https://www.postgresql.org/} -- Version 9.11} verwendet. Diese wird u.a. genutzt, um die Lerninhalte aus der Datenbankvorlesung aus diesem Semester zu vertiefen und das Arbeiten mittels einer Datenbank zu forcieren.  
+Für die Datenverarbeitung sowie -haltung wird eine Postgres Datenbank\footnote{\url{https://www.postgresql.org/} -- Version 9.11} verwendet.
+Diese wird u.a. genutzt, um die Lerninhalte aus der Datenbankvorlesung aus diesem Semester zu vertiefen und das Arbeiten mittels einer Datenbank zu forcieren.
 
-Die verwendete Postgres Datenbank ist eine relationale Datenbank (Relational Database Management System). Alle Anfragen an die Datenbank werden über das BASE-DAO an das DBMS geschickt, welches die Anfragen optimiert und das Ergebnis an den Nutzer bzw. Aufrufer weiterleitet. 
+Die verwendete Postgres Datenbank ist eine relationale Datenbank (Relational Database Management System).
+Alle Anfragen an die Datenbank werden über das BASE-\acs{DAO} an das \acs{DBMS} geschickt, welches die Anfragen optimiert und das Ergebnis an den Nutzer bzw. Aufrufer weiterleitet.
 
 Ein Datenbankmodell des hier erstellten Kinoreservierungsprogramms befindet sich im Anhang \vref{fig:Anhang_ER-Modell}. 
 
 \subsection{Kommunikation zwischen Server und Datenbank}
 \label{ssec:jpa}
-In diesem Projekt wird die \ac{JPA} verwendet. Sie garantiert dem Programmierer einen einfacheren Zugriff auf die Datenbank, da dieser nicht alle benötigten Select- oder Insert-Befehle über die verschiedenen Tabellen selbst erstellen muss. Dies minimiert die potentiell auftretenden Fehler. 
+In diesem Projekt wird die \ac{JPA} verwendet.
+Sie garantiert dem Programmierer einen einfacheren Zugriff auf die Datenbank, da dieser nicht alle benötigten SELECT- oder INSERT-Befehle über die verschiedenen Tabellen selbst erstellen muss.
+Dies minimiert die potentiell auftretenden Fehler.
 
-Mittels eines Plain Old Java Objects (POJO) wird die Datenstruktur der Datenbank widergespiegelt (Entiät). Bei dem eingesetzten Kinoreservierungsprogramms werden für 1:N-Beziehung eine ArrayList verwendet. Alternativ besteht die Möglichkeit in \ac{JPA} auch eine MAP einzusetzen. Darüber hinaus hat der Programmierer die Option verschiedene Anotations an den jeweiligen Attributen zu definieren. So kann er z.B. deklarieren, dass der verwendete Sessiontoken im POJO bzw. der Entität nicht \textit{null} sein darf. Dies geschieht mit den aus Jersey JAX-RS 2.1 zur Verfügung gestellten Bibliothek.  
+Mittels eines \acp{POJO} wird die Datenstruktur der Datenbank widergespiegelt (Entität). Bei dem eingesetzten Kinoreservierungsprogramms werden für 1:N-Beziehung eine ArrayList verwendet.
+Alternativ besteht die Möglichkeit in \ac{JPA} auch eine MAP einzusetzen.
+Darüber hinaus hat der Programmierer die Option verschiedene Annotationen an den jeweiligen Attributen zu definieren.
+So kann er z.B. deklarieren, dass der verwendete Sessiontoken im \ac{POJO} bzw. der Entität nicht \textit{null} sein darf.
+Dies geschieht mit den aus Jersey JAX-RS 2.1 zur Verfügung gestellten Bibliotheken.
 
-Nutzt man \ac{JPA} hat der Programmierer zwei \ac{ORM} zur Auswahl; nämlich EclipseLink und Hibernate. In diesem Projekt wird EclipseLink\footnote{\url{https://www.eclipse.org/eclipselink/} --  Version 2.5.2} verwendet, da es einige Vorteile ggü. Hibernate hat, auf die in dieser Seminararbeit nicht weiter eingegangen werden kann. Auch diese wird mittels einer Dependency in der pom.xml definiert.  
+Nutzt man \ac{JPA} hat der Programmierer zwei \acp{ORM} zur Auswahl; nämlich EclipseLink und Hibernate.
+In diesem Projekt wird EclipseLink\footnote{\url{https://www.eclipse.org/eclipselink/} -- Version 2.5.2} verwendet, da es einige Vorteile gegenüber Hibernate hat, auf die in dieser Seminararbeit nicht weiter eingegangen werden kann.
+Auch diese wird mittels einer Dependency in der pom.xml definiert.
 
-Die Abfrage-Sprache ähnelt sehr der SQL-Syntax heißt in \ac{JPA} aber Java Persistence Query Language (JPQL). Die Abfragen werden über die zuvor genannten POJO realisiert. Die \enquote{Standard}- oder erweiterten Abfragen z.B. einer WHERE-Bedingung werden mittels einer sog. Native-Query realisiert, die wie zuvor beschrieben sehr nahe an der SQL-Syntax ist.
+Die Abfrage-Sprache ähnelt sehr der \acs{SQL}-Syntax, heißt in \ac{JPA} aber \acf{JPQL}.
+Die Abfragen werden über die zuvor genannten \acsp{POJO} realisiert.
+Die \enquote{Standard}- oder erweiterten Abfragen z.B. einer WHERE-Bedingung werden mittels einer sog. Native-Query realisiert, die wie zuvor beschrieben sehr nahe an der \acs{SQL}-Syntax ist.
 
-Ein Beispiel wäre, wenn man alle Vorstellungen zu einem Film haben möchte. Um diese WHERE-Bedingung In JPQL zu realisieren muss man auf die ID eines anderen Attributes bzw. Objekt zugreifen. Dies muss der Programmierer über eine sog. Native-Query erstellen. Das Ergebnis würde wie folgt aussehen (siehe Quelltext \vref{lst:jpql_movie}): 
+Ein Beispiel wäre, wenn man alle Vorstellungen zu einem Film haben möchte.
+Um diese WHERE-Bedingung in \acs{JPQL} zu realisieren, muss man auf die ID eines anderen Attributes bzw. Objekts zugreifen.
+Dies muss der Programmierer über eine sog. Native-Query erstellen.
+Das Ergebnis würde wie folgt aussehen (siehe Quelltext \vref{lst:jpql_movie}): 
 
-% Quelltext   
+% Quelltext
 \begin{lstlisting}[language=JAVA]
 SELECT * FROM Show s WHERE s.movie.id = 1; 
 \end{lstlisting}
-\captionof{lstlisting}{SQL-Abfrage aller Shows wo die Movie-ID 1 ist}
+\captionof{lstlisting}{\acs{SQL}-Abfrage aller Shows, bei denen die Movie-ID 1 ist}
 \label{lst:jpql_movie}

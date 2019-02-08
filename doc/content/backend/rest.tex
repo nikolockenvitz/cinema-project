@@ -1,34 +1,41 @@
 \section{Representational State Transfer (REST)}
 \label{sec:rest}
-Um die Dreischichtenarchitektur zu etablieren, wird für den Datenaustausch zwischen Server--Frontend und Server--Datenbank auf das  \ac{REST} gesetzt. \ac{REST} ist ein Architekturstil für den Entwurf verteilter Netz"-werk"-an"-wen"-dung"-en. Es setzt auf \ac{HTTP} und \ac{HTTPS}-Methoden und stellt verschiedene Methoden zur Verfügung. Für den Einsatz von \ac{REST}-Services kommen folgende CRUD-Prinzipien in Frage:
+Um die Dreischichtenarchitektur zu etablieren, wird für den Datenaustausch zwischen Server--Front-End und Server--Datenbank auf das \acf{REST} gesetzt.
+\acs{REST} ist ein Architekturstil für den Entwurf verteilter Netz"-werk"-an"-wen"-dung"-en.
+Es setzt auf \acs{HTTP} und \acs{HTTPS}-Methoden und stellt verschiedene Methoden zur Verfügung.
+Für den Einsatz von \acs{REST}-Services kommen folgende \acs{CRUD}-Prinzipien in Frage:
 
-\begin{table}
-\begin{tabular}{ l| l | l }
-	CRUD & HTTP & Beispiel-URI \\
+\setlength{\tabcolsep}{6pt}
+\begin{tabular}{l|l|l}
+	\acs{CRUD} & \acs{HTTP} & Beispiel-\acs{URI} \\
 	\hline
-	Create & POST & http://lolcalhost:8080/cinema-system/movie \\ 
-	Read & GET & http://lolcalhost:8080/cinema-system/show/1 \\ 
-	Update & PUT & http://lolcalhost:8080/cinema-system/movie/5\\ 
-	Delete & DELETE & http://lolcalhost:8080/cinema-system/customer/4711\\ 
+	Create & POST & http://lolcalhost:8080/cinema-system/movie \\
+	Read & GET & http://lolcalhost:8080/cinema-system/show/1 \\
+	Update & PUT & http://lolcalhost:8080/cinema-system/movie/5 \\
+	Delete & DELETE & http://lolcalhost:8080/cinema-system/customer/4711 \\
 \end{tabular}
-\caption{CRUD-Befehle und deren Verwendung}
+\caption{\acs{CRUD}-Befehle und deren Verwendung}
 \label{tab:crud}
-\end{table} 
 
-Wir der Webservice mit einem \textit{POST} aufgerufen wird ein neuer Datensatz in der Datenbank angelegt. In dem Beispiel aus Tabelle \vref{tab:crud} wird ein neuer Film in der Datenbank angelegt. Wird die Ressource mit einem \textit{GET} aufgerufen wird ein Datensatz bei der Datenbank angefragt und an die Ressource zurückgesendet. In dem Beispiel aus Tabelle \vref{tab:crud} wird die Ressource Film aufgerufen und der Datenbankeintrag mit der Film-ID 1 abgefragt. Mittels \textit{PUT} wird ein vorhandener Datensatz aktualisiert. In dem Beispiel aus Tabelle \vref{tab:crud} würde z.B. ein neuer Schauspieler hinzugefügt werden. Schlussendlich löscht man einen Datensatz indem man die Ressource mit \textit{DELETE} aufruft. In dem Beispiel aus Tabelle  \vref{tab:crud} würde man den Kunden mit der Kundennummer 4711 aus der Datenbank entfernen.  
+Wir der Webservice mit einem \textit{POST} aufgerufen wird ein neuer Datensatz in der Datenbank angelegt.
+In dem Beispiel aus Tabelle \vref{tab:crud} wird ein neuer Film in der Datenbank angelegt.
+Wird die Ressource mit einem \textit{GET} aufgerufen, wird ein Datensatz bei der Datenbank angefragt und an die Ressource zurückgesendet.
+In dem Beispiel aus Tabelle \vref{tab:crud} wird die Ressource Film aufgerufen und der Datenbankeintrag mit der Film-ID 1 abgefragt.
+Mittels \textit{PUT} wird ein vorhandener Datensatz aktualisiert.
+In dem Beispiel aus Tabelle \vref{tab:crud} würde z.B. ein neuer Schauspieler hinzugefügt werden.
+Schlussendlich löscht man einen Datensatz, indem man die Ressource mit \textit{DELETE} aufruft.
+In dem Beispiel aus Tabelle \vref{tab:crud} würde man den Kunden mit der Kundennummer 4711 aus der Datenbank entfernen.
 
-Während Anfragen über die REST-Schnittstelle über den Server beantwortet werden, können auch verschiedene HTTP bzw. HTTPS-Satuse zurückgeliefert werden (siehe Tabelle \vref{tab:http_status}). 
+Während Anfragen über die \acs{REST}-Schnittstelle über den Server beantwortet werden, können auch verschiedene \acs{HTTP} bzw. \acs{HTTPS}-Status zurückgeliefert werden (siehe Tabelle \vref{tab:http_status}).
 
-\begin{table}
 \begin{tabular}{l | p{9.50 cm}}
-	Satus Code & Beschreibung \\
-\hline
-200 (OK) & Alles OK bei der Verbindung \\
-400 (Bad Request) & Der Server weiß nicht, was er mit der Anfrage machen soll \\
-401 (Unauthorized) & Der Clien muss sich erst authentifizieren z.B. falsches Passwort gewählt \\
-501 (Media Type unsupported) & Der gewählte Medientyp wird nicht unterstützt z.B. Text Plain oder es wird ein anderes Format erwartet z.B. JSON\\
-503 (Service Unavailable) & Anfrage konnte nicht abgeschlossen werden 
+	Status Code & Beschreibung \\
+	\hline
+	200 (OK) & Alles OK bei der Verbindung \\
+	400 (Bad Request) & Der Server weiß nicht, was er mit der Anfrage machen soll \\
+	401 (Unauthorized) & Der Client muss sich erst authentifizieren, z.B. falsches Passwort gewählt \\
+	501 (Media Type unsupported) & Der gewählte Medientyp wird nicht unterstützt z.B. Text Plain oder es wird ein anderes Format erwartet z.B. JSON \\
+	503 (Service Unavailable) & Anfrage konnte nicht abgeschlossen werden
 \end{tabular}
-\caption{Mögliche HTTP-Satuse eines Webservice}
+\caption{Mögliche \acs{HTTP}-Status eines Webservices}
 \label{tab:http_status}
-\end{table}

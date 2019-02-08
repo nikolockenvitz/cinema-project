@@ -1,8 +1,13 @@
-\section{Generieren der JavaScript Object Notation (JSON)}
+\section{Generieren der \acf{JSON}}
 \label{sec:json_generieren}
-Java ist eine objektorientierte Sprache. Alle Klassen sind dementsprechend als Objekte hinterlegt. Durch die Implementierung eines sog. Object-Mappers wie dem Jackson-Mapper\footnote{\url{https://github.com/FasterXML/jackson}}
-ist es möglich die zuvor erstellten Objekte in eine JSON-Datei zu überführen. Er erkennt automatisch, ob es sich um ein Objekt, ein Attribut oder einer Liste handelt. Der Programmierer ruft lediglich die Methode writeValueAsString(Object-to-JSON) auf. \\
-Das Auslesen eines JSON-Strings wird mittels der Methode readValue(json, javaClass) ausgeführt. Der Vorteil dieser Methode ist, dass hier die Java-Klasse angegeben wird, also das Objekt, in das der JSON-String konvertiert werden soll. 
+Java ist eine objektorientierte Sprache.
+Alle Klassen sind dementsprechend als Objekte hinterlegt.
+Durch die Implementierung eines sog. Object-Mappers wie dem Jackson-Mapper\footnote{\url{https://github.com/FasterXML/jackson}}
+ist es möglich die zuvor erstellten Objekte in eine \acs{JSON}-Datei zu überführen.
+Er erkennt automatisch, ob es sich um ein Objekt, ein Attribut oder eine Liste handelt.
+Der Programmierer ruft lediglich die Methode writeValueAsString(Object-to-JSON) auf. \\
+Das Auslesen eines \acs{JSON}-Strings wird mittels der Methode readValue(json, javaClass) ausgeführt.
+Der Vorteil dieser Methode ist, dass hier die Java-Klasse angegeben wird, also das Objekt, in das der \acs{JSON}-String konvertiert werden soll.
 
 Der Jackson-Mapper wird in diesem Projekt über eine Dependency zu einem Maven-Projekt hinzugefügt und kann anschließend verwendet werden (siehe Quelltext \ref{lst:Einbindung_ObjektMapper}) %TODO VARIOREF
 
@@ -16,26 +21,26 @@ Der Jackson-Mapper wird in diesem Projekt über eine Dependency zu einem Maven-P
 \end{lstlisting}
 \captionof{lstlisting}{Einbindung des Objekt-Mappers in die pom.xml}
 \label{lst:Einbindung_ObjektMapper}
-\end{minipage} 
+\end{minipage}
 
 \begin{minipage}{\linewidth}
-	\begin{lstlisting}[language=JAVA] 
+	\begin{lstlisting}[language=JAVA]
 	public static String toJSON ( Object object ) throws JsonProcessingException
 	{
-	String str = "";
-	ObjectMapper om = new ObjectMapper();
-	om.getSerializerProvider().setNullKeySerializer(nullKeySerializer);
-	str = om.writeValueAsString(object);
-	return str;
+		String str = "";
+		ObjectMapper om = new ObjectMapper();
+		om.getSerializerProvider().setNullKeySerializer(nullKeySerializer);
+		str = om.writeValueAsString(object);
+		return str;
 	}
 	
 	public static Object fromJSON ( String json, Class<?> javaClass ) throws IOException
 	{
-	ObjectMapper om = new ObjectMapper();
-	om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-	Object obj = om.readValue(json, javaClass);
-	return obj;
+		ObjectMapper om = new ObjectMapper();
+		om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		Object obj = om.readValue(json, javaClass);
+		return obj;
 	}
 	\end{lstlisting}
-	\captionof{lstlisting}{Ausschnitt aus eigen erstellte Klasse JSONConverter}
-\end{minipage} 
+	\captionof{lstlisting}{Ausschnitt aus der selbst erstellten Klasse JSONConverter}
+\end{minipage}

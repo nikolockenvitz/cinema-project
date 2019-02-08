@@ -1,24 +1,31 @@
 \section{Konzept}
 \label{sec:konzept}
-In diesem Projekt soll die Drei-Schichten-Architektur eingesetzt werden. Sie dient dazu, die einzelnen Schichten zu separieren, sodass in zukünftigen Schritten ein Austausch der genutzten Benutzeroberfläche oder gegen eine andere Datenbank zu ermöglichen. 
+In diesem Projekt soll die Drei-Schichten-Architektur eingesetzt werden.
+Sie dient dazu, die einzelnen Schichten zu separieren, sodass in zukünftigen Schritten ein Austausch der genutzten Benutzeroberfläche oder Datenbank möglich ist. 
 
-Wie zuvor in Kapitel \vref{sec:technologien} beschrieben, finden in diesem Projekt REST-Ful Webservices Anwendung. Da Webservices in der Realität u.a. aus Performance Gründen auf unterschiedlichen Servern ausgeführt werden, wurde dies hier ebenfalls umgesetzt. Zum Einsatz kommt eine System- und Data-Ressource. Wie in Abbildung \vref{fig:konzept_backend} dargestellt ist, greift die Benutzeroberfläche niemals direkt auf die Datenhaltungsschicht. Dies wird realisiert indem das Frontend auf die bereitgestellten Webservice in der Fachkonzeptschicht zugreift. Diese wiederum greift dann auf die Datenhaltungsschicht zu.   
+Wie zuvor in Kapitel \vref{sec:technologien} beschrieben, finden in diesem Projekt \acs{REST}ful Webservices Anwendung.
+Da Webservices in der Realität u.a. aus Performance-Gründen auf unterschiedlichen Servern ausgeführt werden, wurde dies hier ebenfalls umgesetzt.
+Zum Einsatz kommt eine System- und Data-Ressource.
+Wie in Abbildung \vref{fig:konzept_backend} dargestellt ist, greift die Benutzeroberfläche niemals direkt auf die Datenhaltungsschicht.
+Dies wird realisiert, indem das Front-End auf die bereitgestellten Webservices in der Fachkonzeptschicht zugreift.
+Diese wiederum greifen dann auf die Datenhaltungsschicht zu.
 
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=0.5\textwidth]{img/backend/drei-schichten-architektur}
 	\captionsetup{format=hang}
-	\caption{Konzept des Backends \\
-		eigene Darstellung mittels \url{https://draw.io/}}
-		\label{fig:konzept_backend}
+	\caption{Konzept des Back-Ends \\ eigene Darstellung mittels \url{https://draw.io/}}
+	\label{fig:konzept_backend}
 	\end{figure}
 
-Die System-Ressource stellt dem Frontend mehrere Webservices zur Verfügung. Nachdem die Ressource über eine \ac{URI} \url{http://localhost:8080/cinema-system/show/1} aufgerufen wurde, ruft diese ihren eigenen Service eigenen Service \textit{getMovieById} auf, der den Webservice \url{http://localhost:8080/cinema-data/show/1} in der Data-Ressource aufruft, welche die gewünschten Daten in der Datenbank anfragt und in ein Transferobjekt umwandelt. Eine Erläuterung warum dies notwendig ist, wird in Kapitel \vref{sec:dto} näher beschrieben. \\
-Jede Ressource hat wiederum mehrere Services implementiert, die die gewünschten Ergebnisse konsolidieren.  
+Die System-Ressource stellt dem Front-End mehrere Webservices zur Verfügung.
+Nachdem die Ressource über eine \acs{URI} \url{http://localhost:8080/cinema-system/show/1} aufgerufen wurde, ruft diese ihren eigenen Service \textit{getMovieById} auf, der den Webservice \url{http://localhost:8080/cinema-data/show/1} in der Data-Ressource aufruft, welche die gewünschten Daten in der Datenbank anfragt und in ein Transferobjekt umwandelt.
+Eine Erläuterung warum dies notwendig ist, wird in Kapitel \vref{sec:dto} näher beschrieben. \\
+Jede Ressource hat wiederum mehrere Services implementiert, die die gewünschten Ergebnisse konsolidieren.
 
-Die Erläuterung wie dies seitens des Frontends umgesetzt ist, wird in Kapitel \vref{sec:anbindung_backend} näher erläutert.
+Die Erläuterung wie dies seitens des Front-Ends umgesetzt ist, wird in Kapitel \vref{sec:anbindung_backend} näher erläutert.
  
-%Möchte man z.B. alle Daten einer Vorstellung haben, so ruft das Frontend die Ressource mit der \ac(URI) \url{http://localhost:8080/cinema-system/show/1} auf.
+%Möchte man z.B. alle Daten einer Vorstellung haben, so ruft das Front-End die Ressource mit der \acs{URI} \url{http://localhost:8080/cinema-system/show/1} auf.
 
 Die aktuell verwendeten Ressourcen in diesem Projekt sind:
 \begin{itemize}
