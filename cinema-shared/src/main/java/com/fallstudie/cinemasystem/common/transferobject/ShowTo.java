@@ -2,14 +2,14 @@ package com.fallstudie.cinemasystem.common.transferobject;
 
 public class ShowTo
 {
-    private long   id;
-    private String date;
-    private String time;
-    private String weekday;
+    private long    id;
+    private boolean showis3D;
+    private String  date;
+    private String  time;
+    private String  weekday;
 //    private List<TicketTo> tickets;
     private MovieTo movie;
     private HallTo  hall;
-    private boolean is3D;
 
     @Override
     public int hashCode ( )
@@ -19,7 +19,7 @@ public class ShowTo
         result = prime * result + ((date == null) ? 0 : date.hashCode());
         result = prime * result + ((hall == null) ? 0 : hall.hashCode());
         result = prime * result + (int) (id ^ (id >>> 32));
-        result = prime * result + (is3D ? 1231 : 1237);
+        result = prime * result + (showis3D ? 1231 : 1237);
         result = prime * result + ((movie == null) ? 0 : movie.hashCode());
         result = prime * result + ((time == null) ? 0 : time.hashCode());
         result = prime * result + ((weekday == null) ? 0 : weekday.hashCode());
@@ -50,7 +50,7 @@ public class ShowTo
             return false;
         if ( id != other.id )
             return false;
-        if ( is3D != other.is3D )
+        if ( showis3D != other.showis3D )
             return false;
         if ( movie == null )
         {
@@ -123,14 +123,14 @@ public class ShowTo
         this.hall = hall;
     }
 
-    public boolean is3D ( )
+    public boolean isShowIs3D ( )
     {
-        return is3D;
+        return showis3D;
     }
 
-    public void setIs3D ( boolean is3d )
+    public void setShowIs3D ( boolean showIs3D )
     {
-        is3D = is3d;
+        this.showis3D = showIs3D;
     }
 
     public String getWeekday ( )

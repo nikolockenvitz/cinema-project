@@ -40,7 +40,6 @@ import com.fallstudie.cinemasystem.data.entity.Reservation;
 import com.fallstudie.cinemasystem.data.entity.Seat;
 import com.fallstudie.cinemasystem.data.entity.Show;
 import com.fallstudie.cinemasystem.data.entity.Ticket;
-import com.fallstudie.cinemasystem.data.helper.EntityToToHelper;
 import com.fallstudie.cinemasystem.data.helper.ToToEntityHelper;
 
 public class ToToEntityHelper_Test
@@ -220,7 +219,7 @@ public class ToToEntityHelper_Test
         testShowTo.setDate(testDateString);
         testShowTo.setHall(testHallTo);
         testShowTo.setId(1);
-        testShowTo.setIs3D(false);
+        testShowTo.setShowIs3D(false);
         testShowTo.setTime(Utils.convertDateToTime(testDateDate));
         testShowTo.setWeekday(Utils.getWeekDay(testDateDate));
 

@@ -220,7 +220,7 @@ public class EntityToToHelper_Test
         testShowTo.setDate(testDateString);
         testShowTo.setHall(testHallTo);
         testShowTo.setId(1);
-        testShowTo.setIs3D(false);
+        testShowTo.setShowIs3D(false);
         testShowTo.setTime(Utils.convertDateToTime(testDateDate));
         testShowTo.setWeekday(Utils.getWeekDay(testDateDate));
 

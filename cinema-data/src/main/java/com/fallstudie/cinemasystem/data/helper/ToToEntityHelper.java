@@ -119,10 +119,10 @@ public class ToToEntityHelper
             Show show = new Show();
             show.setId(transferObject.getId());
             show.setHall(createHallEntity(transferObject.getHall()));
-            show.setIs3D(transferObject.is3D());
+            show.setIs3D(transferObject.isShowIs3D());
             show.setDate(Utils.convertStringToDate(transferObject.getDate()));
             show.setTime(Utils.convertStringToTime(transferObject.getTime()));
-            show.setIs3D(transferObject.is3D());
+            show.setIs3D(transferObject.isShowIs3D());
             if ( withMovie )
             {
                 show.setMovie(createMovieEntity(transferObject.getMovie(), false));
