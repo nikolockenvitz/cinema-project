@@ -153,7 +153,7 @@ function addSeatToSelection (seatId, seatObj) {
 	var data = "block=" + JSON.stringify(block);
 	$.ajax({
 	  type: "POST",
-	  url: "http://localhost:8080/cinema-data/reservation/block",
+	  url: "http://localhost:8080/cinema-system/reservation/block",
 	  data: data,
 	  contentType: "application/json; charset=utf-8",
 	  success: (data) => processBlockingResult(data, seatId, seatObj),
@@ -189,7 +189,7 @@ function removeSeatFromSelection (seatId, seatObj) {
 	var data = "block=" + JSON.stringify(block);
 	$.ajax({
 	  type: "DELETE",
-	  url: "http://localhost:8080/cinema-data/reservation/block",
+	  url: "http://localhost:8080/cinema-system/reservation/block",
 	  data: data,
 	  contentType: "application/json; charset=utf-8",
 	  success: (data) => console.log(data),
