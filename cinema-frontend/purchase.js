@@ -62,7 +62,7 @@ $(function () {
 		var data = "book=" + JSON.stringify(book);
 		$.ajax({
 		  type: "POST",
-		  url: "http://localhost:8080/cinema-data/reservation/book",
+		  url: "http://localhost:8080/cinema-system/reservation/book",
 		  data: data,
 		  contentType: "application/json; charset=utf-8",
 		  success: (data) => processBookingResult(data),

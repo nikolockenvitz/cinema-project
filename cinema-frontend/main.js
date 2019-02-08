@@ -1,5 +1,5 @@
 
-const URL_SERVER = "http://localhost:8080/cinema-data";
+const URL_SERVER = "http://localhost:8080/cinema-system";
 const PATH_ALL_MOVIES = "/movie/getAllMovies";
 const PATH_MOVIE = "/movie/{movieID}";
 const PATH_SHOW = "/show/{showID}";
