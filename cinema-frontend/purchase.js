@@ -43,8 +43,8 @@ $(function () {
 					seats: [],
 					customer: { firstname: firstName,
 								lastname: lastName,
-								email: email,
-								sessiontoken: cookie}};
+								email: email},
+					sessiontoken: cookie};
 		for(var i=0; i<seatsP.length; i++) {
 			if(seatsP[i] != "")
 				book.seats.push({id: parseInt(seatsP[i]), isReducedPrice: (pe-- > 0 ? true : false)});
