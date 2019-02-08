@@ -2,6 +2,7 @@
 const URL_SERVER = "http://localhost:8080/cinema-system";
 const PATH_ALL_MOVIES = "/movie/getAllMovies";
 const PATH_MOVIE = "/movie/{movieID}";
+const PATH_SHOWS_FOR_MOVIE = "/show/getAllShows/{movieID}";
 const PATH_SHOW = "/show/{showID}";
 
 function getData (path, func) {
@@ -72,19 +73,38 @@ function loadMovies () {
 function displayMovies (movies) {
 	for(var i=0; i<movies.length; i++) {
 		var movie = movies[i];
-		showButtons = "";
+		var shows = [];
+		var showButtons = "";
 		for(var j in movie.shows) {
 			var show = movie.shows[j];
 			if(show.date == date) {
-				var [day, month, year] = show.date.split(".");
-				var [hour, minute] = show.time.split(":");
-				var showTime = new Date(year, month-1, day, hour, minute);
-				showButtons += templateShowButton
-					.replace("{showID}",show.id)
-					.replace("{show3D}",(show["showIs3D"] ? "show-3d" : ""))
-					.replace("{showButtonDisabled}", (now > showTime  ? "disabled" : ""))
-					.replace("{showTime}",show.time);
+				// simple insert sort with O(n^2)
+				if(shows.length == 0) {
+					shows.push(show);
+				} else if (show.time < shows[0].time) {
+					shows.splice(0, 0, show);
+				} else if (show.time > shows[shows.length-1].time) {
+					shows.push(show);
+				} else {
+					for(var i=0; i<shows.length; i++) {
+						if(show.time > shows[i].time) {
+							shows.splice(i-1, 0, show);
+							break;
+						}
+					}
+				}
 			}
+		}
+		for(var j in shows) {
+			var show = shows[j];
+			var [day, month, year] = show.date.split(".");
+			var [hour, minute] = show.time.split(":");
+			var showTime = new Date(year, month-1, day, hour, minute);
+			showButtons += templateShowButton
+				.replace("{showID}",show.id)
+				.replace("{show3D}",(show["showIs3D"] ? "show-3d" : ""))
+				.replace("{showButtonDisabled}", (now > showTime  ? "disabled" : ""))
+				.replace("{showTime}",show.time);
 		}
 		var genres = "";
 		for(var j in movie.genres) {
@@ -187,7 +207,21 @@ function displayMovieAndShows (movie) {
 		var showDate = new Date(year, month-1, day);
 		var differenceToToday = (showDate - todayMidnight) / 1000 / 60 / 60 / 24;
 		if(differenceToToday >= 0 && differenceToToday < numberOfDisplayedDays) {
-			showsPerDay[differenceToToday].push(show);
+			// simple insert sort with O(n^2) TODO: should be improved to n*log n
+			if(showsPerDay[differenceToToday].length == 0) {
+				showsPerDay[differenceToToday].push(show);
+			} else if (show.time < showsPerDay[differenceToToday][0].time) {
+				showsPerDay[differenceToToday].splice(0, 0, show);
+			} else if (show.time > showsPerDay[differenceToToday][showsPerDay[differenceToToday].length-1].time) {
+				showsPerDay[differenceToToday].push(show);
+			} else {
+				for(var i=0; i<showsPerDay[differenceToToday].length; i++) {
+					if(show.time > showsPerDay[differenceToToday][i].time) {
+						showsPerDay[differenceToToday].splice(i-1, 0, show);
+						break;
+					}
+				}
+			}
 		}
 	}
 	for(var j=0; j<numberOfDisplayedDays; j++) {
