@@ -81,7 +81,7 @@ function displayMovies (movies) {
 				var showTime = new Date(year, month-1, day, hour, minute);
 				showButtons += templateShowButton
 					.replace("{showID}",show.id)
-					.replace("{show3D}",(show["3D"] ? "show-3d" : ""))
+					.replace("{show3D}",(show["showIs3D"] ? "show-3d" : ""))
 					.replace("{showButtonDisabled}", (now > showTime  ? "disabled" : ""))
 					.replace("{showTime}",show.time);
 			}
@@ -199,7 +199,7 @@ function displayMovieAndShows (movie) {
 			var showTime = new Date(year, month-1, day, hour, minute);
 			showButtons += templateShowButton
 				.replace("{showID}",show.id)
-				.replace("{show3D}",(show["3D"] ? "show-3d" : ""))
+				.replace("{show3D}",(show["showIs3D"] ? "show-3d" : ""))
 				.replace("{showButtonDisabled}", (now > showTime ? "disabled" : ""))
 				.replace("{showTime}",show.time);
 		}
