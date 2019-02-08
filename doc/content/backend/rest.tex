@@ -5,17 +5,18 @@ Um die Dreischichtenarchitektur zu etablieren, wird für den Datenaustausch zwis
 Es setzt auf \acs{HTTP} und \acs{HTTPS}-Methoden und stellt verschiedene Methoden zur Verfügung.
 Für den Einsatz von \acs{REST}-Services kommen folgende \acs{CRUD}-Prinzipien in Frage:
 
-\setlength{\tabcolsep}{6pt}
-\begin{tabular}{l|l|l}
-	\acs{CRUD} & \acs{HTTP} & Beispiel-\acs{URI} \\
-	\hline
-	Create & POST & http://lolcalhost:8080/cinema-system/movie \\
-	Read & GET & http://lolcalhost:8080/cinema-system/show/1 \\
-	Update & PUT & http://lolcalhost:8080/cinema-system/movie/5 \\
-	Delete & DELETE & http://lolcalhost:8080/cinema-system/customer/4711 \\
-\end{tabular}
-\caption{\acs{CRUD}-Befehle und deren Verwendung}
-\label{tab:crud}
+\begin{table}[ht]
+	\begin{tabular}{l|l|l}
+		\acs{CRUD} & \acs{HTTP} & Beispiel-\acs{URI} \\
+		\hline
+		Create & POST & http://lolcalhost:8080/cinema-system/movie \\
+		Read & GET & http://lolcalhost:8080/cinema-system/show/1 \\
+		Update & PUT & http://lolcalhost:8080/cinema-system/movie/5 \\
+		Delete & DELETE & http://lolcalhost:8080/cinema-system/customer/4711 \\
+	\end{tabular}
+	\caption{\acs{CRUD}-Befehle und deren Verwendung}
+	\label{tab:crud}
+\end{table}
 
 Wir der Webservice mit einem \textit{POST} aufgerufen wird ein neuer Datensatz in der Datenbank angelegt.
 In dem Beispiel aus Tabelle \vref{tab:crud} wird ein neuer Film in der Datenbank angelegt.
@@ -26,16 +27,19 @@ In dem Beispiel aus Tabelle \vref{tab:crud} würde z.B. ein neuer Schauspieler h
 Schlussendlich löscht man einen Datensatz, indem man die Ressource mit \textit{DELETE} aufruft.
 In dem Beispiel aus Tabelle \vref{tab:crud} würde man den Kunden mit der Kundennummer 4711 aus der Datenbank entfernen.
 
+
 Während Anfragen über die \acs{REST}-Schnittstelle über den Server beantwortet werden, können auch verschiedene \acs{HTTP} bzw. \acs{HTTPS}-Status zurückgeliefert werden (siehe Tabelle \vref{tab:http_status}).
 
-\begin{tabular}{l | p{9.50 cm}}
-	Status Code & Beschreibung \\
-	\hline
-	200 (OK) & Alles OK bei der Verbindung \\
-	400 (Bad Request) & Der Server weiß nicht, was er mit der Anfrage machen soll \\
-	401 (Unauthorized) & Der Client muss sich erst authentifizieren, z.B. falsches Passwort gewählt \\
-	501 (Media Type unsupported) & Der gewählte Medientyp wird nicht unterstützt z.B. Text Plain oder es wird ein anderes Format erwartet z.B. JSON \\
-	503 (Service Unavailable) & Anfrage konnte nicht abgeschlossen werden
-\end{tabular}
-\caption{Mögliche \acs{HTTP}-Status eines Webservices}
+\begin{table}[ht]
+	\begin{tabular}{l | p{9.50 cm}}
+		Status Code & Beschreibung \\
+		\hline
+		200 (OK) & Alles OK bei der Verbindung \\
+		400 (Bad Request) & Der Server weiß nicht, was er mit der Anfrage machen soll \\
+		401 (Unauthorized) & Der Client muss sich erst authentifizieren, z.B. falsches Passwort gewählt \\
+		501 (Media Type unsupported) & Der gewählte Medientyp wird nicht unterstützt z.B. Text Plain oder es wird ein anderes Format erwartet z.B. JSON \\
+		503 (Service Unavailable) & Anfrage konnte nicht abgeschlossen werden
+	\end{tabular}
+	\caption{Mögliche \acs{HTTP}-Status eines Webservices}
 \label{tab:http_status}
+\end{table}
