@@ -212,8 +212,32 @@
 \definecolor{darkblue}{rgb}{0.0,0.0,0.6}
 \definecolor{cyan}{rgb}{0.0,0.6,0.6}
 
+% javascript listing
+\definecolor{jsBackground}{RGB}{250,250,255}
+\definecolor{jsString}    {RGB}{ 16,160, 60}
+\lstdefinelanguage{JavaScript}
+{
+	basicstyle=\ttfamily\footnotesize,
+	backgroundcolor=\color{jsBackground},
+	keywordstyle=\color{blue}\bfseries,
+	stringstyle=\color{jsString},
+	commentstyle=\color{grey},
+	morestring=[b]",
+	morecomment=[s][\color{grey}]{/*}{*/},
+	numbers=left,
+	numberstyle=\tiny\color{black},
+	stepnumber=1,
+	numbersep=10pt,
+	tabsize=1,
+	showspaces=false,
+	showstringspaces=false,
+	breaklines=true,
+	morekeywords={break,case,const,continue,else,false,for,function,if,in,new,null,switch,true,var,while}
+}
+
 % extra packages
 \usepackage{graphicx}			% use various graphics formats
+\usepackage{subfig}				% sub-figures, e.g. side-by-side pictures
 \usepackage[german]{varioref}	% nicer references \vref
 \usepackage{caption}			% better captions
 \usepackage{booktabs}			% nicer tabs

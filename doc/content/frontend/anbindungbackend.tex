@@ -1,3 +1,35 @@
 % !TEX root =  master.tex
 \section{Anbindung an das Back-End}
 \label{sec:anbindung_backend}
+
+Um die Daten aus der Datenbank bzw. dem Back-End anzuzeigen, werden diese durch einen oder mehrere \acs{AJAX}-Aufrufe nachgeladen.
+Beim Laden der Startseite wird die Funktion \textit{loadMovies()} aufgerufen.
+Diese wiederum ist nur für die Zuordnung von einem Pfad bzw. einer \acs{URI} zu einer Funktion, die das Ergebnis verarbeitet, da.
+Sie würde auch \acs{URL}-Parameter auslesen und in den Aufruf mit einarbeiten, dies ist aber auf der Startseite noch nicht notwendig.
+
+\begin{lstlisting}[language=JavaScript]
+const URL_SERVER = "http://localhost:8080/cinema-system";
+const PATH_ALL_MOVIES = "/movie/getAllMovies";
+
+function getData (path, func) {
+	$.ajax({
+		type: "GET",
+		url: URL_SERVER + path,
+		success: (data) => func(data),
+		error: function (xhr,status,error){
+			console.log(xhr, status, error);
+			func([]);
+		}
+	});
+}
+
+function loadMovies () {
+	getData(PATH_ALL_MOVIES, displayMovies);
+}
+
+function displayMovies (movies) {
+	...
+}
+\end{lstlisting}
+\captionof{lstlisting}{\acs{AJAX}-Aufruf, um alle Filme zu erhalten}
+\label{lst:ajax_all_movies}
