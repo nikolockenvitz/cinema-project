@@ -6,6 +6,8 @@ Es setzt auf \acs{HTTP} und \acs{HTTPS}-Methoden und stellt verschiedene Methode
 Für den Einsatz von \acs{REST}-Services kommen folgende \acs{CRUD}-Prinzipien in Frage:
 
 \begin{table}[ht]
+	\renewcommand{\arraystretch}{1.2}
+	\centering
 	\begin{tabular}{l|l|l}
 		\acs{CRUD} & \acs{HTTP} & Beispiel-\acs{URI} \\
 		\hline
@@ -30,8 +32,10 @@ In dem Beispiel aus Tabelle \vref{tab:crud} würde man den Kunden mit der Kunden
 
 Während Anfragen über die \acs{REST}-Schnittstelle über den Server beantwortet werden, können auch verschiedene \acs{HTTP} bzw. \acs{HTTPS}-Status zurückgeliefert werden (siehe Tabelle \vref{tab:http_status}).
 
-\begin{table}[ht]
-	\begin{tabular}{l | p{9.50 cm}}
+\begin{table}[!hpt]
+	\renewcommand{\arraystretch}{1.2}
+	\centering
+	\begin{tabular}{l|p{8.5cm}}
 		Status Code & Beschreibung \\
 		\hline
 		200 (OK) & Alles OK bei der Verbindung \\
@@ -43,3 +47,4 @@ Während Anfragen über die \acs{REST}-Schnittstelle über den Server beantworte
 	\caption{Mögliche \acs{HTTP}-Status eines Webservices}
 \label{tab:http_status}
 \end{table}
+\clearpage
