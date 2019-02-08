@@ -449,15 +449,17 @@ public class EntityToToHelper_Test
     {
 
         // test MovieTo and Movie
-        assertThat(testMovieTo.getId(), equalTo(EtoToHelper.createMovieTo(testMovieEntity, true).getId()));
-        assertThat(testMovieTo.getActors(), equalTo(EtoToHelper.createMovieTo(testMovieEntity, true).getActors()));
-        assertThat(testMovieTo.getDescription(), equalTo(EtoToHelper.createMovieTo(testMovieEntity, true).getDescription()));
-        assertThat(testMovieTo.getDuration(), equalTo(EtoToHelper.createMovieTo(testMovieEntity, true).getDuration()));
-        assertThat(testMovieTo.getFsk(), equalTo(EtoToHelper.createMovieTo(testMovieEntity, true).getFsk()));
-        assertThat(testMovieTo.getName(), equalTo(EtoToHelper.createMovieTo(testMovieEntity, true).getName()));
-        assertThat(testMovieTo.getGenres(), equalTo(EtoToHelper.createMovieTo(testMovieEntity, true).getGenres()));
-        assertThat(testMovieTo.getShows(), equalTo(EtoToHelper.createMovieTo(testMovieEntity, true).getShows()));
-        assertThat(testMovieTo.getRatings(), equalTo(EtoToHelper.createMovieTo(testMovieEntity, true).getRatings()));
+        MovieTo compareMovieTo = EtoToHelper.createMovieTo(testMovieEntity, true);
+
+        assertThat(testMovieTo.getId(), equalTo(compareMovieTo.getId()));
+        assertThat(testMovieTo.getActors(), equalTo(compareMovieTo.getActors()));
+        assertThat(testMovieTo.getDescription(), equalTo(compareMovieTo.getDescription()));
+        assertThat(testMovieTo.getDuration(), equalTo(compareMovieTo.getDuration()));
+        assertThat(testMovieTo.getFsk(), equalTo(compareMovieTo.getFsk()));
+        assertThat(testMovieTo.getName(), equalTo(compareMovieTo.getName()));
+        assertThat(testMovieTo.getGenres(), equalTo(compareMovieTo.getGenres()));
+        assertThat(testMovieTo.getShows(), equalTo(compareMovieTo.getShows()));
+        assertThat(testMovieTo.getRatings(), equalTo(compareMovieTo.getRatings()));
 
     }
 
@@ -466,84 +468,102 @@ public class EntityToToHelper_Test
     {
 
         // test MovieTo and Movie
-        assertThat(testMovieTo.getId(), equalTo(EtoToHelper.createMovieTo(testMovieEntity, false).getId()));
-        assertThat(testMovieTo.getActors(), equalTo(EtoToHelper.createMovieTo(testMovieEntity, false).getActors()));
-        assertThat(testMovieTo.getDescription(), equalTo(EtoToHelper.createMovieTo(testMovieEntity, false).getDescription()));
-        assertThat(testMovieTo.getDuration(), equalTo(EtoToHelper.createMovieTo(testMovieEntity, false).getDuration()));
-        assertThat(testMovieTo.getFsk(), equalTo(EtoToHelper.createMovieTo(testMovieEntity, false).getFsk()));
-        assertThat(testMovieTo.getName(), equalTo(EtoToHelper.createMovieTo(testMovieEntity, false).getName()));
-        assertThat(testMovieTo.getGenres(), equalTo(EtoToHelper.createMovieTo(testMovieEntity, false).getGenres()));
-        assertThat(testMovieTo.getRatings(), equalTo(EtoToHelper.createMovieTo(testMovieEntity, false).getRatings()));
+
+        MovieTo compareMovieTo = EtoToHelper.createMovieTo(testMovieEntity, false);
+
+        assertThat(testMovieTo.getId(), equalTo(compareMovieTo.getId()));
+        assertThat(testMovieTo.getActors(), equalTo(compareMovieTo.getActors()));
+        assertThat(testMovieTo.getDescription(), equalTo(compareMovieTo.getDescription()));
+        assertThat(testMovieTo.getDuration(), equalTo(compareMovieTo.getDuration()));
+        assertThat(testMovieTo.getFsk(), equalTo(compareMovieTo.getFsk()));
+        assertThat(testMovieTo.getName(), equalTo(compareMovieTo.getName()));
+        assertThat(testMovieTo.getGenres(), equalTo(compareMovieTo.getGenres()));
+        assertThat(testMovieTo.getRatings(), equalTo(compareMovieTo.getRatings()));
 
     }
 
     @Test
     public void testCreateReserverationTo ( )
     {
-        assertThat(testReservationTo.getDateOfReservation(), equalTo(EtoToHelper.createReservationTo(testReservationEntity, false).getDateOfReservation()));
-        assertThat(testReservationTo.getId(), equalTo(EtoToHelper.createReservationTo(testReservationEntity, false).getId()));
-        assertThat(testReservationTo.getCustomer(), equalTo(EtoToHelper.createReservationTo(testReservationEntity, false).getCustomer()));
+
+        ReservationTo compareReservationTo = EtoToHelper.createReservationTo(testReservationEntity, false);
+
+        assertThat(testReservationTo.getDateOfReservation(), equalTo(compareReservationTo.getDateOfReservation()));
+        assertThat(testReservationTo.getId(), equalTo(compareReservationTo.getId()));
+        assertThat(testReservationTo.getCustomer(), equalTo(compareReservationTo.getCustomer()));
 
     }
 
     @Test
     public void testCreateTicketTo ( )
     {
-        assertThat(testTicketTo.getId(), equalTo(EtoToHelper.createTicketTo(testTicketEntity).getId()));
-        assertThat(testTicketTo.getReservation(), equalTo(EtoToHelper.createTicketTo(testTicketEntity).getReservation()));
-        assertThat(testTicketTo.getSeat(), equalTo(EtoToHelper.createTicketTo(testTicketEntity).getSeat()));
-        assertThat(testTicketTo.getShow(), equalTo(EtoToHelper.createTicketTo(testTicketEntity).getShow()));
+        TicketTo compareTicketTo = EtoToHelper.createTicketTo(testTicketEntity);
+
+        assertThat(testTicketTo.getId(), equalTo(compareTicketTo.getId()));
+        assertThat(testTicketTo.getReservation(), equalTo(compareTicketTo.getReservation()));
+        assertThat(testTicketTo.getSeat(), equalTo(compareTicketTo.getSeat()));
+        assertThat(testTicketTo.getShow(), equalTo(compareTicketTo.getShow()));
 
     }
 
     @Test
     public void testCreateTicketToForReservation ( )
     {
-        assertThat(testTicketTo.getId(), equalTo(EtoToHelper.createTicketToForReservation(testTicketEntity).getId()));
-        assertThat(testTicketTo.getSeat(), equalTo(EtoToHelper.createTicketToForReservation(testTicketEntity).getSeat()));
-        assertThat(testTicketTo.getShow(), equalTo(EtoToHelper.createTicketToForReservation(testTicketEntity).getShow()));
+        TicketTo compareTicketTo = EtoToHelper.createTicketToForReservation(testTicketEntity);
+
+        assertThat(testTicketTo.getId(), equalTo(compareTicketTo.getId()));
+        assertThat(testTicketTo.getSeat(), equalTo(compareTicketTo.getSeat()));
+        assertThat(testTicketTo.getShow(), equalTo(compareTicketTo.getShow()));
 
     }
 
     @Test
     public void testCreateShowToWithMovie ( )
     {
-        assertThat(testShowTo.getId(), equalTo(EtoToHelper.createShowToWithMovie(testShowEntity).getId()));
-        assertThat(testShowTo.getHall(), equalTo(EtoToHelper.createShowToWithMovie(testShowEntity).getHall()));
-        assertThat(testShowTo.getDate(), equalTo(EtoToHelper.createShowToWithMovie(testShowEntity).getDate()));
-        assertThat(testShowTo.getMovie(), equalTo(EtoToHelper.createShowToWithMovie(testShowEntity).getMovie()));
-        assertThat(testShowTo.getTime(), equalTo(EtoToHelper.createShowToWithMovie(testShowEntity).getTime()));
-        assertThat(testShowTo.getWeekday(), equalTo(EtoToHelper.createShowToWithMovie(testShowEntity).getWeekday()));
+        ShowTo compareShowTo = EtoToHelper.createShowToWithMovie(testShowEntity);
+
+        assertThat(testShowTo.getId(), equalTo(compareShowTo.getId()));
+        assertThat(testShowTo.getHall(), equalTo(compareShowTo.getHall()));
+        assertThat(testShowTo.getDate(), equalTo(compareShowTo.getDate()));
+        assertThat(testShowTo.getMovie(), equalTo(compareShowTo.getMovie()));
+        assertThat(testShowTo.getTime(), equalTo(compareShowTo.getTime()));
+        assertThat(testShowTo.getWeekday(), equalTo(compareShowTo.getWeekday()));
     }
 
     @Test
     public void testCreateShowToWithoutMovie ( )
     {
-        assertThat(testShowTo.getId(), equalTo(EtoToHelper.createShowToWithoutMovie(testShowEntity).getId()));
-        assertThat(testShowTo.getHall(), equalTo(EtoToHelper.createShowToWithoutMovie(testShowEntity).getHall()));
-        assertThat(testShowTo.getDate(), equalTo(EtoToHelper.createShowToWithoutMovie(testShowEntity).getDate()));
-        assertThat(testShowTo.getTime(), equalTo(EtoToHelper.createShowToWithoutMovie(testShowEntity).getTime()));
-        assertThat(testShowTo.getWeekday(), equalTo(EtoToHelper.createShowToWithoutMovie(testShowEntity).getWeekday()));
+        ShowTo compareShowTo = EtoToHelper.createShowToWithoutMovie(testShowEntity);
+
+        assertThat(testShowTo.getId(), equalTo(compareShowTo.getId()));
+        assertThat(testShowTo.getHall(), equalTo(compareShowTo.getHall()));
+        assertThat(testShowTo.getDate(), equalTo(compareShowTo.getDate()));
+        assertThat(testShowTo.getTime(), equalTo(compareShowTo.getTime()));
+        assertThat(testShowTo.getWeekday(), equalTo(compareShowTo.getWeekday()));
     }
 
     @Test
     public void testCreateEmployeeTo ( )
     {
-        assertThat(testEmployeeTo.getId(), equalTo(EtoToHelper.createEmployeeTo(testEmployeeEntity).getId()));
-        assertThat(testEmployeeTo.getDateofbirth(), equalTo(EtoToHelper.createEmployeeTo(testEmployeeEntity).getDateofbirth()));
-        assertThat(testEmployeeTo.getEmail(), equalTo(EtoToHelper.createEmployeeTo(testEmployeeEntity).getEmail()));
-        assertThat(testEmployeeTo.getFirstname(), equalTo(EtoToHelper.createEmployeeTo(testEmployeeEntity).getFirstname()));
-        assertThat(testEmployeeTo.getLastname(), equalTo(EtoToHelper.createEmployeeTo(testEmployeeEntity).getLastname()));
+        EmployeeTo compareEmployeeTo = EtoToHelper.createEmployeeTo(testEmployeeEntity);
+
+        assertThat(testEmployeeTo.getId(), equalTo(compareEmployeeTo.getId()));
+        assertThat(testEmployeeTo.getDateofbirth(), equalTo(compareEmployeeTo.getDateofbirth()));
+        assertThat(testEmployeeTo.getEmail(), equalTo(compareEmployeeTo.getEmail()));
+        assertThat(testEmployeeTo.getFirstname(), equalTo(compareEmployeeTo.getFirstname()));
+        assertThat(testEmployeeTo.getLastname(), equalTo(compareEmployeeTo.getLastname()));
     }
 
     @Test
     public void testCreateBlockTo ( )
     {
-        assertThat(testBlockTo.getId(), equalTo(EtoToHelper.createBlockTo(testBlockEntity).getId()));
-        assertThat(testBlockTo.getSeat(), equalTo(EtoToHelper.createBlockTo(testBlockEntity).getSeat()));
-        assertThat(testBlockTo.getShow(), equalTo(EtoToHelper.createBlockTo(testBlockEntity).getShow()));
-        assertThat(testBlockTo.getSessiontoken(), equalTo(EtoToHelper.createBlockTo(testBlockEntity).getSessiontoken()));
-        assertThat(testBlockTo.getTimestamp(), equalTo(EtoToHelper.createBlockTo(testBlockEntity).getTimestamp()));
+        BlockTo compareBlockTo = EtoToHelper.createBlockTo(testBlockEntity);
+
+        assertThat(testBlockTo.getId(), equalTo(compareBlockTo.getId()));
+        assertThat(testBlockTo.getSeat(), equalTo(compareBlockTo.getSeat()));
+        assertThat(testBlockTo.getShow(), equalTo(compareBlockTo.getShow()));
+        assertThat(testBlockTo.getSessiontoken(), equalTo(compareBlockTo.getSessiontoken()));
+        assertThat(testBlockTo.getTimestamp(), equalTo(compareBlockTo.getTimestamp()));
     }
 
     @Test
