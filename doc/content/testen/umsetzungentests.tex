@@ -1,2 +1,85 @@
 % !TEX root =  master.tex
 \section{Umsetzungen der Tests}
+
+\subsection{Vorwort}
+
+Das Kinoreservierungsprogramm befindet sich noch in Entwicklung, weshalb sich bei den Tests dafür entschieden wurde keine Testdatenbank zu erstellen.
+Durch diese Maßnahme wurde Zeit eingespart, welche in die weitere Entwicklung einfließen konnte. 
+Jedoch sind die Autoren der Arbeit sich bewusst, dass sobald das Programm veröffentlich werden soll, die Testdaten simuliert werden sollten und keine Tests mit echten Daten in Bezug kommen sollten.
+
+\subsection{Rollenverteilung}
+
+Sofern Code und dazugehörige Tests von der selben Person bzw. Personengruppe entwickelt wird, entstehen oft im späteren Verlauf der Entwicklungsphase Probleme, welche man bereits vorher durch sinnvollere Tests gefunden hätte.
+Dieses Problem entsteht dadruch, dass Entwickler meist bei Tests ähnliche Werte verwenden, wie sie bei der Entwicklung des Codes bedacht haben. 
+Eigenständige Tester jedoch betrachten Tests unvoreingenommenen und verwenden andere Werte, welche vom Entwickler möglicherweise nicht bedacht wurden.
+Zudem zwingt es die Entwickler des Back-Ends dazu verständlichen Code bzw. dazugehörige Kommentare zu schreiben, da sonst die Entwicklung der Tests negativ beeinflusst werden kann.\footnote{\url{https://wr.informatik.uni-hamburg.de/_media/teaching/wintersemester_2010_2011/siw-1011-ehmke-tests-ausarbeitung.pdf}}
+
+
+Dadurch, dass die Entwickler der Tests des Kinoreservierungsprogramms nur in moderatem Maß mit der Entwicklung des Back-Ends zu tun hatten, sind die Tests mit größtenteils unvoreingenommenen Ein- / Ausgabedaten entstanden.
+Dies hat den Vorteil, dass diverse Szenarien betrachtet wurden, die bei der Entwicklung nicht bedacht worden sind. 
+Somit konnten Fehler des Back-Ends frühzeitig erkannt und behoben werden. 
+
+
+\subsection{Eigene Tests}
+
+\subsubsection{Entitäten und Datentransferobjekte}
+
+Nachdem in dem Projekt \acsp{DTO} (siehe Kapitel \vref{sec:dto}) verwendet werden, um die Daten aus der Datenhaltungsschicht der Drei-Schichten-Architektur in die Logikschicht zu transferieren, müssen diese an geeigneten Stellen von \acsp{DTO} umgewandelt werden zu Entitäten bzw. von Entitäten zu \acsp{DTO}.
+Dies geschieht mittels der \texttt{EntityToToHelper}- bzw der \texttt{ToToEntityHelper}-Klasse. Diese Umwandlung wird für beide Klassen in eigenen Testklassen getestet.
+Beide Testklassen sind grundlegend gleich aufgebaut, da beide erst Test-Entitäten bzw. Test-\acsp{DTO} erstellen mit den exakt gleichen Attributen. 
+Danach wird verglichen, ob das durch die Umwandlung entsandene Objekt die exakt gleichen Attribute besitzt. Zu sehen ist dies im Anhang \vref{src:entitytotohelpertest} anhand des Employee-\acsp{DTO}.
+Im Code-Beispiel wird gezeigt, wie je ein \acs{DTO}-Objekt und ein Entität-Objekt erstellt wird und über \texttt{Set}-Methoden die exakt gleichen Werte übergeben werden. 
+In der nachfolgenden Test-Methode wird dann geprüft, ob bei der Eingabe von \texttt{NULL} kein Error entsteht, sondern \texttt{NULL} zurückgegeben wird. 
+Anschließend wird die Employee-Entität umgewandelt mit Hilfe der \texttt{EntityToToHelper}-Klasse und die jeweiligen Attribute überprüft, ob sie mit dem vorher erstellten Vergleichsobjekt übereinstimmen. 
+Dadurch werden alle \texttt{Getter}-Methoden getestet. Zudem werden durch das Erstellen der Objekte zu Beginn der Testklassen alle \texttt{Setter}-Methoden der Entitäts- und \acs{DTO}-Klassen mit genutzt und überprüft. 
+
+\subsubsection{JSON Konvertierung}
+
+Das Überführen der Daten in das \acs{JSON}-Format ist ein wichtiger und entscheidender Schritt für die nahtlose Zusammenarbeit zwischen Front- und Back-End.
+Deshalb wurde beim Testen der Konvertierungs-Klasse besonderen Wert auf Vollständigkeit gelegt. In der Testklasse wurde deshalb die Konvertierung für jeden einzelnen \acs{DTO}-Typen vorgenommen und überprüft.
+Dies ist zwar nicht direkt notwendig, da die Klasse für jeden \acs{DTO}-Typen sich gleich verhält, aber erhöht jedoch die Sicherheit, dass keine unbemerkte Fehler bei diesem Schritt entstehen, ungemein. 
+
+
+\subsubsection{Eigene Werkzeuge}
+
+Neben der \acs{JSON} Konvertierung wurden weitere Werkzeuge entworfen, um diverse Konvertierungen zu übernehmen.
+Diese Werkzeuge befinden sich in der \texttt{Utils}-Klasse und erstrecken sich über Zeitkonvertierungen von Date-Objekten zu Strings, Informationen zum Datum oder Tag aus Strings herauslesen oder verschiedene Überprüfungen, ob die Buchung eines Sitzplatzes erfolgreich ist.
+Zum Testen dieser Methoden reicht es aus vorher eigene Kalender-Objekte zu erstellen, diese umzuwandeln und mit vorher festgelegten Strings zu vergleichen.
+Methoden, zur Überprüfung, ob ein Sitz buchbar ist, wurden mit Hilfe von Sitz-Objekten und verschiedenen Zeitstempeln gebucht, so ist ein Sitz für eine aktuelle Vorstellung nicht, aber für zukünftige Vorstellungen buchbar.
+
+\subsubsection{Ressourcen}
+Die Ressourcen des Fachkonzepts, namlich \texttt{ReservationResource, ShowResource, MovieResource}, wurden auch komplett auf ihre Funktionalität getestet.
+Hierbei wurde darauf geachtet, dass jede Anfrage überprüft wird. Anhand der \texttt{ReservationResource} wird nachfolgend das Testen erklärt.
+
+Zu Beginn des Tests werden alle zur Reservierung benötigten \acs{DTO}-Objekte angelegt, also ein Kunde, ein Buchungsobjekt sowie eine zu buchende Show.
+Nachdem das Buchungsobjekt mit Hilfe der JSON Konvertierung umgewandelt wurde, wird die \texttt{postTickets}-Methode der Ressource aufgerufen und der entstandene String übergeben.
+Als Bestätigung, sofern das Buchen erfolgreich ist, wird ein Reservations-Objekt in Form eines \acs{JSON}-Strings übergeben. Dieser String wird wieder mit Hilfe der Konvertierungsklasse zurück umgewandelt in ein Reservations-Objekt.
+Danach wird aus dem entstanden Reservations-Objekt die Id entnommen, um mit dieser geprüft, ob die Reservierung im System vorhanden ist. Dies geschieht mittels der \texttt{getReservationById}-Methode und hat ein Reservations-Objekt als \acs{JSON}-String als Rückgabewert.
+Dieser \acs{JSON}-String wird erneut zu einem Reservierungs-Objekt umgewandelt, um das Objekt mit dem vorher aus der Buchung erhaltenen Objekt zu vergleichen. Damit wird sichergestellt, dass das Buchungs-Objekt auch alle Informationen enthält, die vorher abgegeben wurden.
+
+Danach wird über die vorher ausgelesene Id die Reservierung gelöscht. Dies geschieht über die \texttt{deleteReservationById}-Methode und gibt wie die anderen beiden Methoden das gelöschte Reservations-Objekt als \acs{JSON} zurück.
+Diese \acs{JSON} wird wie zuvor auch in ein Objekt umgewandelt und danach überprüft, sodass alle Informationen korrekt sind. 
+Zu Überprüfung, ob die Reservierung auch erfolgreich gelöscht wurde, wird am Ende des Tests überprüft, ob eine Reservierung unter der vorher erhaltenen Id vorhanden ist. 
+
+Zusätzlich wird in der \texttt{ReservationResource} das Blockieren und Deblockieren einzelner Sitze ausgeführt. Um dies zu Testen werden zwei Blockierungs-Objekte zu Beginn des Tests angelegt.
+Diese bestehen aus einer eigenen Id, einem Sitz, der blockiert werden soll, einem Sessiontoken und einer dazugehörige Show, in der der Sitz blockiert werden soll. 
+Im Test wird so ein Sitz blockiert und wieder freigegeben, bei beiden Operationen wird ein Block-Objekt im \acs{JSON}-Format übergeben. 
+Diese Objekte werden anschließend auf ihre Gleichheit überprüft, um sicherzustellen, dass der blockierte Sitz mit dem freigegebenen Sitz übereinstimmt.
+
+Die Tests der \texttt{ShowResource} und der \texttt{MovieResource} sind analog zum beschriebenen Test zu erklären. 
+Jedoch sind die beiden anderen Ressourcen auf das Auslesen von Daten spezialisiert und konnten somit leichter getestet werden. 
+Lediglich in der \texttt{MovieResource} befindet sich ein weiterer \texttt{Post} von Daten. 
+Dieser wurde ähnlich des \texttt{Posts} der Reservierung umgesetzt, mit dem Nachteil, dass ein löschen eines Filmes im aktuellen Entwicklungsstand nicht möglicht ist. Dies muss per Hand nach dem Test gelöscht werden, da sonst ein Testfilm in der Datenbank steht.
+
+\subsection{Codeabdeckung} 
+
+Für das Kinoreservierungsprogramm wurde bezüglich des Testens vorgeben, dass eine Codeabdeckung von 60\% erreicht werden soll.
+Jedoch beziehen diese 60\% sich nur auf den eigenen logischen Code. 
+
+Durch die erstellten Tests werden ~70,7\% des gesamten Codes der Datenhaltung und ~65,9\% des gesamten Codes des Fachkonzepts.das Objekt mit 
+Somit wurden die Vorgaben nicht nur erreicht, sondern überschritten.
+
+Durch die Tests der verschienden Ressourcen des Fachkonzepts werden die dazugehörigen Services mit getestet.
+In Kapitel \vref{sec:konzept} wird der Zusammenhang der Fachkonzeptschicht mit der Datenhaltungsschicht erläutert. 
+Dieser Zusammenhang trägt auch zur Testabdeckung bei, wird jedoch durch die verwendete \acs{IDE} nicht dargestellt.
+Somit kann jedoch nicht genau gesagt werden, um welchen Betrag sich die Testabdeckung des Datenhaltungs-Codes steigern würde.

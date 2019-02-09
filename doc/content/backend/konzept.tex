@@ -1,18 +1,19 @@
+% !TEX root =  master.tex
 \section{Konzept}
 \label{sec:konzept}
 In diesem Projekt soll die Drei-Schichten-Architektur eingesetzt werden.
-Sie dient dazu, die einzelnen Schichten zu separieren, sodass in zukünftigen Schritten ein Austausch der genutzten Benutzeroberfläche oder Datenbank möglich ist. 
+Sie dient dazu, die einzelnen Schichten (Datenhaltung, Fachkonzept und Benutzeroberfläche) zu separieren, sodass in zukünftigen Schritten ein Austausch der genutzten Benutzeroberfläche oder Datenbank möglich ist. 
 
 Wie zuvor in Kapitel \vref{sec:technologien} beschrieben, finden in diesem Projekt \acs{REST}ful Webservices Anwendung.
 Da Webservices in der Realität u.a. aus Performance-Gründen auf unterschiedlichen Servern ausgeführt werden, wurde dies hier ebenfalls umgesetzt.
-Zum Einsatz kommt eine System- und Data-Ressource.
-Wie in Abbildung \vref{fig:konzept_backend} dargestellt ist, greift die Benutzeroberfläche niemals direkt auf die Datenhaltungsschicht.
-Dies wird realisiert, indem das Front-End auf die bereitgestellten Webservices in der Fachkonzeptschicht zugreift.
-Diese wiederum greifen dann auf die Datenhaltungsschicht zu.
+Zum Einsatz kommt eine System- und Data-Webservice.
+Wie in Abbildung \vref{fig:konzept_backend} dargestellt ist, greift die Benutzeroberfläche niemals direkt auf die Datenhaltungsschicht zu.
+Dies wird realisiert, indem das Front-End auf die bereitgestellten Webservices von System in der Fachkonzeptschicht zugreift. 
+Diese wiederum greifen dann auf die Webservices der Datenhaltungsschicht zu.
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=0.5\textwidth]{img/backend/drei-schichten-architektur}
+	\includegraphics[width=0.7\textwidth]{img/backend/rest}
 	\captionsetup{format=hang}
 	\caption{Konzept des Back-Ends}
 	\small Quelle: eigene Darstellung mittels \url{https://draw.io/}
@@ -20,9 +21,11 @@ Diese wiederum greifen dann auf die Datenhaltungsschicht zu.
 	\end{figure}
 
 Die System-Ressource stellt dem Front-End mehrere Webservices zur Verfügung.
-Nachdem die Ressource über eine \acs{URI} \url{http://localhost:8080/cinema-system/show/1} aufgerufen wurde, ruft diese ihren eigenen Service \textit{getMovieById} auf, der den Webservice \url{http://localhost:8080/cinema-data/show/1} in der Data-Ressource aufruft, welche die gewünschten Daten in der Datenbank anfragt und in ein Transferobjekt umwandelt.
+Nachdem die Ressource über eine \acs{URI} \url{http://localhost:8080/cinema-system/show/1} aufgerufen wurde, ruft diese z.B. die Methode \textit{getMovieById} in ihrem eigenen Service auf.
+Diese ruft den Webservice \url{http://localhost:8080/cinema-data/show/1} in der Data-Ressource auf, welche die gewünschten Daten über die dort gleichnamige implementierte Methode im eigenen \textit{ShowService} aufruft. Diese Methode ruft anschließend das Show-\acs{DAO} auf, welches die Datensätze in der Datenbank anfragt. 
+Die erhaltenen Datensätze werden daraufhin in ein Transferobjekt umgewandelt und an die System-Ressource zurückgegeben.
 Eine Erläuterung warum dies notwendig ist, wird in Kapitel \vref{sec:dto} näher beschrieben. \\
-Jede Ressource hat wiederum mehrere Services implementiert, die die gewünschten Ergebnisse konsolidieren.
+Jede Ressource hat wiederum mehrere Services implementiert, die die gewünschten Anfragen bearbeitet und konsolidieren.
 
 Die Erläuterung wie dies seitens des Front-Ends umgesetzt ist, wird in Kapitel \vref{sec:anbindung_backend} näher erläutert.
  
@@ -35,3 +38,5 @@ Die aktuell verwendeten Ressourcen in diesem Projekt sind:
 	\item movie $\rightarrow$ hier können alle Informationen über eine Film abgerufen werden
 	\item employee $\rightarrow$ hier können alle Informationen über die Mitarbeiter des Kinos abgerufen werden
 \end{itemize} 
+
+Diese haben jeweils einen eigenen Service, der für die Kommunikation zwischen den Ressourcen, den Webservices und der Datenbank verantwortlich ist. 
