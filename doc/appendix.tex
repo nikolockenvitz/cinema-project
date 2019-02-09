@@ -64,3 +64,47 @@
 	\captionof{lstlisting}{Erstellen einer Movie-Entität aus einem Movie-\acs{DTO} mit Hilfe des eigen erstellten ToToEntityHelper}
 	\label{lst:ToToEntityHelper_movie}
 \end{minipage}
+
+\begin{minipage}{\linewidth}
+  \begin{lstlisting}[style=lstJava]
+  public class EntityToToHelper_Test
+  {
+    EntityToToHelper EtoToHelper = new EntityToToHelper();
+
+    @Before
+    public void initialize ( )
+    {
+      EmployeeTo testEmployeeTo = new EmployeeTo();
+      testEmployeeTo.setId(1);
+      testEmployeeTo.setDateofbirth(testDateString);
+      testEmployeeTo.setEmail("mail");
+      testEmployeeTo.setFirstname("firstname");
+      testEmployeeTo.setLastname("lastname");
+
+      Employee testEmployeeEntity = new Employee();
+      testEmployeeEntity.setId(1);
+      testEmployeeEntity.setDateofbirth(testDateDate);
+      testEmployeeEntity.setEmail("mail");
+      testEmployeeEntity.setFirstname("firstname");
+      testEmployeeEntity.setLastname("lastname");
+    }
+
+    @Test
+    public void testCreateEmployeeTo ( )
+    {
+      assertEquals(null, EtoToHelper.createEmployeeTo(null));
+
+      EmployeeTo compareEmployeeTo = EtoToHelper.createEmployeeTo(testEmployeeEntity);
+
+      assertThat(testEmployeeTo.getId(), equalTo(compareEmployeeTo.getId()));
+      assertThat(testEmployeeTo.getDateofbirth(), equalTo(compareEmployeeTo.getDateofbirth()));
+      assertThat(testEmployeeTo.getEmail(), equalTo(compareEmployeeTo.getEmail()));
+      assertThat(testEmployeeTo.getFirstname(), equalTo(compareEmployeeTo.getFirstname()));
+      assertThat(testEmployeeTo.getLastname(), equalTo(compareEmployeeTo.getLastname()));
+    }
+  }
+
+	\end{lstlisting}
+	\captionof{lstlisting}{Ausschnitt der Test-Klasse der EntityToToHelper-Klasse}
+  \label{src:entitytotohelpertest}
+\end{minipage}

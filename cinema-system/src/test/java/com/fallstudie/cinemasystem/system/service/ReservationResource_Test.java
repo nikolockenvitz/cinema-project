@@ -118,6 +118,7 @@ public class ReservationResource_Test
         String receivedAfterPost = null;
         String receivedAfterGet = null;
         String receivedAfterDelete = null;
+        String receivedGetAfterDelete = null;
 
         try
         {
@@ -126,12 +127,16 @@ public class ReservationResource_Test
 
             // check if reservation created is same
             long testReservationId = receivedReservationToFromPost.getId();
-            receivedAfterGet = testReservationResource.getReservationById(String.valueOf(testReservationId)).getEntity().toString();
+            String testReservationIdString = String.valueOf(testReservationId);
+            receivedAfterGet = testReservationResource.getReservationById(testReservationIdString).getEntity().toString();
             receivedReservationToFromGet = (ReservationTo) JSONConverter.fromJSON(receivedAfterGet, ReservationTo.class);
 
             // delete reservation again
-            receivedAfterDelete = testReservationResource.deleteReservationById(String.valueOf(testReservationId)).getEntity().toString();
+            receivedAfterDelete = testReservationResource.deleteReservationById(testReservationIdString).getEntity().toString();
             receivedReservationToFromDelete = (ReservationTo) JSONConverter.fromJSON(receivedAfterDelete, ReservationTo.class);
+
+            // after delte
+            receivedGetAfterDelete = testReservationResource.getReservationById(testReservationIdString).getEntity().toString();
         } catch (Exception e)
         {
             e.printStackTrace();
@@ -144,6 +149,8 @@ public class ReservationResource_Test
         assertThat(receivedReservationToFromGet.getId(), equalTo(receivedReservationToFromDelete.getId()));
         assertThat(receivedReservationToFromGet.getCustomer(), equalTo(receivedReservationToFromDelete.getCustomer()));
         assertThat(receivedReservationToFromGet.getTickets(), equalTo(receivedReservationToFromDelete.getTickets()));
+
+        assertThat("null", equalTo(receivedGetAfterDelete));
     }
 
     @Test
