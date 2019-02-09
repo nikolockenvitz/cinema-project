@@ -1,11 +1,21 @@
+% !TEX root =  master.tex
 \section{\acf{DTO}}
 \label{sec:dto}
 Das \ac{DTO} ist ein Entwurfsmuster aus dem Bereich der Softwareentwicklung.
-Sie werden genutzt, um mehrere Objekte in einem Programmaufruf zusammenzufassen, weshalb sie Anwendung in verteilten Systemen finden.
+Es wird genutzt, um mehrere Objekte in einem Programmaufruf zusammenzufassen, weshalb es Anwendung in verteilten Systemen findet.
 
 Ein \ac{DTO} entspricht eigentlich dem \ac{POJO}.
 Es hat nahezu die selben Attribute, kann aber nach Belieben verändert werden.
 So kann man sich mittels des \ac{DTO} nur einige Attribute anzeigen lassen und die Entität bleibt unberührt.
 
-Die \acsp{DTO} werden in diesem Projekt dazu genutzt, um die Daten aus der Datenhaltungsschicht der Drei-Schichten-Architektur in die Logikschicht zu transferieren.
+Die \acsp{DTO} werden in diesem Projekt dazu genutzt, um die Daten aus der Datenhaltungsschicht der Drei-Schichten-Architektur in die Logik- bzw. Fachkonzeptschicht zu transferieren. Denn eine Entität verlässt niemals die Datenhaltungsschicht.
 Von dort aus werden sie an die Benutzerschicht weitergeleitet.
+
+\subsection{Umwandlung der Entität zu und von einem \acf{DTO}}
+\label{ssec:umwandlung_dto}
+Wie bereits beschrieben kommen in diesem Projekt \acp{DTO} zum Einsatz. Um eine Umwandlung zu realisieren wurden zwei Java-Klassen implementiert: \textit{EntityToToHelper} und \textit{ToToEntityHelper}. \\
+
+Die Klasse \textit{EntityToToHelper} ist dafür verantwortlich, die zuvor über das \acs{DAO} angefragte Entität mit all ihren Attributen in ein \acs{DTO} umzuwandeln, sodass es transferierbar ist. \\
+Ein Beispiel für die Umwandlung in ein \acs{DTO} befindet sich im Anhang \vref{lst:EntityToToHelper_movie}. \\
+Die Klasse \textit{ToToEntityHelper} ist dafür verantwortlich die zuvor über das \acs{JSON} übermittelte \acs{DTO} mit all seinen Attributen in ein Entität umzuwandeln, sodass es persistier-, änder- oder löschbar ist.\\ 
+Ein Beispiel für die Umwandlung in eine Entität befindet sich im Anhang \vref{lst:ToToEntityHelper_movie}.
