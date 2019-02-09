@@ -61,7 +61,7 @@ Danach wird über die vorher ausgelesene Id die Reservierung gelöscht. Dies ges
 Diese \acs{JSON} wird wie zuvor auch in ein Objekt umgewandelt und danach überprüft, sodass alle Informationen korrekt sind. 
 Zu Überprüfung, ob die Reservierung auch erfolgreich gelöscht wurde, wird am Ende des Tests überprüft, ob eine Reservierung unter der vorher erhaltenen Id vorhanden ist. 
 
-Zusätzlich wird in der \testtt{ReservationResource} das Blockieren und Deblockieren einzelner Sitze ausgeführt. Um dies zu Testen werden zwei Blockierungs-Objekte zu Beginn des Tests angelegt.
+Zusätzlich wird in der \texttt{ReservationResource} das Blockieren und Deblockieren einzelner Sitze ausgeführt. Um dies zu Testen werden zwei Blockierungs-Objekte zu Beginn des Tests angelegt.
 Diese bestehen aus einer eigenen Id, einem Sitz, der blockiert werden soll, einem Sessiontoken und einer dazugehörige Show, in der der Sitz blockiert werden soll. 
 Im Test wird so ein Sitz blockiert und wieder freigegeben, bei beiden Operationen wird ein Block-Objekt im \acs{JSON}-Format übergeben. 
 Diese Objekte werden anschließend auf ihre Gleichheit überprüft, um sicherzustellen, dass der blockierte Sitz mit dem freigegebenen Sitz übereinstimmt.
@@ -69,7 +69,7 @@ Diese Objekte werden anschließend auf ihre Gleichheit überprüft, um sicherzus
 Die Tests der \texttt{ShowResource} und der \texttt{MovieResource} sind analog zum beschriebenen Test zu erklären. 
 Jedoch sind die beiden anderen Ressourcen auf das Auslesen von Daten spezialisiert und konnten somit leichter getestet werden. 
 Lediglich in der \texttt{MovieResource} befindet sich ein weiterer \texttt{Post} von Daten. 
-Dieser wurde ähnlich des \testtt{Posts} der Reservierung umgesetzt, mit dem Nachteil, dass ein löschen eines Filmes im aktuellen Entwicklungsstand nicht möglicht ist. Dies muss per Hand nach dem Test gelöscht werden, da sonst ein Testfilm in der Datenbank steht.
+Dieser wurde ähnlich des \texttt{Posts} der Reservierung umgesetzt, mit dem Nachteil, dass ein löschen eines Filmes im aktuellen Entwicklungsstand nicht möglicht ist. Dies muss per Hand nach dem Test gelöscht werden, da sonst ein Testfilm in der Datenbank steht.
 
 \subsection{Codeabdeckung} 
 
