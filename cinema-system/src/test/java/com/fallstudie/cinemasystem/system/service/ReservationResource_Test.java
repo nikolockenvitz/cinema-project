@@ -126,7 +126,7 @@ public class ReservationResource_Test
 
             // check if reservation created is same
             long testReservationId = receivedReservationToFromPost.getId();
-            receivedAfterGet = testReservationResource.getMovieById(String.valueOf(testReservationId)).getEntity().toString();
+            receivedAfterGet = testReservationResource.getReservationById(String.valueOf(testReservationId)).getEntity().toString();
             receivedReservationToFromGet = (ReservationTo) JSONConverter.fromJSON(receivedAfterGet, ReservationTo.class);
 
             // delete reservation again
@@ -138,7 +138,12 @@ public class ReservationResource_Test
         }
 
         assertThat(receivedReservationToFromPost.getId(), equalTo(receivedReservationToFromGet.getId()));
+        assertThat(receivedReservationToFromPost.getCustomer(), equalTo(receivedReservationToFromGet.getCustomer()));
+        assertThat(receivedReservationToFromPost.getTickets(), equalTo(receivedReservationToFromGet.getTickets()));
+
         assertThat(receivedReservationToFromGet.getId(), equalTo(receivedReservationToFromDelete.getId()));
+        assertThat(receivedReservationToFromGet.getCustomer(), equalTo(receivedReservationToFromDelete.getCustomer()));
+        assertThat(receivedReservationToFromGet.getTickets(), equalTo(receivedReservationToFromDelete.getTickets()));
     }
 
     @Test
