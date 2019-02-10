@@ -15,3 +15,24 @@ Ebenfalls hat ein Tester auch keine leichte Aufgabe, da er sich in den Quellcode
 Damit ist es aber noch nicht getan, da der Tester nun den Fehler weitergeben muss.
 Das absichtliche Suchen nach Fehlern und dem Drang nach Perfektionismus durchzusetzen ist zwar notwendig aber kann schnell zu zwischenmenschlichen Konflikten führen. 
 Deshalb ist sowohl auf Tester- und Programmierseite Vorsicht und auch Verständnis für die Aufgabe des Gegenparts geboten.
+
+\subsection{Äquivalenzklassen}
+Da selbst bei einem einfachen Test die möglichen Testfälle unmögliche viele werden können, kann durch die Äquivalenzklassen Abhilfe geschaffen werden. 
+Diese Äquivalenzklassen verhalten sich gleich wie die getesten Eingabedaten, daher kann man davon aus gehen, dass diese Testfälle ebenfalls abgedeckt wurden. 
+In diesem Sinne reicht es die Grenzfälle zu testen und bei allen anderen Möglichkeiten von einer äquivalente Verhaltensweise auszugehen.\footnote{\url{https://wr.informatik.uni-hamburg.de/_media/teaching/wintersemester_2010_2011/siw-1011-ehmke-tests-ausarbeitung.pdf}}  
+Um dies mit einem Beispiel zu erläutern könnte man die Subtraktion von zwei Zahlen heranziehen. 
+Wenn also die Subtraktion von Zahlen in einem Testfall funktioniert hat, dann kann man davon ausgehen, dass die anderen möglichen Testfälle mit Eingabedaten des gleichen Datenformates und Datentypes auch ein positives Ergebnis zurückgeben werden.
+
+\subsection{Whitebox-Test und Blackbox-Test}
+Bei beiden Testformen handelt es sich um eine Art den Quellcode auf seine Struktur, Design und Implementation zu testen. 
+In einem Blackbox-Test hingegen ist der zu testende Code nicht bekannt und dies ist auch nicht erwünscht. 
+Es handelt sich um eine einfache und billige Art und Weise das System zu testen. 
+Der Programmierer erfordert keine Kenntnisse außer die Anforderungen an das System. Die möglichen Testmethoden sind Akzeptanz- und System-Tests, also Tests ob die Anforderungen des Benutzers und die Anforderungen an das System erfüllt wurden.  
+Als Beispiel kann man sich einen Tester für ein Kinobuchungssystem vorstellen, der als Testfall das Buchen von Eintrittskarten heranzieht. 
+Er besitzt weder Kenntnisse über das System, noch hat er eine konkrete Ahnung, welche Brennpunkte in dem System existieren und wird diese auch nicht explizit testen. 
+
+Im Gegensatz dazu gibt es noch die Whitebox-Test, dabei handelt es sich um das Gegenteil eines Blackbox-Test.
+Diese Methode ist im Gegensatz zu einem Blackbox-Test teurer und aufwendiger, aber führt zu einer genaueren Testabdeckung.
+Der Tester hat detaillierte Kenntnisse über das System und hat Einblick in alle Ressourcen die den Quellcode betreffen.  
+Die Testmethoden eines Whitebox-Testers sind Unit-Tests und Integrationstests, also Test auf die Verwendung von Codeabschnitten und einzelnen Codezeilen.
+Das Beispiel für einen solchen Test wäre ein Tester, der jede Zeile eines Kinobuchungssystems auf Herz und Nieren testet. 
