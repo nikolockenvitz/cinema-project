@@ -50,7 +50,7 @@ Die Ressourcen des Fachkonzepts, namentlich \texttt{ReservationResource, ShowRes
 Hierbei wurde darauf geachtet, dass jede Anfrage überprüft wird. Anhand der \texttt{ReservationResource} wird nachfolgend das Testen erklärt.
 
 Zu Beginn des Tests werden alle zur Reservierung benötigten \acs{DTO}-Objekte angelegt, also ein Kunde, ein Buchungsobjekt sowie eine zu buchende Show.
-Nachdem das Buchungsobjekt mit Hilfe der JSON Konvertierung umgewandelt wurde, wird die \texttt{postTickets}-Methode der Ressource aufgerufen und der entstandene String übergeben.
+Nachdem das Buchungsobjekt mit Hilfe der \acs{JSON} Konvertierung umgewandelt wurde, wird die \texttt{postTickets}-Methode der Ressource aufgerufen und der entstandene String übergeben.
 Als Bestätigung, sofern das Buchen erfolgreich ist, wird ein Reservations-Objekt in Form eines \acs{JSON}-Strings übergeben. Dieser String wird wieder mit Hilfe der Konvertierungsklasse zurück umgewandelt in ein Reservations-Objekt.
 Danach wird aus dem entstanden Reservations-Objekt die Id entnommen, um mit dieser geprüft, ob die Reservierung im System vorhanden ist. Dies geschieht mittels der \texttt{getReservationById}-Methode und hat ein Reservations-Objekt als \acs{JSON}-String als Rückgabewert.
 Dieser \acs{JSON}-String wird erneut zu einem Reservierungs-Objekt umgewandelt, um das Objekt mit dem vorher aus der Buchung erhaltenen Objekt zu vergleichen. Damit wird sichergestellt, dass das Buchungs-Objekt auch alle Informationen enthält, die vorher abgegeben wurden.
@@ -75,7 +75,7 @@ Dies muss per Hand nach dem Test gelöscht werden, da sonst ein Test-Film in der
 Für das Kinoreservierungsprogramm wurde bezüglich des Testens vorgeben, dass eine Codeabdeckung von 60\% erreicht werden soll.
 Jedoch beziehen diese 60\% sich nur auf den eigenen logischen Code.
 
-Durch die erstellten Tests werden ~70,7\% des gesamten Codes der Datenhaltung und ~65,9\% des gesamten Codes des Fachkonzepts abgedeckt.
+Durch die erstellten Tests werden $\sim$70,7\% des gesamten Codes der Datenhaltung und $\sim$65,9\% des gesamten Codes des Fachkonzepts abgedeckt.
 Somit wurden die Vorgaben nicht nur erreicht, sondern überschritten.
 
 Durch die Tests der verschiedenen Ressourcen des Fachkonzepts werden die dazugehörigen Services mit getestet.
