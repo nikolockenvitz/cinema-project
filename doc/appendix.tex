@@ -102,6 +102,80 @@ Die folgenden Screenshots sind alle von der Seite eines Filmes, wo sich weitere 
 \end{minipage}
 
 \begin{minipage}{\linewidth}
+	\begin{lstlisting}[style=lstJava]
+	private boolean checkIfSeatsAreBookable ( List<SeatTo> seatsToProof, List<TicketTo> bookedTicketTos, List<BlockTo> blockTos, String sessiontoken )
+	{
+	boolean bookable = true;
+	
+	for ( SeatTo s : seatsToProof )
+	{
+	if ( bookable )
+	{
+	for ( TicketTo t : bookedTicketTos )
+	{
+	if ( s.getId() == t.getSeat().getId() )
+	{
+	bookable = false;
+	s.setOccupied(true);
+	break;
+	} else
+	{
+	s.setOccupied(false);
+	}
+	} // end for ticket
+	// verification for blocked elements
+	for ( BlockTo b : blockTos )
+	{
+	if ( s.getId() == b.getSeat().getId() && !(b.getSessiontoken().equals(sessiontoken)) )
+	{
+	bookable = false;
+	s.setBlocked(true);
+	break;
+	} else
+	{
+	s.setBlocked(false);
+	}
+	} // end for block
+	}	// end if bookable
+	}	// end for seatTo
+	return bookable;
+	}
+	\end{lstlisting}
+	\captionof{lstlisting}{Überprüfung, ob eine Reservierung möglich ist.}
+	\label{lst:Angang_Prüfung_ob_Reservierung_möglich}
+\end{minipage}
+
+\begin{minipage}{\linewidth}
+\begin{lstlisting}[style=lstJava]
+private ReservationTo createReservationForSeats ( List<SeatTo> seatTos, ShowTo showTo )
+{
+	List<TicketTo> toBook = new ArrayList<>();
+	ReservationTo createdReservationTo = new ReservationTo();
+		
+	for ( SeatTo seatTo : seatTos )
+	{
+		seatTo.setOccupied(true);
+	
+		TicketTo ticketTo = new TicketTo();
+		ticketTo.setSeat(seatTo);
+		ticketTo.setShow(showTo);
+		ticketTo.setReservation(createdReservationTo);
+		if ( seatTo.isReducedPrice() )
+		{
+			ticketTo.setReducedPrice(true);
+		}
+		toBook.add(ticketTo);
+	}
+	createdReservationTo.setDateOfReservation(Utils.convertDateToString(new Date()));
+	createdReservationTo.setTickets(toBook);
+	return createdReservationTo;
+}
+	\end{lstlisting}
+	\captionof{lstlisting}{Erstellen eines Reservierungs-\acs{DTO}}
+	\label{lst:Anhang_Erstellen_Reservierung}
+\end{minipage}
+
+\begin{minipage}{\linewidth}
   \begin{lstlisting}[style=lstJava]
   public class EntityToToHelper_Test
   {
