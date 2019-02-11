@@ -20,7 +20,7 @@ Der Fall, dass ein Platz durch einen anderen Benutzer reserviert wird, ist mit g
 Wählt ein Benutzer im Saalplan ein paar Plätze aus, so wird er vermutlich in den nächsten paar Minuten mit der Bezahlung fortfahren und die Plätze für sich reservieren.
 In dem Moment, wo ein Benutzer einen Sitzplatz also nur auswählt, kann diese Information bereits in der Datenbank gespeichert werden.
 Der Sitzplatz wird für diesen Benutzer zwar nicht reserviert, aber für einen kurzen Zeitraum vorgemerkt.
-Will nun jemand einen Platz auf dem Saalplan auswählen, teilt er dies über die API dem Back-End mit.
+Will nun jemand einen Platz auf dem Saalplan auswählen, teilt er dies über die \acs{API} dem Back-End mit.
 Nun gibt es mehrere mögliche Ergebnisse:
 \begin{enumerate}
 \item Der ausgewählte Sitzplatz ist bereits reserviert.
@@ -35,4 +35,4 @@ Die zu der Reservierung zugehörigen Operationen auf der Datenbank müssen als T
 
 Alle Sicherheitsprüfungen müssen im Back-End ausgeführt werden.
 Natürlich können auch einzelne Prüfungen im Front-End implementiert werden, diese helfen allerdings nur einem normalen Benutzer den Vorgang zu erleichtern.
-Eine Absicherung bieten derartige Prüfung im Front-End nicht, da der clientseitig ausgeführte Quellcode logischerweise vom Client verändert werden kann und jeder Angreifer eine manipulierte Anfrage mit selbst gewählten Parametern an die API schicken kann.
+Eine Absicherung bieten derartige Prüfung im Front-End nicht, da der clientseitig ausgeführte Quellcode logischerweise vom Client verändert werden kann und jeder Angreifer eine manipulierte Anfrage mit selbst gewählten Parametern an die \acs{API} schicken kann.

@@ -5,7 +5,7 @@
 Nachdem die Daten wie in Quelltext \ref{lst:load_movie_and_shows} geladen wurden, muss nun das \acs{DOM} entsprechend verändert werden.
 Die statische \acs{HTML}-Seite ist dabei auf das Wesentliche reduziert und enthält neben der Menüleiste und der Fußzeile folgenden Teil:
 
-\begin{lstlisting}[style=lstHTML]
+\begin{lstlisting}[style=lstHTML, caption={\acs{HTML}-Seite für Filmdetails}, label={lst:html_movie_and_shows}]
 <div class="container" id="movie">
 	<!-- Informationen zum Film werden hier eingefügt -->
 	<table class="table" id="shows">
@@ -18,14 +18,12 @@ Die statische \acs{HTML}-Seite ist dabei auf das Wesentliche reduziert und enth�
 	<!-- Bewertungen werden hier eingefügt -->
 </div>
 \end{lstlisting}
-\captionof{lstlisting}{\acs{HTML}-Seite für Filmdetails}
-\label{lst:html_movie_and_shows}
 
 An den gekennzeichneten Stellen wird später der Inhalt, der aus dem Back-End geladen wurde, eingefügt.
 Dafür gibt es kleinere Vorlagen mit Platzhaltern.
 In Quelltext \ref{lst:html_template_movie_detail} sieht man die Vorlage für die Filmdetails.
 
-\begin{lstlisting}[style=lstHTML,escapeinside=``]
+\begin{lstlisting}[style=lstHTML, caption={\acs{HTML}-Vorlage mit Platzhaltern für Filmdetails}, label={lst:html_template_movie_detail}]
 <div class="row featurette">
 	<div class="col-12 col-sm-4">
 		<img class="featurette-image img-fluid mx-auto" src="./img/`\textcolor{red}{\{movieID\}}`.jpg" alt="`\textcolor{red}{\{movieTitle\}}`" width="100%">
@@ -43,13 +41,11 @@ In Quelltext \ref{lst:html_template_movie_detail} sieht man die Vorlage für die
 	</div>
 </div>
 \end{lstlisting}
-\captionof{lstlisting}{\acs{HTML}-Vorlage mit Platzhaltern für Filmdetails}
-\label{lst:html_template_movie_detail}
 
 In JavaScript wird diese Vorlage dann mit Inhalten befüllt.
 Nachdem die Daten in der Funktion \textit{displayMovieAndShows()} ein wenig verarbeitet wurden, können sie mit JavaScript bzw. jQuery in die Vorlage und danach ins \acs{DOM} eingefügt werden.
 
-\begin{lstlisting}[language=JavaScript]
+\begin{lstlisting}[language=JavaScript, caption={Einfügen der Filmdetails ins \acs{DOM} mit jQuery}, label={lst:js_write_movie_detail_to_dom}]
 $("#movie").prepend(templateMovieDetail
 	.replace("{movieID}", movie.id)
 	.replace(/\{movieTitle\}/g, movie.name)
@@ -61,14 +57,12 @@ $("#movie").prepend(templateMovieDetail
 	.replace("{movieDescription}", movie.description)
 );
 \end{lstlisting}
-\captionof{lstlisting}{Einfügen der Filmdetails ins \acs{DOM} mit jQuery}
-\label{lst:js_write_movie_detail_to_dom}
 
 Genauso wie die Filmdetails werden auch die Vorstellungen und die Bewertungen ins \acs{DOM} eingefügt.
 
 Zusammenfassend heißt das, dass zuerst einmal die statische und weitestgehend leere \acs{HTML}-Seite geladen wird.
-Diese wiederum importiert eine JavaScript-Datei, welche beim Laden der Seite einen Aufruf an das Back-End schickt.
-Sobald der Server antwortet, wird die Antwort entsprechend verarbeitet und in JavaScript in kleinere Vorlagen eingefügt.
+Diese wiederum importiert eine JavaScript-Datei, welche beim Laden der Seite eine Anfrage an das Back-End stellt.
+Sobald der Server antwortet, wird die Antwort entsprechend verarbeitet und in JavaScript in kleinere Vorlagen eingesetzt.
 Die mit Inhalten befüllten Vorlagen werden dann mit jQuery ins \acs{DOM} eingefügt, sodass die \acs{HTML}-Seite die gewünschten Inhalte darstellt.
 Dies passiert im Idealfall so schnell, dass es für den Benutzer wirkt, als hätte er die Seite \enquote{ganz normal} geladen.
 

@@ -88,7 +88,7 @@ function createSeats () {
 	$(function () {
 		$('.seat').on('click', function () {
 			var seatId = $(this).attr("id");
-			if($(this).hasClass("selected")) {
+			if (seatId in selection) {
 				removeSeatFromSelection(seatId, this);
 			}
 			else {
@@ -167,6 +167,7 @@ function addSeatToSelection (seatId, seatObj) {
 function processBlockingResult (data, seatId, seatObj) {
 	if(data != null) {
 		var seatIdResponse = data.seat.id;
+		seats[seatId].isBlocked = false;
 		$(seatObj).addClass("selected available");
 		$(seatObj).removeClass("occupied");
 		selection[seatIdResponse] = true;

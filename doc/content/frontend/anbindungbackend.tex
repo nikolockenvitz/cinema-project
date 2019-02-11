@@ -8,7 +8,7 @@ Beim Laden der Startseite wird die Funktion \textit{loadMovies()} aufgerufen.
 Diese wiederum ist nur für die Zuordnung von einem Pfad bzw. einer \acs{URI} zu einer Funktion, die das Ergebnis verarbeitet, da.
 Sie würde auch \acs{URL}-Parameter auslesen und in den Aufruf mit einarbeiten, dies ist aber auf der Startseite noch nicht notwendig.
 
-\begin{lstlisting}[language=JavaScript]
+\begin{lstlisting}[language=JavaScript, caption={\acs{AJAX}-Aufruf, um alle Filme zu erhalten}, label={lst:ajax_all_movies}]
 const URL_SERVER = "http://localhost:8080/cinema-system";
 const PATH_ALL_MOVIES = "/movie/getAllMovies";
 
@@ -28,8 +28,6 @@ function displayMovies (movies) {
 	...
 }
 \end{lstlisting}
-\captionof{lstlisting}{\acs{AJAX}-Aufruf, um alle Filme zu erhalten}
-\label{lst:ajax_all_movies}
 
 Der \acs{AJAX}-Aufruf wird asynchron durchgeführt.
 Das Ergebnis wird, wenn es beim Client angekommen ist, an die Funktion \textit{displayMovies()} weitergegeben, die nun dafür zuständig ist, die Daten entsprechend anzuzeigen.
@@ -39,7 +37,7 @@ Als Parameter erhält sie den Pfad, der vom Server nachgefragt werden soll, sowi
 
 Wenn der Aufruf an das Back-End noch einen oder mehrere Parameter enthält, wie zum Beispiel beim Laden eines einzelnen Films mit seinen Details und Vorstellungen, so wird dieser Parameter in der zugehörigen \textit{load}-Funktion hinzugefügt.
 
-\begin{lstlisting}[language=JavaScript]
+\begin{lstlisting}[language=JavaScript, caption={Laden der Filmdetails nach Auslesen der \acs{URL}-Parameter}, label={lst:load_movie_and_shows}]
 const PATH_MOVIE = "/movie/{movieID}";
 
 function loadMovieAndShows () {
@@ -56,8 +54,6 @@ function displayMovieAndShows (movie) {
 	...
 }
 \end{lstlisting}
-\captionof{lstlisting}{Laden der Filmdetails nach Auslesen der \acs{URL}-Parameter}
-\label{lst:load_movie_and_shows}
 
 Wie in Quelltext \vref{lst:load_movie_and_shows} erkennbar ist, wird der Platzhalter \textit{movieID} einfach durch den aus der \acs{URL} ausgelesenen Wert ersetzt.
 Danach wird genauso wie in Quelltext \vref{lst:ajax_all_movies} die Anfrage an das Back-End gestellt und das Ergebnis in einer weiteren Funktion verarbeitet und angezeigt.

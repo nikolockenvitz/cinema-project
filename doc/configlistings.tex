@@ -18,6 +18,9 @@
 \definecolor{jsBackground}{RGB}{250,250,255}
 \definecolor{jsString}    {RGB}{ 16,160, 60}
 
+\definecolor{cssKeyword}{RGB}{ 10,100,160}
+\definecolor{cssClass}  {RGB}{200,120, 10}
+
 % general style
 \lstset{
 	basicstyle=\ttfamily\footnotesize,
@@ -30,6 +33,7 @@
 	showstringspaces=false,
 	breaklines=true,
 	tabsize=2,
+	captionpos=b,
 	literate=
 	{Ö}{{\"O}}1
 	{Ä}{{\"A}}1
@@ -94,8 +98,9 @@
 	stringstyle=\color{jsString},
 	commentstyle=\color{gray},
 	morestring=[b]",
+	morecomment=[l][\color{gray}]{//},
 	morecomment=[s][\color{gray}]{/*}{*/},
-	morekeywords={break,case,const,continue,else,false,for,function,if,in,new,null,switch,true,var,while}
+	morekeywords={break,case,const,continue,else,false,for,function,if,in,new,null,switch,this,true,var,while}
 }
 
 % HTML
@@ -105,4 +110,16 @@
 	keywordstyle=\color{blue}\bfseries,
 	commentstyle=\color{gray}\itshape,
 %	stringstyle=\color{jsString}
+	escapeinside=``
+}
+
+% CSS
+\lstdefinestyle{lstCSS}
+{
+	keywordstyle=\color{cssKeyword}\bfseries,
+	commentstyle=\color{gray}\itshape,
+	morecomment=[s][\color{gray}]{/*}{*/},
+%	morecomment=[s][\color{cssClass}]{.}{ \{},
+	alsoletter=-,
+	morekeywords={border,background-color}
 }
