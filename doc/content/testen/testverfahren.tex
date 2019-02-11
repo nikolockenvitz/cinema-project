@@ -24,7 +24,16 @@ Um dies mit einem Beispiel zu erläutern könnte man die Subtraktion von zwei Za
 Wenn also die Subtraktion von Zahlen in einem Testfall funktioniert hat, dann kann man davon ausgehen, dass die anderen möglichen Testfälle mit Eingabedaten des gleichen Datenformates und Datentypes auch ein positives Ergebnis zurückgeben werden.
 
 \subsection{Testebenen}
+Das Testen von Quellcode kann in vielen Weisen passieren. Einerseits kann der Quellcode an sich getestet und damit jede einzelne Komponente einer Anwendung überprüft werden, auch Komponententests bezeichnet.
+Diese Ebene kann durch ein besonderes Designparadigma auch zur leitenden Kraft der Softwareentwicklung werden, dies ist die testgetriebene Softwareentwicklung.
+Dabei wird meistens Nutzen aus den Vorteile einer agilen Softwareentwicklung gezogen um am Ende ein Konglomerat von positiven Effekten zu erhalten.
+Diese stellen sich durch höhere Qualität, niedrigere Wartungsarbeiten, saubere Struktur und effektiver Vermeidung von Redundanzen ein.\footnote{\url{https://de.ryte.com/wiki/Test_Driven_Development}}
 
+Auf der nächsten Stufe folgen dann die Integrationstests, diese sind dazu da um Redundanzen innerhalb des Projektes aufzudecken. Ebenfalls können uneindeutige Spezifikationen der Klassen bemerkt und ausgemerzt werden.
+
+Danach kommen noch die System- und Abnahmetests, diese sind beide durch einen gemeinsamen Nenner definiert. Beiderseits wird die Prüfung nach der Zufriedenstellung der Systemanforderungen realisiert.
+In Detail handelt es sich bei den Systemtests um diverse Performance-, Installations-, Wiederinbetriebnahme-, Stress- und Usability-Test.
+Auf der anderen Seite wird bei einem Abnahmetest geprüft ob die Anforderungen eines Benutzers erfüllt werden und die Funktionalität, User Experience und Dokumentation in einer angemessenen Art und Weise erfüllt wurden.\footnote{\url{https://wr.informatik.uni-hamburg.de/_media/teaching/wintersemester_2010_2011/siw-1011-ehmke-tests-ausarbeitung.pdf}} 
 
 \subsection{Whitebox-Test und Blackbox-Test}
 Bei beiden Testformen handelt es sich um eine Art den Quellcode auf seine Struktur, Design und Implementation zu testen. 
