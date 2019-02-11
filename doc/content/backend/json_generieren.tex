@@ -7,11 +7,12 @@ Alle Klassen sind dementsprechend als Objekte hinterlegt.
 Durch die Implementierung eines sog. Object-Mappers wie dem Jackson-Mapper\footnote{\url{https://github.com/FasterXML/jackson}}
 ist es möglich die zuvor erstellten Objekte in eine \acs{JSON}-Datei zu überführen.
 Er erkennt automatisch, ob es sich um ein Objekt, ein Attribut oder eine Liste handelt.
-Der Programmierer ruft lediglich die Methode writeValueAsString(Object-to-JSON) auf. \\
-Das Auslesen eines \acs{JSON}-Strings wird mittels der Methode readValue(json, javaClass) ausgeführt.
+Der Entwickler ruft lediglich die Methode \jinline |writeValueAsString(Object-to-JSON)|, die ein Objekt als Übergabeparameter erwartet auf. \\
+Das Auslesen eines \acs{JSON}-Strings wird mittels der Methode \jinline |readValue(json, javaClass)| ausgeführt. 
+Diese erwartet als Übergabeparameter ein \acs{JSON}, sowie die Java-Klasse des Objekts, in es gewandelt werden soll z.B. \jinline |Show.class|. 
 Der Vorteil dieser Methode ist, dass hier die Java-Klasse angegeben wird, also das Objekt, in das der \acs{JSON}-String konvertiert werden soll.
 
-Der Jackson-Mapper wird in diesem Projekt über eine Dependency zu einem Maven-Projekt hinzugefügt und kann anschließend verwendet werden (siehe Quelltext \ref{lst:Einbindung_ObjektMapper}) %TODO VARIOREF
+Der Jackson-Mapper wird in diesem Projekt über eine Dependency zu einem Maven-Projekt hinzugefügt und kann anschließend verwendet werden (siehe Quelltext \ref{lst:Einbindung_ObjektMapper}) %TODO varioref
 
 \begin{minipage}{\linewidth}
 \begin{lstlisting}[language=XML]
