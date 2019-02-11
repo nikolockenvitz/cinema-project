@@ -15,10 +15,11 @@ Eine weitere Möglichkeit besteht darin, dass man in der pom.xml definieren kann
 Hier kann er z.B. zwischen einer pom.xml, welche die Daten in den anderen Java-Projekten bereitstellt und einer WAR-Datei wählen.
 Letztere wird verwendet, um die Applikation auf einem in diesem Projekt verwendeten Tomcat-Server laufen zu lassen.
 
-Als Struktur für das Back-End dieses Projekts wurde ein Parent-, eine Shared-, ein System- und ein Data-Maven-Projekt angelegt.
+Als Struktur für dieses Projekts wurde ein Parent-, eine Shared-, ein System- und ein Data-Maven-Projekt angelegt.
 Diese fungieren gleichzeitig auch als Java-Klassen.
 In dem Parent-Projekt wird u.a. deklariert, welche Dependencies für das Projekt genutzt werden soll und mit welcher Version Maven verwaltet werden soll.
 Die Shared-Klasse dient dazu, die von der Parent-Klasse zur Verfügung gestellten JAR-Dateien und gemeinsam genutzten Java-Klassen in den Hauptklassen Data und System bereitzustellen.
+Sie beinhaltet u.a. die verwendeten \acp{DTO}, das Exception-Handling und verschiedene Methoden für Konvertierungen und Überprüfungen. 
 
 In den Hauptklassen System und Data wird über die zuvor getätigte Konfiguration \emph{<packaging>war</packaging>} in der pom.xml jeweils eine WAR-Datei erzeugt.
 Diese werden anschließend auf den Tomcat-Server kopiert und dort vollautomatisch entpackt.
