@@ -1,2 +1,36 @@
 % !TEX root =  master.tex
 \section{Abgeschlossene und offene Ziele der Software}
+\subsection{Zieldefinition}
+Das Ziel der Arbeit war es ein Kinobuchungssystem zu entwickeln, welches dem Benutzer ermöglicht eine Buchung durchzuführen.
+Dieses Kinobuchungssystem sollte mithilfe der iterativen Vorgehensweise zu entwickeln. 
+Weitere Einschränkung des Entwurfs- und Entwicklungsprozesses war die Verwendung der Programmiersprache Java im Back-End(Vgl. \vref{sec:backend}) und den Entwicklungsprozess innerhalb von zwei Sprints und einem Bearbeitungszeitraum von zwölf Wochen abzuschließen.
+Zudem sollten ca. 60\% des eigenen logischen Codes durch Tests abgedeckt werden. Dies bezieht sich lediglich auf das Back-End und den Businesscode des Projektes.
+
+Unsere eigenen Ziele waren die Verwendung einer Datenbank, um die Voraussetzungen einer Drei-Schichten-Logik zu erfüllen. Zudem sollte dies den Austausch von Daten im System erleichtern.
+
+Weiterhin sollte es möglich sein einen kompletten Buchungsvorgang durchzuführen, d.h. von der Filmauswahl über die Vorstellungsauswahl sowie die Sitzplatzauswahl bis hin zur Buchung und deren Bestätigung zu gelangen.
+Während des Buchungsvorganges soll dem Benutzer eine unverkennbare User Experience geboten werden, welche eine erneute Verwendung des Kinobuchungssystems begünstigt. 
+
+\subsection{Abgeschlossene Ziele}
+Das vorliegende Kinosystem erfüllt alle gegebenen Zielvorgaben und überschreitet diese an diversen Stellen.
+Das Back-End wurde innerhalb der zwei Iterationen um eine Datenbank sowie die geforderte Businesslogik erweitert. Darin beinhaltet ist eine Restriktion der mehrmaligen Buchung eines Sitzplatzes sowie das temporäre Blockieren eines online ausgewählten Sitzplatzes. 
+
+Im Front-End wurden alle geplanten Schritte der Buchung implementiert. Somit kann der Nutzer von der Filmauswahl bis zur Buchung ohne Unterbrechung die Funktionsweise eines Kinobuchungssystems in Anspruch nehmen. Dies wird jedoch limitiert durch eine vorgegebene Zahlungsmethode, welche nur vorher festgelegte Werte erlaubt.
+
+Das Testen wurde, wie in Kapitel \vref{sec:testen} beschrieben, auch im Rahmen der Vorgaben erfüllt. Hierbei wurde das Ziel überschritten, da die zu testenden Klassen eine höhere Codeabdeckung als gefordert aufweisen.
+
+Die eigenen Ziele wurden ebenfalls zum großen Teil erreicht. Das Verwenden einer Datenbank wurde mit Hilfe einer Postgres-Datenbank umgesetzt.
+Hierzu wurden sämtliche von den Autoren festgelegten Attributen im Backend implementiert und für die weitere Verwendung bereit gestellt.
+- Nutzen von Werten in Abfragen (REST)
+- Implementierung von Employee (Sprint 3)
+- Drei Schichten Logik
+
+- Buchungsvorgang wird erfolgreih durchlaufen
+- Sitzplatz kann nicht mehrmals gebucht werden
+- Filmauswahl hat Carousell
+- Sitzplatzauswahl hat mega sexy implementierung über Koordinatensystem
+- Sitzplatzauswahl skaliebar für größere Säle
+- Unverkennbare User Experience nicht erreicht. da am ende gleich mit jedem kino.
+
+
+\subsection{Offene Ziele}
