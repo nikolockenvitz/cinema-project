@@ -10,7 +10,7 @@
 \usepackage{xcolor}
 
 % hyperlinks
-\usepackage[hidelinks=true]{hyperref}
+\PassOptionsToPackage{hyphens}{url}\usepackage[hidelinks=true]{hyperref}
 
 % commands for author and title
 \newcommand{\TitelDerArbeit}[1]{\def\DerTitelDerArbeit{#1}\hypersetup{pdftitle={#1}}}
