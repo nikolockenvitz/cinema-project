@@ -64,108 +64,98 @@ Die folgenden Screenshots sind alle von der Seite eines Filmes, auf der sich wei
 \end{figure}
 
 \chapter{Quellcode}
-\begin{minipage}{\linewidth}
-	\begin{lstlisting}[style=lstJava]
-	public static MovieTo createMovieTo ( Movie entity, boolean withShow )
-	{
+
+\begin{lstlisting}[style=lstJava, caption={Erstellen eines Movie-\acs{DTO}s aus einer Movie-Entität mit Hilfe des eigen erstellten EntityToToHelper}, label={lst:EntityToToHelper_movie}]
+public static MovieTo createMovieTo ( Movie entity, boolean withShow )
+{
 	if ( null != entity )
 	{
-	MovieTo movieTo = new MovieTo();
-	movieTo.setId(entity.getId());
-	movieTo.setDescription(entity.getDescription());
-	movieTo.setFsk(entity.getFsk());
-	movieTo.setDuration(entity.getDuration());
-	movieTo.setName(entity.getName());
-	movieTo.setGenres(createGenreTos(entity.getGenres()));
-	movieTo.setRatings(createRatingTos(entity.getRatings()));
-	if ( withShow )
-	{
-	movieTo.setShows(createShowTos(entity.getShows(), false));
-	} // end withSow
-	movieTo.setActors(createActorTos(entity.getActors()));
-	return movieTo;
+		MovieTo movieTo = new MovieTo();
+		movieTo.setId(entity.getId());
+		movieTo.setDescription(entity.getDescription());
+		movieTo.setFsk(entity.getFsk());
+		movieTo.setDuration(entity.getDuration());
+		movieTo.setName(entity.getName());
+		movieTo.setGenres(createGenreTos(entity.getGenres()));
+		movieTo.setRatings(createRatingTos(entity.getRatings()));
+		if ( withShow )
+		{
+			movieTo.setShows(createShowTos(entity.getShows(), false));
+		} // end withSow
+		movieTo.setActors(createActorTos(entity.getActors()));
+		return movieTo;
 	}  // end if null
 	return null;
-	}
-	\end{lstlisting}
-	\captionof{lstlisting}{Erstellen eines Movie-\acs{DTO} aus einer Movie-Entität mit Hilfe des eigen erstellten EntityToToHelper}
-	\label{lst:EntityToToHelper_movie}
-\end{minipage}
+}
+\end{lstlisting}
 
-\begin{minipage}{\linewidth}
-	\begin{lstlisting}[style=lstJava]
-	public static Movie createMovieEntity ( MovieTo transferObject, boolean withShow )
+\newpage
+
+\begin{lstlisting}[style=lstJava, caption={Erstellen einer Movie-Entität aus einem Movie-\acs{DTO} mit Hilfe des eigen erstellten ToToEntityHelper}, label={lst:ToToEntityHelper_movie}]
+public static Movie createMovieEntity ( MovieTo transferObject, boolean withShow )
+{
+	if ( null != transferObject )
 	{
-		if ( null != transferObject )
+		Movie movie = new Movie();
+		movie.setId(transferObject.getId());
+		movie.setActors(createActorEntities(transferObject.getActors()));
+		movie.setDescription(transferObject.getDescription());
+		movie.setFsk(transferObject.getFsk());
+		movie.setDuration(transferObject.getDuration());
+		movie.setName(transferObject.getName());
+		movie.setRatings(createRatingEntities(transferObject.getRatings()));
+		if ( withShow )
 		{
-			Movie movie = new Movie();
-			movie.setId(transferObject.getId());
-			movie.setActors(createActorEntities(transferObject.getActors()));
-			movie.setDescription(transferObject.getDescription());
-			movie.setFsk(transferObject.getFsk());
-			movie.setDuration(transferObject.getDuration());
-			movie.setName(transferObject.getName());
-			movie.setRatings(createRatingEntities(transferObject.getRatings()));
-			if ( withShow )
-			{
-				movie.setShows(createShowEntities(transferObject.getShows(), false));
-			}
-			movie.setGenres(createGenreEntities(transferObject.getGenres()));
-			return movie;
+			movie.setShows(createShowEntities(transferObject.getShows(), false));
 		}
-		return null;
+		movie.setGenres(createGenreEntities(transferObject.getGenres()));
+		return movie;
 	}
-	\end{lstlisting}
-	\captionof{lstlisting}{Erstellen einer Movie-Entität aus einem Movie-\acs{DTO} mit Hilfe des eigen erstellten ToToEntityHelper}
-	\label{lst:ToToEntityHelper_movie}
-\end{minipage}
+	return null;
+}
+\end{lstlisting}
 
-\begin{minipage}{\linewidth}
-	\begin{lstlisting}[style=lstJava]
-	private boolean checkIfSeatsAreBookable ( List<SeatTo> seatsToProof, List<TicketTo> bookedTicketTos, List<BlockTo> blockTos, String sessiontoken )
-	{
+\newpage
+
+\begin{lstlisting}[style=lstJava, caption={Überprüfung, ob eine Reservierung möglich ist}, label={lst:Angang_Prüfung_ob_Reservierung_möglich}, tabsize=2]
+private boolean checkIfSeatsAreBookable ( List<SeatTo> seatsToProof, List<TicketTo> bookedTicketTos, List<BlockTo> blockTos, String sessiontoken ) {
 	boolean bookable = true;
 	
-	for ( SeatTo s : seatsToProof )
-	{
-	if ( bookable )
-	{
-	for ( TicketTo t : bookedTicketTos )
-	{
-	if ( s.getId() == t.getSeat().getId() )
-	{
-	bookable = false;
-	s.setOccupied(true);
-	break;
-	} else
-	{
-	s.setOccupied(false);
-	}
-	} // end for ticket
-	// verification for blocked elements
-	for ( BlockTo b : blockTos )
-	{
-	if ( s.getId() == b.getSeat().getId() && !(b.getSessiontoken().equals(sessiontoken)) )
-	{
-	bookable = false;
-	s.setBlocked(true);
-	break;
-	} else
-	{
-	s.setBlocked(false);
-	}
-	} // end for block
-	}	// end if bookable
-	}	// end for seatTo
-	return bookable;
-	}
-	\end{lstlisting}
-	\captionof{lstlisting}{Überprüfung, ob eine Reservierung möglich ist.}
-	\label{lst:Angang_Prüfung_ob_Reservierung_möglich}
-\end{minipage}
+	for ( SeatTo s : seatsToProof ) {
+		if ( bookable ) {
+			for ( TicketTo t : bookedTicketTos ) {
+				if ( s.getId() == t.getSeat().getId() ) {
+					bookable = false;
+					s.setOccupied(true);
+					break;
+				}
+				else {
+					s.setOccupied(false);
+				}
+			} // end for ticket
 
-\begin{minipage}{\linewidth}
-\begin{lstlisting}[style=lstJava]
+			// verification for blocked elements
+			for ( BlockTo b : blockTos ) {
+				if ( s.getId() == b.getSeat().getId() &&
+				     !(b.getSessiontoken().equals(sessiontoken)) ) {
+					bookable = false;
+					s.setBlocked(true);
+					break;
+				}
+				else {
+					s.setBlocked(false);
+				}
+			} // end for block
+		}	// end if bookable
+	}	// end for seatTo
+
+	return bookable;
+}
+\end{lstlisting}
+
+\newpage
+
+\begin{lstlisting}[style=lstJava, caption={Erstellen eines Reservierungs-\acs{DTO}s}, label={lst:Anhang_Erstellen_Reservierung}]
 private ReservationTo createReservationForSeats ( List<SeatTo> seatTos, ShowTo showTo )
 {
 	List<TicketTo> toBook = new ArrayList<>();
@@ -189,51 +179,42 @@ private ReservationTo createReservationForSeats ( List<SeatTo> seatTos, ShowTo s
 	createdReservationTo.setTickets(toBook);
 	return createdReservationTo;
 }
-	\end{lstlisting}
-	\captionof{lstlisting}{Erstellen eines Reservierungs-\acs{DTO}}
-	\label{lst:Anhang_Erstellen_Reservierung}
-\end{minipage}
+\end{lstlisting}
 
-\begin{minipage}{\linewidth}
-  \begin{lstlisting}[style=lstJava]
-  public class EntityToToHelper_Test
-  {
-    EntityToToHelper EtoToHelper = new EntityToToHelper();
+\newpage
 
-    @Before
-    public void initialize ( )
-    {
-      EmployeeTo testEmployeeTo = new EmployeeTo();
-      testEmployeeTo.setId(1);
-      testEmployeeTo.setDateofbirth(testDateString);
-      testEmployeeTo.setEmail("mail");
-      testEmployeeTo.setFirstname("firstname");
-      testEmployeeTo.setLastname("lastname");
+\begin{lstlisting}[style=lstJava, caption={Ausschnitt der Test-Klasse der EntityToToHelper-Klasse}, label={src:entitytotohelpertest}, tabsize=2]
+public class EntityToToHelper_Test {
+	EntityToToHelper EtoToHelper = new EntityToToHelper();
 
-      Employee testEmployeeEntity = new Employee();
-      testEmployeeEntity.setId(1);
-      testEmployeeEntity.setDateofbirth(testDateDate);
-      testEmployeeEntity.setEmail("mail");
-      testEmployeeEntity.setFirstname("firstname");
-      testEmployeeEntity.setLastname("lastname");
-    }
+	@Before
+	public void initialize ( ) {
+		EmployeeTo testEmployeeTo = new EmployeeTo();
+		testEmployeeTo.setId(1);
+		testEmployeeTo.setDateofbirth(testDateString);
+		testEmployeeTo.setEmail("mail");
+		testEmployeeTo.setFirstname("firstname");
+		testEmployeeTo.setLastname("lastname");
 
-    @Test
-    public void testCreateEmployeeTo ( )
-    {
-      assertEquals(null, EtoToHelper.createEmployeeTo(null));
+		Employee testEmployeeEntity = new Employee();
+		testEmployeeEntity.setId(1);
+		testEmployeeEntity.setDateofbirth(testDateDate);
+		testEmployeeEntity.setEmail("mail");
+		testEmployeeEntity.setFirstname("firstname");
+		testEmployeeEntity.setLastname("lastname");
+	}
 
-      EmployeeTo compareEmployeeTo = EtoToHelper.createEmployeeTo(testEmployeeEntity);
+	@Test
+	public void testCreateEmployeeTo ( ) {
+		assertEquals(null, EtoToHelper.createEmployeeTo(null));
 
-      assertThat(testEmployeeTo.getId(), equalTo(compareEmployeeTo.getId()));
-      assertThat(testEmployeeTo.getDateofbirth(), equalTo(compareEmployeeTo.getDateofbirth()));
-      assertThat(testEmployeeTo.getEmail(), equalTo(compareEmployeeTo.getEmail()));
-      assertThat(testEmployeeTo.getFirstname(), equalTo(compareEmployeeTo.getFirstname()));
-      assertThat(testEmployeeTo.getLastname(), equalTo(compareEmployeeTo.getLastname()));
-    }
-  }
+		EmployeeTo compareEmployeeTo = EtoToHelper.createEmployeeTo(testEmployeeEntity);
 
-	\end{lstlisting}
-	\captionof{lstlisting}{Ausschnitt der Test-Klasse der EntityToToHelper-Klasse}
-  \label{src:entitytotohelpertest}
-\end{minipage}
+		assertThat(testEmployeeTo.getId(), equalTo(compareEmployeeTo.getId()));
+		assertThat(testEmployeeTo.getDateofbirth(), equalTo(compareEmployeeTo.getDateofbirth()));
+		assertThat(testEmployeeTo.getEmail(), equalTo(compareEmployeeTo.getEmail()));
+		assertThat(testEmployeeTo.getFirstname(), equalTo(compareEmployeeTo.getFirstname()));
+		assertThat(testEmployeeTo.getLastname(), equalTo(compareEmployeeTo.getLastname()));
+	}
+}
+\end{lstlisting}
