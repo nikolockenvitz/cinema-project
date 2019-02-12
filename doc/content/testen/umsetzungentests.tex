@@ -23,13 +23,13 @@ Somit konnten Fehler des Back-Ends frühzeitig erkannt und behoben werden.
 \subsubsection{Entitäten und Datentransferobjekte}
 
 Nachdem in dem Projekt \acsp{DTO} (siehe Kapitel \vref{sec:dto}) verwendet werden, um die Daten aus der Datenhaltungsschicht der Drei-Schichten-Architektur in die Logikschicht zu transferieren, müssen diese an geeigneten Stellen von \acsp{DTO} zu Entitäten bzw. von Entitäten zu \acsp{DTO}  umgewandelt werden.
-Dies geschieht mittels der \texttt{EntityToToHelper}- bzw. der \texttt{ToToEntityHelper}-Klasse. Diese Umwandlung wird für beide Klassen in eigenen Testklassen getestet.
+Dies geschieht mittels der \jinline |EntityToToHelper|- bzw. der \jinline |ToToEntityHelper|-Klasse. Diese Umwandlung wird für beide Klassen in eigenen Testklassen getestet.
 Beide Testklassen sind grundlegend gleich aufgebaut, da beide erst Test-Entitäten bzw. Test-\acsp{DTO} mit den exakt gleichen Attributen erstellen.
 Danach wird verglichen, ob das durch die Umwandlung entstandene Objekt die exakt gleichen Attribute besitzt. Zu sehen ist dies im Anhang \vref{src:entitytotohelpertest} anhand des Employee-\acsp{DTO}.
-Im Code-Beispiel wird gezeigt, wie je ein \acs{DTO}-Objekt und ein Entitäts-Objekt erstellt wird und über \texttt{Set}-Methoden die exakt gleichen Werte übergeben werden.
+Im Code-Beispiel wird gezeigt, wie je ein \acs{DTO}-Objekt und ein Entitäts-Objekt erstellt wird und über \jinline |Set|-Methoden die exakt gleichen Werte übergeben werden.
 In der nachfolgenden Test-Methode wird dann geprüft, ob bei der Eingabe von \texttt{NULL} kein Error entsteht, sondern \texttt{NULL} zurückgegeben wird.
-Anschließend wird die Employee-Entität umgewandelt mit Hilfe der \texttt{EntityToToHelper}-Klasse und die jeweiligen Attribute überprüft, ob sie mit den Attributen des vorher erstellten Vergleichsobjekts übereinstimmen.
-Dadurch werden alle \texttt{Getter}-Methoden getestet. Zudem werden durch das Erstellen der Objekte zu Beginn der Testklassen alle \texttt{Setter}-Methoden der Entitäts- und \acs{DTO}-Klassen mit genutzt und überprüft.
+Anschließend wird die Employee-Entität umgewandelt mit Hilfe der \jinline |EntityToToHelper|-Klasse und die jeweiligen Attribute überprüft, ob sie mit den Attributen des vorher erstellten Vergleichsobjekts übereinstimmen.
+Dadurch werden alle \jinline |Getter|-Methoden getestet. Zudem werden durch das Erstellen der Objekte zu Beginn der Testklassen alle \jinline |Setter|-Methoden der Entitäts- und \acs{DTO}-Klassen mit genutzt und überprüft.
 
 \subsubsection{JSON Konvertierung}
 
@@ -41,33 +41,33 @@ Dies ist zwar nicht direkt notwendig, da die Klasse sich für jeden \acs{DTO}-Ty
 \subsubsection{Eigene Werkzeuge}
 
 Neben der \acs{JSON} Konvertierung wurden weitere Werkzeuge entworfen, um diverse Konvertierungen zu übernehmen.
-Diese Werkzeuge befinden sich in der \texttt{Utils}-Klasse und erstrecken sich über Zeitkonvertierungen von Date-Objekten zu Strings, Informationen zum Datum oder Tag aus Strings herauslesen oder verschiedene Überprüfungen, ob die Buchung eines Sitzplatzes erfolgreich ist.
+Diese Werkzeuge befinden sich in der \jinline |Utils|-Klasse und erstrecken sich über Zeitkonvertierungen von Date-Objekten zu Strings, Informationen zum Datum oder Tag aus Strings herauslesen oder verschiedene Überprüfungen, ob die Buchung eines Sitzplatzes erfolgreich ist.
 Zum Testen dieser Methoden reicht es aus vorher eigene Kalender-Objekte zu erstellen, diese umzuwandeln und mit vorher festgelegten Strings zu vergleichen.
 Methoden zur Überprüfung, ob ein Sitz buchbar ist, wurden mit Hilfe von Sitz-Objekten und verschiedenen Zeitstempeln gebucht, so ist ein Sitz für eine aktuelle Vorstellung nicht, aber für zukünftige Vorstellungen buchbar.
 
 \subsubsection{Ressourcen}
-Die Ressourcen des Fachkonzepts, namentlich \texttt{ReservationResource, ShowResource, MovieResource}, wurden auch komplett auf ihre Funktionalität getestet.
-Hierbei wurde darauf geachtet, dass jede Anfrage überprüft wird. Anhand der \texttt{ReservationResource} wird nachfolgend das Testen erklärt.
+Die Ressourcen des Fachkonzepts, namentlich \jinline |ReservationResource, ShowResource, MovieResource|, wurden auch komplett auf ihre Funktionalität getestet.
+Hierbei wurde darauf geachtet, dass jede Anfrage überprüft wird. Anhand der \jinline |ReservationResource| wird nachfolgend das Testen erklärt.
 
 Zu Beginn des Tests werden alle zur Reservierung benötigten \acs{DTO}-Objekte angelegt, also ein Kunde, ein Buchungsobjekt sowie eine zu buchende Show.
-Nachdem das Buchungsobjekt mit Hilfe der \acs{JSON} Konvertierung umgewandelt wurde, wird die \texttt{postTickets}-Methode der Ressource aufgerufen und der entstandene String übergeben.
+Nachdem das Buchungsobjekt mit Hilfe der \acs{JSON} Konvertierung umgewandelt wurde, wird die \jinline |postTickets|-Methode der Ressource aufgerufen und der entstandene String übergeben.
 Als Bestätigung, sofern das Buchen erfolgreich ist, wird ein Reservations-Objekt in Form eines \acs{JSON}-Strings übergeben. Dieser String wird wieder mit Hilfe der Konvertierungsklasse zurück umgewandelt in ein Reservations-Objekt.
-Danach wird aus dem entstanden Reservations-Objekt die Id entnommen, um mit dieser geprüft, ob die Reservierung im System vorhanden ist. Dies geschieht mittels der \texttt{getReservationById}-Methode und hat ein Reservations-Objekt als \acs{JSON}-String als Rückgabewert.
+Danach wird aus dem entstanden Reservations-Objekt die Id entnommen, um mit dieser geprüft, ob die Reservierung im System vorhanden ist. Dies geschieht mittels der \jinline |getReservationById|-Methode und hat ein Reservations-Objekt als \acs{JSON}-String als Rückgabewert.
 Dieser \acs{JSON}-String wird erneut zu einem Reservierungs-Objekt umgewandelt, um das Objekt mit dem vorher aus der Buchung erhaltenen Objekt zu vergleichen. Damit wird sichergestellt, dass das Buchungs-Objekt auch alle Informationen enthält, die vorher abgegeben wurden.
 
-Danach wird über die vorher ausgelesene Id die Reservierung gelöscht. Dies geschieht über die \texttt{deleteReservationById}-Methode und gibt wie die anderen beiden Methoden das gelöschte Reservations-Objekt als \acs{JSON} zurück.
+Danach wird über die vorher ausgelesene Id die Reservierung gelöscht. Dies geschieht über die \jinline |deleteReservationById|-Methode und gibt wie die anderen beiden Methoden das gelöschte Reservations-Objekt als \acs{JSON} zurück.
 Diese \acs{JSON} wird wie zuvor auch in ein Objekt umgewandelt und danach überprüft, sodass alle Informationen korrekt sind.
 Zu Überprüfung, ob die Reservierung auch erfolgreich gelöscht wurde, wird am Ende des Tests überprüft, ob eine Reservierung unter der vorher erhaltenen Id vorhanden ist.
 
-Zusätzlich wird in der \texttt{ReservationResource} das Blockieren und Deblockieren einzelner Sitze ausgeführt. Um dies zu Testen werden zwei Blockierungs-Objekte zu Beginn des Tests angelegt.
+Zusätzlich wird in der \jinline |ReservationResource| das Blockieren und Deblockieren einzelner Sitze ausgeführt. Um dies zu Testen werden zwei Blockierungs-Objekte zu Beginn des Tests angelegt.
 Diese bestehen aus einer eigenen Id, einem Sitz, der blockiert werden soll, einem Session Token und einer dazugehörigen Show, in der der Sitz blockiert werden soll.
 Im Test wird so ein Sitz blockiert und wieder freigegeben, bei beiden Operationen wird ein Block-Objekt im \acs{JSON}-Format übergeben.
 Diese Objekte werden anschließend auf ihre Gleichheit überprüft, um sicherzustellen, dass der blockierte Sitz mit dem freigegebenen Sitz übereinstimmt.
 
-Die Tests der \texttt{ShowResource} und der \texttt{MovieResource} sind analog zum beschriebenen Test zu erklären.
+Die Tests der \jinline |ShowResource| und der \jinline |MovieResource| sind analog zum beschriebenen Test zu erklären.
 Jedoch sind die beiden anderen Ressourcen auf das Auslesen von Daten spezialisiert und konnten somit leichter getestet werden.
-Lediglich in der \texttt{MovieResource} befindet sich ein weiterer \texttt{Post} von Daten.
-Dieser wurde ähnlich des \texttt{Posts} der Reservierung umgesetzt, mit dem Nachteil, dass ein Löschen eines Filmes im aktuellen Entwicklungsstand nicht möglich ist.
+Lediglich in der \jinline |MovieResource| befindet sich ein weiterer \jinline |Post| von Daten.
+Dieser wurde ähnlich des \jinline |Posts| der Reservierung umgesetzt, mit dem Nachteil, dass ein Löschen eines Filmes im aktuellen Entwicklungsstand nicht möglich ist.
 Dies muss per Hand nach dem Test gelöscht werden, da sonst ein Test-Film in der Datenbank steht.
 
 \subsection{Codeabdeckung} 
