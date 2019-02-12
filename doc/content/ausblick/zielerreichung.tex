@@ -6,7 +6,8 @@ Dieses Kinobuchungssystem sollte mithilfe der iterativen Vorgehensweise zu entwi
 Weitere Einschränkung des Entwurfs- und Entwicklungsprozesses war die Verwendung der Programmiersprache Java im Back-End(Vgl. \vref{sec:backend}) und den Entwicklungsprozess innerhalb von zwei Sprints und einem Bearbeitungszeitraum von zwölf Wochen abzuschließen.
 Zudem sollten ca. 60\% des eigenen logischen Codes durch Tests abgedeckt werden. Dies bezieht sich lediglich auf das Back-End und den Businesscode des Projektes.
 
-Unsere eigenen Ziele waren die Verwendung einer Datenbank, um die Voraussetzungen einer Drei-Schichten-Logik zu erfüllen. Zudem sollte dies den Austausch von Daten im System erleichtern.
+Unsere eigenen Ziele waren die Verwendung einer Datenbank, um die Voraussetzungen einer Drei-Schichten-Logik zu erfüllen. 
+Zudem sollte dies den Austausch von Daten im System erleichtern.
 
 Weiterhin sollte es möglich sein einen kompletten Buchungsvorgang durchzuführen, d.h. von der Filmauswahl über die Vorstellungsauswahl sowie die Sitzplatzauswahl bis hin zur Buchung und deren Bestätigung zu gelangen.
 Während des Buchungsvorganges soll dem Benutzer eine unverkennbare User Experience geboten werden, welche eine erneute Verwendung des Kinobuchungssystems begünstigt. 
@@ -21,16 +22,30 @@ Das Testen wurde, wie in Kapitel \vref{sec:testen} beschrieben, auch im Rahmen d
 
 Die eigenen Ziele wurden ebenfalls zum großen Teil erreicht. Das Verwenden einer Datenbank wurde mit Hilfe einer Postgres-Datenbank umgesetzt.
 Hierzu wurden sämtliche von den Autoren festgelegten Attributen im Backend implementiert und für die weitere Verwendung bereit gestellt.
-- Nutzen von Werten in Abfragen (REST)
-- Implementierung von Employee (Sprint 3)
-- Drei Schichten Logik
+Durch die Implementierung von einem breiten Schnittstellen-Portfolio, die sowohl Speichern, Abrufen und Löschen mit Hilfe von \acs{REST}-Services ermöglichen, wird eine umfangreiche Kommunikation zwischen Front- und Back-End gewährleistet.
+Somit wurde das Ziel einer klaren Trennung in Form der Drei-Schichten-Logik erreicht.
 
-- Buchungsvorgang wird erfolgreih durchlaufen
-- Sitzplatz kann nicht mehrmals gebucht werden
-- Filmauswahl hat Carousell
-- Sitzplatzauswahl hat mega sexy implementierung über Koordinatensystem
-- Sitzplatzauswahl skaliebar für größere Säle
-- Unverkennbare User Experience nicht erreicht. da am ende gleich mit jedem kino.
+Ein weiteres, selbst gestecktes Ziel war es einen erfolgreichen Buchungsvorgang, wie in dem User-Journey (Vgl. \vref{GERRIT-USER-JOURNEY}) beschrieben, zu durchlaufen. 
+Hierbei wurde im Front-End zusätzlich zur geplanten Filmauswahl ein Karussell mit aktuellen Blockbustern als Eye-Catcher implementiert.
+Zudem wurde die Sitzplatzauswahl im Front- und Back-End gegenüber einer konventionellen Anordnung in Tabellenform durch ein Koordinatensystem ersetzt.
+Hieraus ergeben sich diverse Möglichkeiten zu einer realitätsgetreuen Darstellung aller denkbaren zweidimensionalen Sitzplatzanordnungen sowie eine Skalierbarkeit der Saalgrößen bzw. Anzahl der Plätze.
+
+Der Hauptziel der Arbeit, einen Sitzplatz einer Vorstellung nicht mehrmals zu verkaufen, wurde mit Hilfe des temporären Blockierens eines Sitzes gelöst. 
+Genauer beschrieben wird der Ansatz in Kapitel \vref{ssssec:geblockt_durch_benutzer}.
+
+Der Grundstein des theoretischen dritten Sprints wurde ebenfalls gelegt, indem ein Mitarbeiter im Back-End bereits implementiert wurde.
 
 
 \subsection{Offene Ziele}
+
+Zu den offenen Zielen, welche nicht in voller Gänze erreicht wurden, zählt die Sitzplatzdarstellung.
+Diese sollte nach Plan auch eine Breite und Höhe in der Datenhaltung aufweisen, um jegliche Sitzarten (Sofas etc.) darstellen zu können.
+Des Weiteren fehlt die Spezifikation für Rollstuhlplätze, diese werden in der aktuellen Version nicht dargestellt.
+Jedoch ist das Potential für diese Änderungen im aktuellen System vorhanden, weshalb sie bei einem größeren Bearbeitungszeitraum auch erreicht worden wären.
+
+Ein weiteres offenes Ziel ist die Umsetzung des Front-Ends als Single-Page-Application, hierbei wäre redundanter Datenaustausch verhindert worden.
+Es wurde sich jedoch aufgrund Zeitmangels gegen eine frühzeitige Konvertierung des Front-Ends entschieden, um Ressourcen für Anpassungen im Back-End sowie der Tests frei zu halten.
+
+Die unvergleichliche User Experience konnte zum jetzigen Zeitpunkt noch nicht erreicht werden, soll aber durch spätere Erweiterungen erreicht werden. 
+Eine Fokussierung auf eine Eigenschaft der User Experience wäre dabei ein Weg dieses Ziel zu erreichen.
+Dabei bietet sich das Vergnügen beim Benutzen des Systems hervorragend an, da dies eine der wichtigsten Eigenschaften bei einer Anwendung ist.
