@@ -20,7 +20,6 @@ Die statische \acs{HTML}-Seite ist dabei auf das Wesentliche reduziert und enth�
 
 An den gekennzeichneten Stellen wird später der Inhalt, der aus dem Back-End geladen wurde, eingefügt.
 Dafür gibt es kleinere Vorlagen mit Platzhaltern.
-In Quelltext \ref{lst:html_template_movie_detail} sieht man die Vorlage für die Filmdetails.
 
 \begin{lstlisting}[style=lstHTML, caption={\acs{HTML}-Vorlage mit Platzhaltern für Filmdetails}, label={lst:html_template_movie_detail}]
 <div class="row featurette">
@@ -29,17 +28,19 @@ In Quelltext \ref{lst:html_template_movie_detail} sieht man die Vorlage für die
 	</div>
 	<div class="col-12 col-sm-8">
 		<h2 class="featurette-heading">`\textcolor{red}{\{movieTitle\}}`</h2>
-		<p class="lead">FSK `\textcolor{red}{\{movieFSK\}}`, `\textcolor{red}{\{movieDuration\}}` Minuten, `\textcolor{red}{\{movieGenres\}}`</p>
-		<p class="lead rating-`\textcolor{red}{\{movieRatingRounded\}}`">`\textcolor{red}{\{movieRating\}}`</p>
+		<p>FSK `\textcolor{red}{\{movieFSK\}}`, `\textcolor{red}{\{movieDuration\}}` Minuten, `\textcolor{red}{\{movieGenres\}}`</p>
+		<p class="rating-`\textcolor{red}{\{movieRatingRounded\}}`">`\textcolor{red}{\{movieRating\}}`</p>
 	</div>
 </div>
 
 <div class="row featurette">
 	<div class="col-12">
-		<p class="lead">`\textcolor{red}{\{movieDescription\}}`</p>
+		<p>`\textcolor{red}{\{movieDescription\}}`</p>
 	</div>
 </div>
 \end{lstlisting}
+
+%Dabei wir davon ausgegangen, dass die Bilder für die Filme als statische Inhalt unter einem festen Namen gespeichert sind, z.B. \textit{1.jpg}.
 
 In JavaScript wird diese Vorlage dann mit Inhalten befüllt.
 Nachdem die Daten in der Funktion \textit{displayMovieAndShows()} ein wenig verarbeitet wurden, können sie mit JavaScript bzw. jQuery in die Vorlage und danach ins \acs{DOM} eingefügt werden.
@@ -68,5 +69,4 @@ Dies passiert im Idealfall so schnell, dass es für den Benutzer wirkt, als hät
 
 Damit dies reibungslos funktioniert, ist es essentiell, dass sich die Kommunikation mit dem Server auf ein Minimum beschränkt und keine nicht benötigten oder redundanten Daten transferiert werden.
 So ist es zum Beispiel schlecht für die Performance, wenn man im Front-End lediglich eine Liste mit allen Filmen sehen will, aber vom Back-End zu jedem Film alle Vorstellungen mit allen Sitzplätzen erhält.
-
-Genauso muss natürlich die Verarbeitung im Front-End effizient erfolgen.
+Genauso muss natürlich auch die Verarbeitung im Front-End effizient erfolgen.

@@ -11,9 +11,10 @@ Wenn der Benutzer all seine Plätze ausgewählt hat und auch die Ermäßigungen 
 	\label{fig:vorstellung03}
 \end{figure}
 
-Die Daten werden dabei über \acs{URL}-Parameter weitergegeben.
-Dies hat zwar den Nachteil, dass der Benutzer die Werte (z.B. den Gesamtpreis) theoretisch ändern könnte und dann andere Werte angezeigt bekommt.
-Dies betrifft jedoch nicht die Sicherheit des Systems, da alle Überprüfung zwangsläufig zumindest im Back-End erfolgen müssen.
+Die Daten zur Vorstellung, zu den ausgewählte Sitzplätzen, zu den Ermäßigungen und auch der Preis werden dabei über \acs{URL}-Parameter weitergegeben.
+Auch wenn der Preis in diesem Fall redundant ist, so wird er trotzdem übergeben, um sich eine erneute Berechnung, die auch wieder eine weitere Kommunikation mit dem Back-End erfordern würde, zu ersparen.
+Dies hat jedoch den Nachteil, dass der Benutzer Werte wie eben den Gesamtpreis theoretisch bei der Übergabe auf die nächste Seite ändern könnte und dann andere Werte angezeigt bekommt.
+Dies betrifft jedoch nicht die Sicherheit des Systems, da alle Berechnungen und Überprüfungen zwangsläufig zumindest noch einmal im Back-End erfolgen müssen.
 Am Beispiel des Preises würde dies bedeuten, dass der Benutzer zwar seine aktuelle Ansicht manipulieren kann, dennoch den korrekten Preis bezahlen muss.
 
 Im oberen Bereich sieht der Benutzer nochmal allgemeine Informationen zur Vorstellung.
@@ -21,6 +22,8 @@ Des Weiteren erhält er eine Zusammenfassung zu seiner Sitzplatzauswahl mit dem 
 Wenn sich der Benutzer entscheidet, die Sitzplätze verbindlich zu buchen, so wird im Hintergrund eine Nachricht an das Back-End gesendet.
 
 Die Daten werden ähnlich wie beim Blocken eines Sitzplatzes in einem \acs{JSON}-Objekt gespeichert und mit einem \acs{AJAX}-Aufruf an das Back-End gesendet.
+
+Im aktuellen Beispiel (siehe Abbildung \ref{fig:vorstellung02} und \ref{fig:vorstellung03}) würde sich dann folgendes \acs{JSON}-Objekt ergeben.
 
 \begin{lstlisting}[language=JavaScript, caption={\acs{JSON}-Objekt für den Reservierungsvorgang}, label={lst:json_book}]
 book = {paymentoption: "giftcard",
