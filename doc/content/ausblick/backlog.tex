@@ -4,26 +4,27 @@
 \subsection{Theoretischer Sprint 3}
 \label{ssec:theoretischer_sprint}
 \multipleauthorsection{\authorRF}{\authorEJ}
-Die größte Neuerung des angedachten dritten Sprintes ist die komplette Anbindung des Mitarbeiters.
-Der Mitarbeiter besteht aus Vorname, Nachname, E-Mail-Adresse, Mitarbeiternummer und einem dem aktuellen Sicherheitsstandards genügenden Passwort.
+Die größte Neuerung des angedachten dritten Sprints ist die komplette Anbindung des Mitarbeiters.
+Für einen Mitarbeiter sollen Vorname, Nachname, E-Mail-Adresse, Mitarbeiternummer und ein Passwort, in einer aktuellen Sicherheitsstandards genügenden Form (vgl. Kapitel \vref{sec:authentifizieren}), gespeichert werden.
 Grundlagen dazu wurden bereits im vorhergehenden Sprint gelegt.
 Eine Mitarbeiterrelation wurde in der Datenbank angelegt.
 Teile der Businesslogik sind ebenfalls vorhanden, namentlich das Employee-\acs{DTO} und die Entität mit der zugehörigen Konvertierung.
 Diese wurde bereits während der Testphase überprüft.
 
 Eine Neuerung wäre eine spezielle Ansicht des Front-Ends angepasst an die Bedürfnisse der Mitarbeiter.
-Hierzu zählen eine einfache Übersicht der aktuell laufenden Filme, eine simple und schnelle Suche nach Reservierungen und ein Kalendersteuerelement der nächsten 14 Spieltage ihm Kino. \\
-Die Anordnung der Filme auf der Startseite des Mitarbeiters sollte nach Belieben und aktueller Uhrzeit erfolgen, sodass Primetime-Filme eine bestimmte Zeit vor Start des Blockbusters, aber auch zur jeweiligen Tageszeit eine passende Filmauswahl angezeigt werden. \\
-Dies sollte den Buchungsvorgang vor Ort erheblich erleichtern und Teilzeitkräften sowie Ferienarbeiter den Einsteig in das System auch ohne lang Einarbeitungszeit ermöglichen. \\
+Hierzu zählen eine einfache Übersicht der aktuell laufenden Filme, eine simple und schnelle Suche nach Reservierungen und ein Kalendersteuerelement der nächsten 14 Spieltage im Kino. \\
+Die Anordnung der Filme auf der Startseite des Mitarbeiters sollte nach dessen Belieben z.B. nach aktueller Uhrzeit erfolgen, sodass Primetime-Filme eine bestimmte Zeit vor Start des Blockbusters, aber auch zur jeweiligen Tageszeit eine passende Filmauswahl angezeigt werden. \\
+Dies sollte den Buchungsvorgang vor Ort erheblich erleichtern und Teilzeitkräften sowie Ferienarbeitern den Einsteig in das System auch ohne eine lange Einarbeitungszeit ermöglichen. \\
 
 Sobald ein Mitarbeiter eine Vorstellung ausgewählt hat, bekommen er und der Kunde vor Ort einen aktuellen Saalplan angezeigt.
 Nachdem der Kunde nun seine gewünschten Sitze ausgewählt hat, beginnt der Bezahlvorgang.
-Dieser erfolgt über ein bereits vorhandenes Kassensystem. Beendet wird die Buchung schlussendlich durch das Ausdrucken der Kinotickets. 
+Dieser erfolgt über ein bereits vorhandenes Kassensystem.
+Beendet wird die Buchung schlussendlich durch das Ausdrucken der Kinotickets direkt an der Kasse.
 
 Aufgrund der Bezahlung vor Ort muss die Mitarbeiteransicht in zweifacher Sicht geschützt werden.
-Einerseits sollte das System nur innerhalb des lokalen Netzwerks verfügbar sein, andererseits ist eine Sicherheitsprüfung, in Form einer Authentifizierung, relevant, sodass kein unbefugter Zutritt auf die internen Bezahlsysteme erlaubt wird.
+Einerseits sollte das System nur innerhalb des lokalen Netzwerks verfügbar sein, andererseits ist eine Sicherheitsprüfung, in Form einer Authentifizierung, relevant, sodass kein Unbefugter Zugang zu den internen Bezahlsysteme erlangt.
 
-Zusätzlich zu den genannten Hauptaspekten des dritten Sprints gehören kleinere Verbesserungen sowie Fehlerbeseitigungen.
+Zusätzlich zu den genannten Hauptaspekten des dritten Sprints sollen kleinere Verbesserungen sowie Fehlerbeseitigungen durchgeführt werden.
 Diese bestehen aus einer verbesserten Bestätigungsseite der Online-Buchung, in welcher neben der Klassifikation der Sitze, auch eine Nummerierung dargestellt und eine generierte PDF-Datei mit Informationen der Bestellung zum Download angeboten werden sollte.
 
 \subsection{Theoretischer Sprint 4}
@@ -33,10 +34,10 @@ Durch den vierten Sprint soll dem Kinoreservierungssystem ein Benutzerkonto hinz
 Somit hätte der Kunde die Perspektive, sich in sein zuvor erstelltes Benutzerkonto einzuloggen.
 Hier hätte er u.a. die Chance sein Passwort zu ändern und eine Übersicht über seine getätigtem Reservierungen zu haben.\
 Hierbei bestünde dann die Aussicht, dass er auch eine getätigte Reservierung wieder stornieren kann.
-Schlussendlich könnte man dem Kunden noch die Perspektive bieten, alle getätigten Rezessionen aufzuzeigen, die er getätigt hat. 
+Schlussendlich könnte man dem Kunden noch die Perspektive bieten, alle getätigten Rezessionen aufzuzeigen, die er getätigt hat.
 
-Hierfür müssten lediglich neue \acs{REST}-Schnittstellen wie z.B. \jinline|reservation/customer|definiert werden, die für die Auswertung der getätigten Reservierungen verantwortlich wäre.
-Ebenfalls müsste im \jinline|CustomerService| die entsprechenden Methoden implementiert werden, sodass die aufgerufene Ressource das Ergebnis übermitteln kann.
+Hierfür müssten lediglich neue \acs{REST}-Schnittstellen wie z.B. \jinline|reservation/customer| definiert werden, die für die Auswertung der getätigten Reservierungen verantwortlich wären.
+Ebenfalls müssten im \jinline|CustomerService| die entsprechenden Methoden implementiert werden, sodass die aufgerufene Ressource das Ergebnis übermitteln kann.
 
 Wie auch im dritten Sprint sollen hier kleine Verbesserungen sowie Fehlerbeseitigungen durchgeführt werden.
 
@@ -53,7 +54,7 @@ Dabei sollen verschiedene Arten von Gutscheinen, sowie deren Ablaufdatum und ver
 \subsubsection*{Bildformate und Dimensionen}
 \label{ssssec:bildformatedimensionen}
 Nachdem nicht jedes Filmplakat unbedingt im selben Format oder gar in den selben Dimensionen vorhanden sein wird, müssen diese Restriktionen im Endprodukt entfernt werden.
-Hierbei ist vor allem zu beachten, dass Unternehmen eine einfache Bedienung der Software bevorzugen und somit beim hinzufügen von Filmen im System die Bilder in diversen Formaten bereits mitgeben wollen.
+Hierbei ist vor allem zu beachten, dass Unternehmen eine einfache Bedienung der Software bevorzugen und somit beim Hinzufügen von Filmen im System die Bilder in diversen Formaten bereits mitgeben wollen.
 Dabei sollten die Bilder für das Karussell sowie möglicherweise verschiedene Poster des Films einfach über eine Einrichtungsseite auf dem Front-End eingefügt werden können und durch das Back-End angepasst und in der Datenbank gespeichert werden.
 
 \subsubsection*{Sitzplatzauswahl}
@@ -82,5 +83,3 @@ Einhergehend zur Reservierung, sollte eine Stornierung dieser, als auch eine Buc
 
 Um Reservierungen und Buchungen für einen passionierten Kinogänger einsehbar und verwaltbar (u.a. Stornierung) zu gestalten, wird ein Login eingerichtet.
 Über diesen kann eine Personalisierung der Darstellung sowie Filmempfehlungen die User Experience verbessern.
-
-
