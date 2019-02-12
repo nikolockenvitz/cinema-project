@@ -1,6 +1,7 @@
 % !TEX root =  master.tex
 \section{Sitzplatzauswahl und Blockierungen}
 \authorsection{\authorNL}
+
 Beim Reservierungsvorgang ist es essentiell, dass ein Sitzplatz nicht mehrfach reserviert wird.
 
 Hier ein einfaches Beispiel:
@@ -31,7 +32,7 @@ Er wurde nun erfolgreich für den aktuellen Benutzer vorgemerkt.
 
 Dies kann nun dazu führen, dass ein Benutzer einen freien Saalplan angezeigt bekommt und beim Anklicken eines Platzes dieser nun nicht mehr als \enquote{frei}, sondern als \enquote{durch einen anderen Nutzer belegt} angezeigt wird.
 
-Die zu der Reservierung zugehörigen Operationen auf der Datenbank müssen als Transaktion ausgeführt werden, sodass die Reservierung entweder erfolgreich war oder eine Fehlermeldung den Benutzer informiert, dass die Reservierung fehlgeschlagen ist.
+Die zu der Reservierung zugehörigen Operationen auf der Datenbank müssen atomar ausgeführt werden, sodass die Reservierung entweder erfolgreich war oder eine Fehlermeldung den Benutzer informiert, dass die Reservierung fehlgeschlagen ist.
 
 Alle Sicherheitsprüfungen müssen im Back-End ausgeführt werden.
 Natürlich können auch einzelne Prüfungen im Front-End implementiert werden, diese helfen allerdings nur einem normalen Benutzer den Vorgang zu erleichtern.

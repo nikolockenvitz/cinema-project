@@ -1,6 +1,7 @@
 \section{Representational State Transfer (REST)}
 \label{sec:rest}
-\authorsection{\authorSG}
+
+\subsection{Funktionsweise einer \acs{REST}-Schnittstelle}
 Um die Dreischichtenarchitektur zu etablieren, wird für den Datenaustausch zwischen Server--Front-End und Server--Datenbank auf das \acf{REST} gesetzt.
 \acs{REST} ist ein Architekturstil für den Entwurf verteilter Netz"-werk"-an"-wen"-dung"-en.
 Es setzt auf \acs{HTTP} und \acs{HTTPS}-Methoden und stellt verschiedene Methoden zur Verfügung.
@@ -50,15 +51,19 @@ Während Anfragen über die \acs{REST}-Schnittstelle über den Server beantworte
 \end{table}
 \clearpage
 
-\subsection{Annotation für eine \acs{REST}-Schnittstelle}
+\subsection{Annotationen für eine \acs{REST}-Schnittstelle}
 \label{ssec:annotationen_schnittstelle}
-\authorsection{\authorSG}
-Das Paket JAX-RS von Jersey bietet eine Vielzahl an Möglichkeiten für Annotationen einer \acs{REST}-Schnittstelle. In diesem Kapitel sollen einige im Projekt verwendete vorgestellt werden.
+
+Das Paket JAX-RS von Jersey bietet eine Vielzahl an Möglichkeiten für Annotationen einer \acs{REST}-Schnittstelle.
+In diesem Kapitel sollen einige im Projekt verwendete vorgestellt werden.
 
 \subsubsection*{@Path}
-Mittels \textit{@Path} werden die jeweiligen Pfade zu den \acs{REST}-Schnittstellen in einer Ressource dargestellt. Diese können nach belieben geschachtelt werden. \\
-So ist es z.B. möglich auf dem Server den Pfad zur Ressource der Reservierung anzugeben \textit{@Path("reservation")}. 
-Hier werden dann noch weitere Pfade wie \textit{@Path("book")} angegeben, der ausschließlich für das Buchen von Tickets oder \textit{@Path("block")}, der ausschließlich für das Blocken von Sitzen verantwortlich ist. In ihnen sind dann verschiedenen \acs{CRUD}-Befehle definiert (vgl.~\nameref{sss:get}, \nameref{sss:post}, \nameref{sss:delete} auf Seite~\pageref{sss:delete}) 
+Mittels \textit{@Path} werden die jeweiligen Pfade zu den \acs{REST}-Schnittstellen in einer Ressource dargestellt.
+Diese können nach belieben geschachtelt werden.
+
+So ist es z.B. möglich auf dem Server den Pfad zur Ressource der Reservierung anzugeben \textit{@Path("reservation")}.
+Hier werden dann noch weitere Pfade wie \textit{@Path("book")} angegeben, der ausschließlich für das Buchen von Tickets oder \textit{@Path("block")}, der ausschließlich für das Blocken von Sitzen verantwortlich ist.
+In ihnen sind dann verschiedenen \acs{CRUD}-Befehle definiert (vgl.~\nameref{sss:get}, \nameref{sss:post}, \nameref{sss:delete} auf Seite~\pageref{sss:delete}) 
 
 \subsubsection*{@MediaType}
 \label{sss:mediatype}
@@ -67,7 +72,8 @@ Deklariert sind in diesem Projekt: \textit{MediaType.TEXT\_PLAIN\_TYPE}, sodass 
 
 \subsubsection*{@Consumes}
 \label{sss:consumes}
-Mit Hilfe der Annotation \textit{@Consumes} definiert man an der \acs{REST}-Schnittstelle, dass eine Verarbeitung nur mit dem gewünschten MediaType erfolgt. Wird dies nicht erfüllt, kommt die Fehlermeldung 501 (vgl. Tabelle \vref{tab:http_status}). 
+Mit Hilfe der Annotation \textit{@Consumes} definiert man an der \acs{REST}-Schnittstelle, dass eine Verarbeitung nur mit dem gewünschten MediaType erfolgt.
+Wird dies nicht erfüllt, kommt die Fehlermeldung 501 (vgl. Tabelle \vref{tab:http_status}).
 
 \subsubsection*{@FormParam}
 \label{sss:formparam}
@@ -75,15 +81,16 @@ Mit Hilfe der Annotation \textit{@Consumes} definiert man an der \acs{REST}-Schn
 Ein korrektes \acs{JSON} mit \textit{@FormParam} für das Blocken würde z.B. folgendermaßen aussehen: \textit{block=\{ <DATEN> \}}
 \subsubsection*{@GET}
 \label{sss:get}
-Über die \textit{@GET}-Annotation wird eine einfache Anfrage erstellt. So ist sichergestellt, dass auch nur die \acs{REST}-Schnittstelle aufgerufen wird, die die \textit{@GET}-Annotation hat, obwohl es vielleicht nochmals die selbe Methode gibt für einen POST. 
+Über die \textit{@GET}-Annotation wird eine einfache Anfrage erstellt.
+So ist sichergestellt, dass auch nur die \acs{REST}-Schnittstelle aufgerufen wird, die die \textit{@GET}-Annotation hat, obwohl es vielleicht nochmals die selbe Methode gibt für einen POST.
 
 \subsubsection*{@POST}
 \label{sss:post}
-Über die \textit{@POST}-Annotation wird sichergestellt, dass wirklich das übergebene \acs{JSON} in die in diesem Projekt verwendete Datenbank gespeichert werden soll. 
+Über die \textit{@POST}-Annotation wird sichergestellt, dass wirklich das übergebene \acs{JSON} in die in diesem Projekt verwendete Datenbank gespeichert werden soll.
 
 \subsubsection*{@DELETE}
 \label{sss:delete}
-Über die \textit{@DELETE}-Annotation wird sichergestellt, dass wirklich der übergebene \textit{String} z.B. eine ID in der in diesem Projekt verwendeten Datenbank gelöscht werden soll. 
+Über die \textit{@DELETE}-Annotation wird sichergestellt, dass wirklich der übergebene \textit{String} z.B. eine ID in der in diesem Projekt verwendeten Datenbank gelöscht werden soll.
 
 \subsubsection*{@Produces}
 \label{sss:produces}
