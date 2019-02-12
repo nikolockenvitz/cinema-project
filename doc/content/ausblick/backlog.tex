@@ -1,12 +1,16 @@
 % !TEX root =  master.tex
 \section{Backlog und Theoretischer Sprint 3}
 
-\subsection{Theoretische Sprint 3}
-Die größte Neuerung des angedachten dritten Sprintes ist die komplette Anbindung des Mitarbeiters. 
+\subsection{Theoretischer Sprint 3}
+\label{ssec:theoretischer_sprint}
+Die größten Neuerung des angedachten dritten Sprintes ist die komplette Anbindung des Mitarbeiters sowie das Benutzerkonto. 
 
+\subsubsection*{Mitarbeiter}
+\label{ssssec:sprint_mitarbeiter}
 Der Mitarbeiter besteht aus Vorname, Nachname, E-Mail-Adresse, Mitarbeiternummer und einem dem aktuellen Sicherheitsstandards genügenden Passwort.
-Grundlagen dazu wurden bereits im vorhergehenden Sprint gelegt, eine Mitarbeitertabelle ist in bereits der Datenbank vorhanden.
-Teile der Businesslogik sind ebenfalls bereits vorhanden, namentlich das \acs{DTO} und die Entität mit der zugehörigen Konvertierung.
+Grundlagen dazu wurden bereits im vorhergehenden Sprint gelegt.
+Eine Mitarbeiterrelation wurde in der Datenbank angelegt.
+Teile der Businesslogik sind ebenfalls bereits vorhanden, namentlich das Employee\acs{DTO} und die Entität mit der zugehörigen Konvertierung.
 Diese wurde ebenfalls bereits mithilfe von Tests überprüft.
 
 Eine Neuerung wäre eine spezielle Ansicht des Front-Ends angepasst an die Bedürfnisse der Mitarbeiter. 
@@ -24,19 +28,32 @@ Andererseits ist eine Sicherheitsprüfung, in Form einer Authentifizierung, rele
 Zusätzlich zum Hauptaspekt des dritten Sprints gehören kleinere Verbesserungen sowie Fehlerbeseitigungen. 
 Diese bestehen aus einer verbesserten Bestätigungsseite der Online-Buchung in welcher neben der Klassifikation der Sitze, auch eine Nummerierung dargestellt und eine generierte PDF-Datei mit Informationen der Bestellung zum Download angeboten werden sollte.
 
+\subsubsection*{Benutzerkonto}
+\label{ssssec:sprint_benuterkonto}
+Ein weiteres angedachtes Feature wäre die Anbindung des Benutzerkontos.
+So hätte der Kunde die Möglichkeit, sich in sein zuvor erstelltes Benutzerkonto einzuloggen. 
+Hier hätte er u.a. die Chance sein Passwort zu ändern, eine Übersicht über seine getätigtem Reservierungen zu haben. 
+Hierbei bestünde dann die Aussicht, dass er auch eine getätigte Reservierung wieder stornieren kann. 
+Schlussendlich könnte man dem Kunden noch die Perspektive bieten, alle getätigten Rezessionen aufzuzeigen, die er getätigt hat. \\
+
+Hierfür müsste lediglich neue \acs{REST}-Schnittstellen wie z.B. \jinline|reservation/customer|definiert werden, die für die Auswertung der getätigten Reservierungen verantwortlich wäre. 
+Ebenfalls müsste im \jinline|CustomerService| die entsprechenden Methoden implementiert werden, sodass die aufgerufene Ressource das Ergebnis übermitteln kann.
+
 \subsection{Backlog}
 Für die langfristige Planung des Projektes wurden bereits Backlog-Items angelegt, die in späteren Sprints aufgefasst werden soll.
 Eine hohe Priorität hält dabei die Überprüfung und langfristige Speicherung der Gutscheincodes mithilfe der Datenbank inne.
 Dabei sollen verschiedene Arten von Gutscheinen, sowie deren Ablaufdatum und vergangene Transaktionen gespeichert werden. 
 
-Die Darstellung der Sitze soll ebenfalls in einem zukünftigen Sprint angepasst werden, sodass einerseits Breite und Höhe eines Sitzes für die Darstellung mit gespeichert werden, andererseits aber auch Sitzflächen für Rollstuhlfahrer o.Ä. ausgewiesen werden.
+Die Darstellung der Sitze soll ebenfalls in einem zukünftigen Sprint angepasst werden, sodass einerseits Breite und Höhe eines Sitzes für die Darstellung mit gespeichert werden, andererseits aber auch Sitzflächen für Rollstuhlfahrer o.ä. ausgewiesen werden.
 
-Die Kommunikation zwischen Front- und Back-End muss erweitert werden, dabei sollten regelmäßige Abfragen das temporäre Speichern verschiedener Übergabeparameter ersetzen.
+Die Kommunikation zwischen Front- und Back-End muss erweitert werden. 
+Dabei sollten regelmäßige Abfragen das temporäre Speichern verschiedener Übergabeparameter ersetzen.
 
 Des Weiteren sollte ein breiteres Portfolio an Zahlungsmöglichkeiten das Benutzererlebnis verbessern und dem Kunden erlauben, ohne vorherigen Besuch des Kinos, online zu bezahlen.
 
 Als Alternative zu den weiteren Zahlungsmöglichkeiten, sollte die Option einer Reservierung gegeben sein.
-Wobei das System der Vergabe einer Reservierungsnummer sicherer gestaltet werden sollte, momentan werden diese noch linear vergeben, aber sollten durch eine scheinbar chaotische Weise ersetzt werden.
+Wobei das System der Vergabe einer Reservierungsnummer sicherer gestaltet werden sollte.
+Momentan werden diese noch linear vergeben, aber sollten durch eine scheinbar chaotische Weise ersetzt werden.
 Um Kunden eine unverbindlichere und bequemere Art der Vorbestellung zu ermöglichen.
 
 Einhergehend zur Reservierung, sollte eine Stornierung dieser, als auch eine Buchung möglich sein.
