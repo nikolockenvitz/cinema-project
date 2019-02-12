@@ -1,5 +1,6 @@
 .cinemaHall {
   border: 1px solid black;
+  border-radius: 0.25rem;
   position: relative;
   padding: 10px;
   margin: 5px;
@@ -8,6 +9,7 @@
 
 .screen {
   border: solid 1px black;
+  border-radius: 0.25rem;
   color: white;
   text-align: center;
 }
@@ -18,7 +20,7 @@
 }
 
 .available {
-  background-color: #0d0;
+  background-color: #4da3ff;
 }
 
 .occupied {
@@ -48,11 +50,11 @@
 }
 
 .hovering {
-  background-color: #0f0;
+  background-color: #cce5ff;
 }
 
 .selected {
-  background-color: #55f;
+  background-color: #004a99;
 }
 
 .btn-seat-select {
