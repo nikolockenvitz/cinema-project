@@ -115,9 +115,8 @@ Dabei wird einerseits die Vorstellung und der ausgewählt Sitzplatz mitgegeben, 
 function addSeatToSelection (seatId, seatObj) {
 	// prepare data for ajax
 	var block = {show: {id: urlparameters.get("id")},
-		seat: {id: seatId},
-		sessiontoken: cookie};
-
+	             seat: {id: seatId},
+	             sessiontoken: cookie};
 	// send ajax
 	var data = "block=" + JSON.stringify(block);
 	$.ajax({

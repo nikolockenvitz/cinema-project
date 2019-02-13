@@ -7,7 +7,7 @@ Durch die Implementierung eines sog. Object-Mappers wie dem Jackson-Mapper\footn
 ist es möglich die zuvor erstellten Objekte in eine \acs{JSON}-Datei zu überführen.
 Er erkennt automatisch, ob es sich um ein Objekt, ein Attribut oder eine Liste handelt.
 Der Entwickler ruft lediglich die Methode \jinline |writeValueAsString(Object-to-JSON)|, die ein Objekt als Übergabeparameter erwartet auf. \\
-Das Auslesen eines \acs{JSON}-Strings wird mittels der Methode \jinline |readValue(json, javaClass)| ausgeführt.
+Das Auslesen eines \acs{JSON}-Strings wird mit der Methode \texttt{readValue(json, javaClass)} ausgeführt.
 Diese erwartet als Übergabeparameter ein \acs{JSON}, sowie die Java-Klasse des Objekts, in es gewandelt werden soll z.B. \jinline |Show.class|.
 Der Vorteil dieser Methode ist, dass hier die Java-Klasse angegeben wird, also das Objekt, in das der \acs{JSON}-String konvertiert werden soll.
 
